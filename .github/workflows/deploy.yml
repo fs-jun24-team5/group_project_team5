@@ -20,5 +20,5 @@ jobs:
         with:
           deploy_key: ${{ secrets.MY_PRIVATE_KEY }}
           publish_dir: ./dist  
-          target_branch: gh-pages
+        
 
