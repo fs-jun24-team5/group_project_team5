@@ -1,11 +1,15 @@
 /* eslint-disable react/react-in-jsx-scope */
+
+import { Header } from './сomponents/Header/Header';
 import { Footer } from './components/Footer/Footer';
 import './styles.scss';
+
 
 
 export const App = () => {
   return (
     <>
+      <Header />
       <header>
         <div className="header"></div>
       </header>
