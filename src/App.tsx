@@ -1,13 +1,32 @@
 /* eslint-disable react/react-in-jsx-scope */
-import './styles.scss'
+import './styles.scss';
 
 export const App = () => {
   return (
     <>
-      <h1 className="title">Hello World!!!</h1>
-      <h1>Test 0001</h1>
-      <h1>Test 0002</h1>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png" alt="React Icon" />
+      <header>
+        <div className="header"></div>
+      </header>
+
+      <main className='main'>
+        <h1 className="title">Welcome to Nice Gadgets store!</h1>
+        <div className="carousel"></div>
+        <div className="newPhoneModels"></div>
+        <div className="categories">
+          <h2 className="categories__title">Shop by category</h2>
+
+          <div className="categories__wrapper">
+            <article className="category"></article>
+            <article className="category"></article>
+            <article className="category"></article>
+          </div>
+        </div>
+        <div className="hotPrices"></div>
+      </main>
+
+      <footer>
+        <div className="footer"></div>
+      </footer>
     </>
   );
 };
