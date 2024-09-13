@@ -26,10 +26,7 @@ export const App = () => {
         <div className="hotPrices"></div>
       </main>
 
-      <footer>
-        <div className="footer"></div>
-      </footer>
-      <Footer />
+      <Footer />      
     </>
   );
 };
