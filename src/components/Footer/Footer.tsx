@@ -1,6 +1,6 @@
 import './Footer.scss';
 import logo from '../../assets/images/Logo.png';
-import backToTopIcon from '../../assets/icons/Slider-button.png';
+import backToTopIcon from '../../assets/images/icons/Slider-button.png';
 import React from 'react';
 
 export const Footer: React.FC = () => {

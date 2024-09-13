@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Img from '../../assets/imgs/Iphone_XS.png';
-import Heart from '../../assets/icons/heart_icon.svg';
-import FilledHeart from '../../assets/icons/filled_heart_icon.svg';
+import Heart from '../../assets/images/icons/heart_icon.svg';
+import FilledHeart from '../../assets/images/icons/filled_heart_icon.svg';
 
 export const Card: React.FC = () => {
   const [isHeartActive, setIsHeartActive] = useState(false);

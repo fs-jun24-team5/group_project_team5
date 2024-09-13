@@ -19,16 +19,6 @@ body {
   font-family: 'MyFonts', sans-serif;
 }
 
-.header {
-  width: 100%;
-  height: 48px;
-  border: 1px solid black;
-
-  @include respond-to('desktop') {
-    height: 64px;
-  }
-}
-
 .main {
   @include respond-to('desktop') {
     display: grid;
