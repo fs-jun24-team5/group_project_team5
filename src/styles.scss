@@ -1,8 +1,5 @@
-
-
+@import './components/Card/styles/card_styles.scss';
 @import './helpers/mixins';
-
-
 @font-face {
   font-family: 'MyFonts';
   src: url('./assets/fonts/Mont-Bold.otf') format('otf'),
@@ -195,3 +192,4 @@ body {
     margin-left: 0;
   }
 }
+
