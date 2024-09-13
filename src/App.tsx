@@ -1,5 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
+import { Footer } from './components/Footer/Footer';
 import './styles.scss';
+
 
 export const App = () => {
   return (
@@ -27,6 +29,7 @@ export const App = () => {
       <footer>
         <div className="footer"></div>
       </footer>
+      <Footer />
     </>
   );
 };
