@@ -1,57 +1,45 @@
 import React from 'react';
-import Logo from '../../assets/Header_img/logo.png';
-import Favorites from '../../assets/Header_img/like.png';
-import Shopping_Bag from '../../assets/Header_img/shoppingBag.png';
-import Menu from '../../assets/Header_img/burger.png';
-import './Header.scss';
+import styles from './Header.module.scss';
+import { Link } from 'react-router-dom';
 
-export const Header = () => {
+export const Header: React.FC = () => {
   return (
-    <div>
-      <div className="container">
-        <a href="/home" className="logo">
-        <img src={Logo} alt="Logo" />
-        </a>
-        <ul className="links">
-          <li>
-            <a href="/" className="link">
-              home
-            </a>
-          </li>
-          <li>
-            <a href="/phones" className="link">
-              phones
-            </a>
-          </li>
-          <li>
-            <a href="/tablets" className="link">
-              tablets
-            </a>
-          </li>
-          <li>
-            <a href="/accessories" className="link">
-              accessories
-            </a>
-          </li>
-        </ul>
-        <ul className="icons">
-          <li className="icon">
-            <a href="/favorites" className="icon-link onTablet">
-              <img src={Favorites} alt="Favorites" />
-            </a>
-          </li>
-          <li className="icon">
-            <a href="/bucket" className="icon-link onTablet">
-              <img src={Shopping_Bag} alt="Shopping_Bag" />
-            </a>
-          </li>
-          <li className="icon">
-            <a href="/" className="icon-link onMobile">
-              <img src={Menu} alt="Menu" />
-            </a>
-          </li>
-        </ul>
-      </div>
+    <div className={styles.container}>
+      <Link to="/" className={styles.logo} />
+
+      <ul className={styles.links}>
+        <li>
+          <Link to="/" className={styles.link}>
+            home
+          </Link>
+        </li>
+        <li>
+          <Link to="/phones" className={styles.link}>
+            phones
+          </Link>
+        </li>
+        <li>
+          <Link to="/tablets" className={styles.link}>
+            tablets
+          </Link>
+        </li>
+        <li>
+          <Link to="/accessories" className={styles.link}>
+            accessories
+          </Link>
+        </li>
+      </ul>
+      <ul className={styles.icons}>
+        <li className={styles.icon}>
+          <Link to="/favourites" className={`${styles.iconLink_heart}`} />
+        </li>
+        <li className={styles.icon}>
+          <Link to="/cart" className={`${styles.iconLink_bag}`} />
+        </li>
+        <li className={styles.icon}>
+          <a href="/" className={`${styles.iconLink_burger}`} />
+        </li>
+      </ul>
     </div>
   );
 };

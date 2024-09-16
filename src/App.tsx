@@ -1,35 +1,21 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { Card } from './components/Card/Card';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
 import './styles.scss';
-
-
+import { Outlet } from 'react-router-dom';
 
 export const App = () => {
   return (
-    <>
+    <div className='appContainer'>
       <Header />
 
-      <main className='main'>
-        <h1 className="title">Welcome to Nice Gadgets store!</h1>
-        <div className="carousel"></div>
-        <div className="newPhoneModels">
-          <Card/>
+      <div className="section">
+        <div className="outletContainer">
+          <Outlet />
         </div>
-        <div className="categories">
-          <h2 className="categories__title">Shop by category</h2>
+      </div>
 
-          <div className="categories__wrapper">
-            <article className="category"></article>
-            <article className="category"></article>
-            <article className="category"></article>
-          </div>
-        </div>
-        <div className="hotPrices"></div>
-      </main>
-
-      <Footer />      
-    </>
+      <Footer />
+    </div>
   );
 };
