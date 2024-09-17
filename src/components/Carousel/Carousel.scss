@@ -61,7 +61,6 @@
 .carousel {
   width: 100%;
   aspect-ratio: 10/11;
-  border: 1px solid rgb(202, 202, 202);
   margin-top: 24px;
   display: flex;
 
@@ -108,35 +107,5 @@
 
   .slick-dots li.slick-active button::before {
     background-image: url('../../assets/icons/Rectangle\ 23.svg');
-  }
-}
-
-.slick-arrow.slick-prev {
-  left: -30px;
-}
-
-.slick-arrow.slick-next::before {
-  z-index: 10; 
-  color: rgb(17, 92, 92);
-  opacity: 1;
-  font-size: 25px;
-}
-
-.slick-arrow.slick-prev::before {
-  z-index: 10; 
-  color: rgb(17, 92, 92);
-  opacity: 1;
-  font-size: 25px; 
-}
-
-.slick-arrow.slick-next:hover::before,
-.slick-arrow.slick-prev:hover::before {
-  color: rgb(24, 145, 145);
-}
-
-@media (max-width: 639px) {
-  .slick-prev,
-  .slick-next {
-    display: none !important;
   }
 }

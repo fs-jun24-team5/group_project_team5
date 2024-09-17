@@ -1,13 +1,13 @@
 import { Card } from '../Card/Card';
 import React, { useRef } from 'react';
-import styles from './NewPhoneModelsSlider.module.scss';
+import styles from './HotPricesSlider.module.scss';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 
-export const NewPhoneModelsSlider: React.FC = () => {
-  const sliderRef = useRef<Slider>(null); 
+export const HotPricesSlider: React.FC = () => {
+  const sliderRef = useRef<Slider>(null); // 
 
   const handleNext = () => {
     if (sliderRef.current) {
@@ -30,7 +30,7 @@ export const NewPhoneModelsSlider: React.FC = () => {
   return (
     <div className={styles.newPhoneModels__container}>
       <div className={styles.newPhoneModels__header}>
-        <h2 className={styles.newPhoneModels__title}>Brand new models</h2>
+        <h2 className={styles.newPhoneModels__title}>Hot prices</h2>
         <div className={styles.newPhoneModels__buttonsWrapper}>
           <button
             className={styles.arrowLeft}
