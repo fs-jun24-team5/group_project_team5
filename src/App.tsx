@@ -3,6 +3,7 @@ import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
 import './styles.scss';
 import { Outlet } from 'react-router-dom';
+import { getHotDeals, getNewModels } from "./api/function";
 
 export const App: React.FC = () => {
   return (
@@ -20,3 +21,20 @@ export const App: React.FC = () => {
 
   );
 };
+
+
+
+const main = async () => {
+  try {
+    const hotDeals = await getHotDeals();
+    console.log("Hot Deals:", hotDeals);
+    
+    const newModels = await getNewModels();
+    console.log("New Models:", newModels);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
+
+main();
