@@ -1,0 +1,128 @@
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+  z-index: 90;
+  transform: translateX(-110%);
+  transition: transform 0.2s ease-in-out;
+}
+
+.menuOpen {
+  transform: translateX(0);
+}
+
+.menuTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 1px 0 0 #e2e6e9;
+  padding: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.iconClose {
+  height: 48px;
+  width: 48px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid #E2E6E9;
+  background-image: url('../../assets/images/header_images/close-icon.svg');
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  cursor: pointer;
+  opacity: 1;
+  z-index: 2;
+}
+
+.logo {
+  margin: 0;
+  height: 22px;
+  width: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 16px;
+  background-image: url('../../assets/images/header_images/logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+}
+
+.links {
+  margin-top: 24px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  list-style-type: none;
+}
+
+.link {
+  height: 100%;
+  position: relative;
+  text-decoration: none;
+  color: grey;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 11px;
+  letter-spacing: 0.04;
+  text-transform: uppercase;
+}
+
+.link:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+.icons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  box-shadow: 0 -1px 0 0 grey;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.icon {
+  display: flex;
+  height: 64px;
+  align-items: center;
+  justify-content: center;
+  color: grey;
+  box-shadow: 0 -1px 0 0 lightgray, 1px 0 0 0 lightgray;
+  margin: 0;
+  padding: 0;
+}
+
+.iconLinkHeart {
+  background-image: url('../../assets/images/header_images/like.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 16px;
+  width: 16px;
+}
+
+.iconLinkBag {
+  background-image: url('../../assets/images/header_images/shoppingBag.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 16px;
+  width: 16px;
+}
