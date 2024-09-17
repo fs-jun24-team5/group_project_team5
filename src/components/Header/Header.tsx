@@ -1,9 +1,14 @@
-import React from 'react';
+// Header.tsx
+import React, { useState } from 'react';
 import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
 import { RoutesPathes } from '../../utils/RoutesPathes';
+import { MobileBurgerMenu } from '../MobileBurgerMenu/MobileBurgerMenu';
 
 export const Header: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
   return (
     <div className={styles.container}>
       <Link to={RoutesPathes.HOME} className={styles.logo} />
@@ -38,9 +43,10 @@ export const Header: React.FC = () => {
           <Link to={RoutesPathes.CART} className={`${styles.iconLink_bag}`} />
         </li>
         <li className={styles.icon}>
-          <a href="/" className={`${styles.iconLink_burger}`} />
+          <button onClick={toggleMenu} className={`${styles.iconLink_burger}`} />
         </li>
       </ul>
+      <MobileBurgerMenu isOpen={isMenuOpen} handleClose={() => setIsMenuOpen(false)} />
     </div>
   );
 };
