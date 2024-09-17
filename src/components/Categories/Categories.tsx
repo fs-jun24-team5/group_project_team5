@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from './Categories.module.scss';
+import { RoutesPathes } from "../../utils/RoutesPathes";
 
 export const Categories: React.FC = () => {
   return (
@@ -9,7 +10,7 @@ export const Categories: React.FC = () => {
 
       <div className={styles.categories__wrapper}>
         <article className={styles.category}>
-          <Link to="/phones">
+          <Link to={RoutesPathes.PHONES}>
             <div className={`${styles.category__image} ${styles.category__image__phones}`} />
           </Link>
           <div className={styles.category__info}>
@@ -18,7 +19,7 @@ export const Categories: React.FC = () => {
           </div>
         </article>
         <article className={styles.category}>
-          <Link to="/tablets">
+          <Link to={RoutesPathes.TABLETS}>
             <div className={`${styles.category__image} ${styles.category__image__tablets}`} />
           </Link>
           <div className={styles.category__info}>
@@ -27,7 +28,7 @@ export const Categories: React.FC = () => {
           </div>
         </article>
         <article className={styles.category}>
-          <Link to="/accessories">
+          <Link to={RoutesPathes.ACCESSORIES}>
             <div className={`${styles.category__image} ${styles.category__image__accessories}`} />
           </Link>
           <div className={styles.category__info}>

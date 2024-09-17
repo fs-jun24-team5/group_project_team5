@@ -2,6 +2,7 @@ import React from 'react';
 import { NewPhoneModelsSlider } from '../../components/NewPhoneModelsSlider/NewPhoneModelsSlider';
 import { Carousel } from '../../components/Carousel/Carousel';
 import { Categories } from '../../components/Categories/Categories';
+import { HotPricesSlider } from '../../components/HotPricesSlider/HotPricesSlider';
 
 export const HomePage: React.FC = () => {
   return (
@@ -14,7 +15,9 @@ export const HomePage: React.FC = () => {
 
       <Categories />
 
-      <div className="hotPrices"></div>
+      <HotPricesSlider />
+
+      
     </main>
   );
 };
