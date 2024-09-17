@@ -9,7 +9,7 @@ export const AccessoriesPage: React.FC = () => {
       <div className={styles.route}>
         <Link to={RoutesPathes.HOME} className={styles.home}></Link>
         <i className={styles.arrow}></i>
-        <p className={styles.pageName}>Accessories</p>
+        <Link to={RoutesPathes.ACCESSORIES} className={styles.pageName}>Accessories</Link>
       </div>
     </div>
   );

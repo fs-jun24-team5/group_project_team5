@@ -16,7 +16,6 @@ export const HomePage: React.FC = () => {
       <Categories />
 
       <HotPricesSlider />
-
       
     </main>
   );

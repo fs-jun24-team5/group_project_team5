@@ -9,7 +9,7 @@ export const TabletsPage: React.FC = () => {
       <div className={styles.route}>
         <Link to={RoutesPathes.HOME} className={styles.home}></Link>
         <i className={styles.arrow}></i>
-        <p className={styles.pageName}>Tablets</p>
+        <Link to={RoutesPathes.TABLETS} className={styles.pageName}>Tablets</Link >
       </div>
     </div>
   );

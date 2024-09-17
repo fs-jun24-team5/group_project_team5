@@ -1,4 +1,4 @@
-/* import React from "react"
+ import React from "react"
 import NotFound from '../../assets/images/page_not_found/page-not-found.png'
 import '../../styles.scss'
 
@@ -11,4 +11,4 @@ export const NotFoundPage: React.FC = () => {
       </div>
     </div>
   )
-} */
+} 
