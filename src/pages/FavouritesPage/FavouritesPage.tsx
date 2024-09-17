@@ -9,7 +9,7 @@ export const FavouritesPage: React.FC = () => {
       <div className={styles.route}>
         <Link to={RoutesPathes.HOME} className={styles.home}></Link>
         <i className={styles.arrow}></i>
-        <p className={styles.pageName}>Favourites</p>
+        <Link to={RoutesPathes.FAVOURITES} className={styles.pageName}>Favourites</Link>
       </div>
     </div>
   );

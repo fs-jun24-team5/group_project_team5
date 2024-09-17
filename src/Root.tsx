@@ -7,8 +7,8 @@ import { TabletsPage } from "./pages/TabletsPage/TabletsPage";
 import { AccessoriesPage } from "./pages/AcessoriesPage/AcessoriesPage";
 import { FavouritesPage } from "./pages/FavouritesPage/FavouritesPage";
 import { CartPage } from "./pages/CartPage/CartPage";
-//import { NotFoundPage } from "./pages/"
 import { RoutesPathes } from "./utils/RoutesPathes";
+import { NotFoundPage } from "./pages/NotFoundPage/NotFoundPage";
 
 export const Root: React.FC = () => (
   <HashRouter>
@@ -35,7 +35,7 @@ export const Root: React.FC = () => (
         <Route path={RoutesPathes.FAVOURITES} element={<FavouritesPage />} />   
         <Route path={RoutesPathes.CART} element={<CartPage />} />   
 
-    {/*     <Route path="*" element={<NotFoundPage /> } /> */}
+        <Route path="*" element={<NotFoundPage /> } /> 
     </Route>
     </Routes>
 

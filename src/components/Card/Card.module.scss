@@ -30,6 +30,8 @@
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat; */
+  transition: transform 0.3s ease;
+  cursor: pointer;
 
   &:hover {
     transform: scale(1.1);
@@ -54,6 +56,11 @@
   font-weight: 600;
   text-align: left;
   padding-top: 16px;
+  cursor: pointer;
+
+  &:hover {
+    color: #626666; 
+  }
 }
 
 .price {
