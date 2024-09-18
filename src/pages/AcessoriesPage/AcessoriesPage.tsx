@@ -1,3 +1,9 @@
 import React from 'react';
+import { PaginatedProducts } from '../../components/PaginatedProducts/PaginatedProducts';
 
-export const AccessoriesPage = () => <h2>Accessories</h2>;
+
+export const AccessoriesPage: React.FC = () => {
+  return (
+    <PaginatedProducts pageLabel='Accessories' productsCategory='accessories' />
+  )
+};
