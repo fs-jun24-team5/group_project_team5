@@ -7,33 +7,35 @@ import { TabletsPage } from "./pages/TabletsPage/TabletsPage";
 import { AccessoriesPage } from "./pages/AcessoriesPage/AcessoriesPage";
 import { FavouritesPage } from "./pages/FavouritesPage/FavouritesPage";
 import { CartPage } from "./pages/CartPage/CartPage";
+import { RoutesPathes } from "./utils/RoutesPathes";
+import { NotFoundPage } from "./pages/NotFoundPage/NotFoundPage";
 
 export const Root: React.FC = () => (
   <HashRouter>
     <Routes>
-    <Route path="/home" element={<Navigate to="/" replace />} />
-    <Route path="/" element={<App />}>
+    <Route path="/home" element={<Navigate to={RoutesPathes.HOME} replace />} />
+    <Route path={RoutesPathes.HOME} element={<App />}>
         <Route index element={<HomePage />} />
 
-        <Route path="phones">
+        <Route path={RoutesPathes.PHONES}>
           <Route index element={<PhonesPage />} />
           <Route path=":phonesId" element={<PhonesPage />} />
         </Route>   
         
-        <Route path="tablets">
+        <Route path={RoutesPathes.TABLETS}>
           <Route index element={<TabletsPage />} />
           <Route path=":tabletsId" element={<TabletsPage />} />
         </Route>   
         
-        <Route path="accessories">
+        <Route path={RoutesPathes.ACCESSORIES}>
           <Route index element={<AccessoriesPage />} />
           <Route path=":accessoriesId" element={<AccessoriesPage />} />
         </Route>
 
-        <Route path="favourites" element={<FavouritesPage />} />   
-        <Route path="cart" element={<CartPage />} />   
+        <Route path={RoutesPathes.FAVOURITES} element={<FavouritesPage />} />   
+        <Route path={RoutesPathes.CART} element={<CartPage />} />   
 
-        <Route path="*" element={<h1 className="title">Page not found</h1>} />
+        <Route path="*" element={<NotFoundPage /> } /> 
     </Route>
     </Routes>
 

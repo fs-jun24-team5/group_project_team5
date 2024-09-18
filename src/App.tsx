@@ -1,11 +1,11 @@
-/* eslint-disable react/react-in-jsx-scope */
+import React from 'react';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
 import './styles.scss';
 import { Outlet } from 'react-router-dom';
-import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage';
+//import { getHotDeals, getNewModels } from "./api/function";
 
-export const App = () => {
+export const App: React.FC = () => {
   return (
     <div className='appContainer'>
       <Header />
@@ -19,6 +19,22 @@ export const App = () => {
       <Footer />
     </div>
 
-    // <NotFoundPage />
   );
 };
+
+
+
+/* const main = async () => {
+  try {
+    const hotDeals = await getHotDeals();
+    console.log("Hot Deals:", hotDeals);
+    
+    const newModels = await getNewModels();
+    console.log("New Models:", newModels);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
+
+main(); */
