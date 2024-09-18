@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Heart from '../../assets/icons/card_icons/heart_icon.svg';
 import FilledHeart from '../../assets/icons/card_icons/filled_heart_icon.svg';
 import styles from './Card.module.scss';
-import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
+import { Product } from '../../api/type/ProductCart';
+import { FavoritesContext } from '../../context/FavoritesContext';
 
 type Props = {
-  product: ProductTypeExtended;
+  product: Product;
 };
 
 export const Card: React.FC<Props> = ({ product }) => {
-  const [isHeartActive, setIsHeartActive] = useState(false);
+  const { favoriteProducts, addToFavorites } = useContext(FavoritesContext);
+  const [isHeartActive, setIsHeartActive] = useState(favoriteProducts.some(p => p.id === product.id));
+
+  const handleFavoriteClick = () => {
+    addToFavorites(product);
+    setIsHeartActive(!isHeartActive);
+  };
 
   return (
     <article className={styles.card}>
@@ -43,7 +50,7 @@ export const Card: React.FC<Props> = ({ product }) => {
 
       <div className={styles.buttons}>
         <button className={styles.add}>Add to cart</button>
-        <button className={styles.heart} onClick={() => setIsHeartActive(!isHeartActive)}>
+        <button className={styles.heart} onClick={handleFavoriteClick}>
           {isHeartActive ? <img src={FilledHeart} alt="" /> : <img src={Heart} alt="" />}
         </button>
       </div>
