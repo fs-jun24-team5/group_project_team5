@@ -1,20 +1,17 @@
-import { getProducts } from "./api";
-import { ProductType } from "./type/ProductType";
+import { ProductTypeExtended } from "./type/ProductTypeExtended";
+//import { ProductTypeExtended } from "./type/ProductTypeExtended";
 
-export const getHotDeals = async (): Promise<ProductType[]> => {
-  const products = await getProducts();
-  
+export const getHotDeals = (products: ProductTypeExtended[]): ProductTypeExtended[] => {
   const phones = products.filter(product => product.category === "phones");
 
-  const sortedPhones = phones.sort((a, b) => (b.fullPrice - b.price) - (a.fullPrice - a.price));
+  const sortedPhones = phones.sort((a, b) => (b.priceRegular - b.priceDiscount) - (a.priceRegular - a.priceDiscount));
 
   return sortedPhones.slice(0, 6);
 };
 
-export const getNewModels = async (): Promise<ProductType[]> => {
-  const products = await getProducts();
+export const getNewModels = (products: ProductTypeExtended[]):ProductTypeExtended[] => {
   
-  const phones = products.filter(product => product.category === "phones");
+/*   const phones = products.filter(product => product.category === "phones");
 
   const sortedPhones = phones.sort((a, b) => b.year - a.year);
 
@@ -28,6 +25,9 @@ export const getNewModels = async (): Promise<ProductType[]> => {
     }
   }
 
-  return Array.from(uniqueModels.values()).slice(0, 6);
+  return Array.from(uniqueModels.values()).slice(0, 6); */
+  const shuffledProducts = products.sort(() => 0.5 - Math.random());
+
+  return shuffledProducts.slice(0, 6);
 };
 

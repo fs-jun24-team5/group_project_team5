@@ -4,9 +4,14 @@ import styles from './NewPhoneModelsSlider.module.scss';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
+
+type Props = {
+  newModels: ProductTypeExtended[];
+}
 
 
-export const NewPhoneModelsSlider: React.FC = () => {
+export const NewPhoneModelsSlider: React.FC<Props> = ({ newModels }) => {
   const sliderRef = useRef<Slider>(null); 
 
   const handleNext = () => {
@@ -26,6 +31,7 @@ export const NewPhoneModelsSlider: React.FC = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     variableWidth: true,
+    infinite: true,
   };
   return (
     <div className={styles.newPhoneModels__container}>
@@ -48,11 +54,9 @@ export const NewPhoneModelsSlider: React.FC = () => {
       </div>
       <div className={styles.newPhoneModels__bottom}>
           <Slider ref={sliderRef} {...settings}>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+          {newModels.map((phone) => {
+            return <Card key={phone.id} product={phone} />;
+          })}       
           </Slider>
       </div>
     </div>
