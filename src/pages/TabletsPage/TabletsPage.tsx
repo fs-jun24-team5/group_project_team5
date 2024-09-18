@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './TabletsPage.module.scss';
 import { RoutesPathes } from '../../utils/RoutesPathes';
+import { PaginatedProducts } from '../../components/PaginatedProducts/PaginatedProducts';
 
 export const TabletsPage: React.FC = () => {
   return (
@@ -11,6 +12,7 @@ export const TabletsPage: React.FC = () => {
         <i className={styles.arrow}></i>
         <Link to={RoutesPathes.TABLETS} className={styles.pageName}>Tablets</Link >
       </div>
+      <PaginatedProducts pageLabel='Tablets' productsCategory='tablets' />
     </div>
   );
 };
