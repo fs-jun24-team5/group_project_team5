@@ -4,6 +4,8 @@ import FilledHeart from '../../assets/icons/card_icons/filled_heart_icon.svg';
 import styles from './Card.module.scss';
 import { Product } from '../../api/type/ProductCart';
 import { FavoritesContext } from '../../context/FavoritesContext';
+import { Link } from 'react-router-dom';
+import { RoutesPathes } from '../../utils/RoutesPathes';
 
 type Props = {
   product: Product;
@@ -13,6 +15,9 @@ export const Card: React.FC<Props> = ({ product }) => {
   const { favoriteProducts, addToFavorites } = useContext(FavoritesContext);
   const [isHeartActive, setIsHeartActive] = useState(favoriteProducts.some(p => p.id === product.id));
 
+  console.log(product);
+  
+
   const handleFavoriteClick = () => {
     addToFavorites(product);
     setIsHeartActive(!isHeartActive);
@@ -20,13 +25,17 @@ export const Card: React.FC<Props> = ({ product }) => {
 
   return (
     <article className={styles.card}>
-      <img src={product.images[0]} alt="iphone" className={styles.image} />
+      <Link to={`${RoutesPathes.PHONES}/${product.id}`}>
+        <img src={product.image} alt="iphone" className={styles.image} />
+      </Link>
 
-      <h3 className={styles.text}>{product.name}</h3>
+      <Link to={`${RoutesPathes.PHONES}/${product.id}`} className={styles.link}>
+        <h3 className={styles.text}>{product.name}</h3>
+      </Link>
 
       <div className={styles.price}>
-        <h3 className={styles.priceRegular}>${product.priceDiscount}</h3>
-        <h3 className={styles.priceDiscount}>${product.priceRegular}</h3>
+        <h3 className={styles.priceRegular}>${product.price}</h3>
+        <h3 className={styles.priceDiscount}>${product.fullPrice}</h3>
       </div>
 
       <div className={styles.separator}></div>

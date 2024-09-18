@@ -12,6 +12,7 @@
 
   @include respond-to('tablet') {
     width: 237px;
+   /*  height: auto; */
   /*   height: 512px; */
   }
 
@@ -50,6 +51,7 @@
 }
 
 .text {
+  min-height: 79px;
   font-size: 14px;
   line-height: 21px;
   color: #313237;
@@ -58,12 +60,15 @@
   text-align: left;
   padding-top: 16px;
   cursor: pointer;
+  box-sizing: border-box;
 
   &:hover {
     color: #626666;
   }
 
- 
+  @include respond-to ('tablet') {
+    min-height: 63px;
+  }
 }
 
 .price {
@@ -127,7 +132,11 @@
 .buttons {
   display: flex;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: 16px;
+
+/*   @include respond-to('desktop') {
+    margin: 0;
+  } */
 }
 
 .add {
@@ -177,4 +186,8 @@
     border: 1px solid #313237;
     cursor: pointer;
   }
+}
+
+.link {
+  text-decoration: none;
 }

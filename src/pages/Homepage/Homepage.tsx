@@ -3,39 +3,47 @@ import { NewPhoneModelsSlider } from '../../components/NewPhoneModelsSlider/NewP
 import { Carousel } from '../../components/Carousel/Carousel';
 import { Categories } from '../../components/Categories/Categories';
 import { HotPricesSlider } from '../../components/HotPricesSlider/HotPricesSlider';
-import { getPhones } from '../../api/api';
+import { getProducts } from '../../api/api';
 import { getHotDeals, getNewModels } from '../../api/function';
+import { ProductType } from '../../api/type/ProductType';
 //import { CardsList } from '../../components/CardsList/CardsList';
-import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
 
 export const HomePage: React.FC = () => {
-  const [phones, setPhones] = useState<ProductTypeExtended[]>([]);
+  const [phones, setPhones] = useState<ProductType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data: ProductTypeExtended[] = await getPhones();
-
-      setPhones(data);
+      setIsLoading(true);  
+      try {
+        const data: ProductType[] = await getProducts();
+        setPhones(data);   
+      } catch (error) {
+        console.error("Ошибка при загрузке данных", error);  
+      } finally {
+        setIsLoading(false);  
+      }
     };
+    
     fetchData();
   }, []);
 
   const newPhones = getHotDeals(phones);
-   const newModels = getNewModels(phones); 
+  const newModels = getNewModels(phones);
 
   return (
     <main className="main">
       <h1 className="title">Welcome to Nice Gadgets store!</h1>
 
-      {/* <CardsList newPhones={newPhones} /> */}
+      {/*    <CardsList newPhones={newPhones} />  */}
 
       <Carousel />
 
-       <NewPhoneModelsSlider newModels={newModels} />  
+      <NewPhoneModelsSlider newModels={newModels} isLoading={isLoading} />   
 
       <Categories />
 
-      <HotPricesSlider newPhones={newPhones} />
+      <HotPricesSlider newPhones={newPhones} isLoading={isLoading} />
     </main>
   );
 };
