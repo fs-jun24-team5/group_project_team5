@@ -33,10 +33,8 @@ export const PaginatedProducts: React.FC<Props> = ({ pageLabel, productsCategory
   const [searchParams, setSearchParams] = useSearchParams();
   const itemsPerPage = (searchParams.get('itemsPerPage') as PerPageOptions) || PerPageOptions.ALL;
   const currentPage = searchParams.get('page') || defaultPage;
-  const sortParam = searchParams.get('sort') as SortOptions || SortOptions.NEWEST;
+  const sortParam = (searchParams.get('sort') as SortOptions) || SortOptions.NEWEST;
   const products = getPreparedProducts(productsFromServer, itemsPerPage, sortParam);
-
-  console.log(prod);
 
   const handlePerPageSelectorChange = (option: PerPageOptions) => {
     if (option === PerPageOptions.ALL) {
@@ -54,24 +52,24 @@ export const PaginatedProducts: React.FC<Props> = ({ pageLabel, productsCategory
 
   const handleSortChange = (sort: SortOptions) => {
     if (sort === SortOptions.NEWEST) {
-        setSearchParams(getSearchWith(searchParams, { sort: null }));
-      } else {
-        setSearchParams(
-          getSearchWith(searchParams, { sort: sort }),
-        );
-      }
+      setSearchParams(getSearchWith(searchParams, { sort: null }));
+    } else {
+      setSearchParams(getSearchWith(searchParams, { sort: sort }));
+    }
   };
 
   useEffect(() => {
-    getProducts().then(productsFromServer => {
-      const needetProducts = productsFromServer.filter(product => product.category === productsCategory);
+    getProducts().then((productsFromServer) => {
+      const needetProducts = productsFromServer.filter(
+        (product) => product.category === productsCategory,
+      );
 
       setProd(needetProducts);
     });
-  },[])
+  }, []);
 
   return (
-    <>
+    <div style={{ gridColumn: "span 24"}}>
       <h2>{pageLabel}</h2>
       <Dropdown
         label="Sort by"
@@ -107,6 +105,6 @@ export const PaginatedProducts: React.FC<Props> = ({ pageLabel, productsCategory
           onPageChange={handlePageChange}
         />
       )}
-    </>
+    </div>
   );
 };

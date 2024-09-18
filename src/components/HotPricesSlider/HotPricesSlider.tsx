@@ -3,26 +3,26 @@ import styles from './HotPricesSlider.module.scss';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
 import { Card } from '../Card/Card';
+import { ProductType } from '../../api/type/ProductType';
+import { Loader } from '../Loader';
 
 type Props = {
-  newPhones: ProductTypeExtended[];
+  newPhones: ProductType[];
+  isLoading: boolean;
 };
 
-export const HotPricesSlider: React.FC<Props> = ({ newPhones }) => {
+export const HotPricesSlider: React.FC<Props> = ({ newPhones, isLoading }) => {
   const sliderRef = useRef<Slider>(null);
 
   const handleNext = () => {
     if (sliderRef.current) {
-
       sliderRef.current.slickNext();
     }
   };
 
   const handlePrev = () => {
     if (sliderRef.current) {
-
       sliderRef.current.slickPrev();
     }
   };
@@ -53,11 +53,15 @@ export const HotPricesSlider: React.FC<Props> = ({ newPhones }) => {
         </div>
       </div>
       <div className={styles.newPhoneModels__bottom}>
-        <Slider ref={sliderRef} {...settings}>
-          {newPhones.map((phone) => {
-            return <Card key={phone.id} product={phone} />;
-          })}
-        </Slider>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <Slider ref={sliderRef} {...settings}>
+            {newPhones.map((phone) => (
+              <Card key={phone.id} product={phone} />
+            ))}
+          </Slider>
+        )}
       </div>
     </div>
   );

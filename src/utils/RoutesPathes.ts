@@ -5,4 +5,5 @@ export enum RoutesPathes {
   ACCESSORIES = "/accessories",
   FAVOURITES = "/favourites",
   CART = "/cart",
+  ABOUT = "/about",
 }
