@@ -15,6 +15,9 @@ export const Card: React.FC<Props> = ({ product }) => {
   const { favoriteProducts, addToFavorites } = useContext(FavoritesContext);
   const [isHeartActive, setIsHeartActive] = useState(favoriteProducts.some(p => p.id === product.id));
 
+  console.log(product);
+  
+
   const handleFavoriteClick = () => {
     addToFavorites(product);
     setIsHeartActive(!isHeartActive);
