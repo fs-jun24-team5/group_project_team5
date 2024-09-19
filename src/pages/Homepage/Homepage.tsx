@@ -19,7 +19,7 @@ export const HomePage: React.FC = () => {
         const data: ProductType[] = await getProducts();
         setPhones(data);   
       } catch (error) {
-        console.error("Ошибка при загрузке данных", error);  
+        console.error("Error", error);  
       } finally {
         setIsLoading(false);  
       }
@@ -27,6 +27,9 @@ export const HomePage: React.FC = () => {
     
     fetchData();
   }, []);
+
+  console.log(phones);
+  
 
   const newPhones = getHotDeals(phones);
   const newModels = getNewModels(phones);

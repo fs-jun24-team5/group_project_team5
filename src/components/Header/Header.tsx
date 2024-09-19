@@ -1,14 +1,19 @@
 // Header.tsx
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styles from './Header.module.scss';
 import { Link, useLocation } from 'react-router-dom';
 import { RoutesPathes } from '../../utils/RoutesPathes';
 import { MobileBurgerMenu } from '../MobileBurgerMenu/MobileBurgerMenu';
 import classNames from 'classnames';
+import { FavoritesContext } from '../../context/FavoritesContext';
 
 export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { favoriteProducts } = useContext(FavoritesContext);
+
+  console.log(favoriteProducts.length);
+  
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -62,6 +67,7 @@ export const Header: React.FC = () => {
       <ul className={styles.icons}>
       <li className={styles.icon}>
         <Link
+          data-count={favoriteProducts.length > 0 ? favoriteProducts.length : ''}
           to={RoutesPathes.FAVOURITES}
           className={classNames(styles.iconLink_heart, {
             [styles.selected]: location.pathname.includes(RoutesPathes.FAVOURITES),
