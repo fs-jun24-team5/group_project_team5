@@ -1,8 +1,9 @@
+import { ProductType } from '../api/type/ProductType';
 import { PerPageOptions } from './PerPageOptions';
 import { SortOptions } from './SortOptions';
 
 export const getPreparedProducts = (
-  products: { name: string; price: number; year: number }[],
+  products: ProductType[],
   perPage: PerPageOptions,
   sort: SortOptions,
 ) => {
