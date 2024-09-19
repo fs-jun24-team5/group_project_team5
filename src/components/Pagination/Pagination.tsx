@@ -18,6 +18,30 @@ export const Pagination: React.FC<Props> = ({ total, perPage, currentPage, onPag
     }
   };
 
+  const renderPageNumbers = () => {
+    const pages = [];
+    const range = 2;
+
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || (i >= currentPage - range && i <= currentPage + range)) {
+        pages.push(i);
+      } else if (pages[pages.length - 1] !== '...') {
+        pages.push('...');
+      }
+    }
+
+    return pages.map((page, index) => (
+      <button
+      key={typeof page === 'number' ? page : `ellipsis-${index}`}
+      onClick={() => handlePageChange(+page)}
+      className={`${styles.paginationButton} ${currentPage === page ? styles.isActive : ''}`}
+    >
+      {page}
+    </button>
+    ));
+  };
+
+
   return (
     <div className={styles.pagination}>
       <button
@@ -27,7 +51,7 @@ export const Pagination: React.FC<Props> = ({ total, perPage, currentPage, onPag
       >
       </button>
 
-      {Array.from({ length: totalPages }, (_, index) => (
+      {/* {Array.from({ length: totalPages }, (_, index) => (
         <button
           key={index + 1}
           onClick={() => handlePageChange(index + 1)}
@@ -35,7 +59,8 @@ export const Pagination: React.FC<Props> = ({ total, perPage, currentPage, onPag
         >
           {index + 1}
         </button>
-      ))}
+      ))} */}
+      {renderPageNumbers()}
 
       <button
         className={`${styles.paginationButton} ${styles.paginationArrows} ${styles.paginationRightArrow}`}

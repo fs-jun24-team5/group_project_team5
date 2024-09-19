@@ -1,8 +1,8 @@
 import React from 'react';
+import styles from './PhonesPage.module.scss'
+import { ProductsMain } from '../../components/ProductsMain/ProductsMain';
 import { Link } from 'react-router-dom';
-import styles from './PhonesPage.module.scss';
 import { RoutesPathes } from '../../utils/RoutesPathes';
-import { PaginatedProducts } from '../../components/PaginatedProducts/PaginatedProducts';
 import { useParams } from 'react-router-dom';
 
 export const PhonesPage: React.FC = () => {
@@ -25,7 +25,7 @@ export const PhonesPage: React.FC = () => {
           </>
         )}
       </div>
-      <PaginatedProducts pageLabel="Phones" productsCategory="phones" />
+      <ProductsMain pageLabel="Phones" productsCategory="phones" />
     </div>
   );
 };
