@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import Heart from '../../assets/icons/card_icons/heart_icon.svg';
 import FilledHeart from '../../assets/icons/card_icons/filled_heart_icon.svg';
 import styles from './Card.module.scss';
-import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
+// import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
+import { ProductType } from '../../api/type/ProductType';
 
 type Props = {
-  product: ProductTypeExtended;
+  product: ProductType;
 };
 
 export const Card: React.FC<Props> = ({ product }) => {
@@ -13,13 +14,13 @@ export const Card: React.FC<Props> = ({ product }) => {
 
   return (
     <article className={styles.card}>
-      <img src={product.images[0]} alt="iphone" className={styles.image} />
+      <img src={product.image} alt="iphone" className={styles.image} />
 
       <h3 className={styles.text}>{product.name}</h3>
 
       <div className={styles.price}>
-        <h3 className={styles.priceRegular}>${product.priceDiscount}</h3>
-        <h3 className={styles.priceDiscount}>${product.priceRegular}</h3>
+        <h3 className={styles.priceRegular}>${product.price}</h3>
+        <h3 className={styles.priceDiscount}>${product.fullPrice}</h3>
       </div>
 
       <div className={styles.separator}></div>
