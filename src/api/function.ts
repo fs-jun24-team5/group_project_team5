@@ -1,17 +1,18 @@
-import { ProductTypeExtended } from "./type/ProductTypeExtended";
+import { ProductType } from "./type/ProductType";
 //import { ProductTypeExtended } from "./type/ProductTypeExtended";
 
-export const getHotDeals = (products: ProductTypeExtended[]): ProductTypeExtended[] => {
+export const getHotDeals = (products: ProductType[]): ProductType[] => {
+    
   const phones = products.filter(product => product.category === "phones");
 
-  const sortedPhones = phones.sort((a, b) => (b.priceRegular - b.priceDiscount) - (a.priceRegular - a.priceDiscount));
+  const sortedPhones = phones.sort((a, b) => (b.fullPrice - b.price) - (a.fullPrice - a.price));
 
   return sortedPhones.slice(0, 6);
 };
 
-export const getNewModels = (products: ProductTypeExtended[]):ProductTypeExtended[] => {
+ export const getNewModels = (products: ProductType[]):ProductType[] => {
   
-/*   const phones = products.filter(product => product.category === "phones");
+   const phones = products.filter(product => product.category === "phones");
 
   const sortedPhones = phones.sort((a, b) => b.year - a.year);
 
@@ -25,9 +26,9 @@ export const getNewModels = (products: ProductTypeExtended[]):ProductTypeExtende
     }
   }
 
-  return Array.from(uniqueModels.values()).slice(0, 6); */
-  const shuffledProducts = products.sort(() => 0.5 - Math.random());
+  return Array.from(uniqueModels.values()).slice(0, 6);  
+/*     const shuffledProducts = products.sort(() => 0.5 - Math.random());
 
-  return shuffledProducts.slice(0, 6);
+  return shuffledProducts.slice(0, 6);   */
 };
-
+ 

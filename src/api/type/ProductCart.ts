@@ -1,6 +1,4 @@
-export type ProductType = {
-  product: object;
-  quantity: number;
+export type Product = {
   id: number;
   category: string;
   itemId: string;
@@ -13,7 +11,4 @@ export type ProductType = {
   ram: string;
   year: number;
   image: string;
-  images: string;
-  priceDiscount: number;
-  priceRegular: number;
 };

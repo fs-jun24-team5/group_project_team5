@@ -2,6 +2,8 @@ import React from 'react';
 import logo from '../../assets/images/footer_images/Logo.png';
 import backToTopIcon from '../../assets/images/footer_images/Slider-button.png';
 import styles from './Footer.module.scss';
+import { Link } from 'react-router-dom';
+import { RoutesPathes } from '../../utils/RoutesPathes';
 
 export const Footer: React.FC = () => {
   const handleBackToTop = () => {
@@ -27,9 +29,9 @@ export const Footer: React.FC = () => {
             GITHUB
           </a>
 
-          <a href="#" className={styles.footer__links__item}>
-            CONTACTS
-          </a>
+          <Link to={RoutesPathes.ABOUT} className={styles.footer__links__item}>
+            ABOUT US
+          </Link>
 
           <a href="#" className={styles.footer__links__item}>
             RIGHTS

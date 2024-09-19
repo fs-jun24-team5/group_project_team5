@@ -1,22 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Heart from '../../assets/icons/card_icons/heart_icon.svg';
 import FilledHeart from '../../assets/icons/card_icons/filled_heart_icon.svg';
 import styles from './Card.module.scss';
-// import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
-import { ProductType } from '../../api/type/ProductType';
+import { Product } from '../../api/type/ProductCart';
+import { FavoritesContext } from '../../context/FavoritesContext';
+import { Link } from 'react-router-dom';
+import { RoutesPathes } from '../../utils/RoutesPathes';
 
 type Props = {
-  product: ProductType;
+  product: Product;
 };
 
 export const Card: React.FC<Props> = ({ product }) => {
-  const [isHeartActive, setIsHeartActive] = useState(false);
+  const { favoriteProducts, addToFavorites } = useContext(FavoritesContext);
+  const [isHeartActive, setIsHeartActive] = useState(favoriteProducts.some(p => p.id === product.id));
+
+  console.log(product);
+  
+
+  const handleFavoriteClick = () => {
+    addToFavorites(product);
+    setIsHeartActive(!isHeartActive);
+  };
 
   return (
     <article className={styles.card}>
-      <img src={product.image} alt="iphone" className={styles.image} />
+      <Link to={`${RoutesPathes.PHONES}/${product.id}`}>
+        <img src={product.image} alt="iphone" className={styles.image} />
+      </Link>
 
-      <h3 className={styles.text}>{product.name}</h3>
+      <Link to={`${RoutesPathes.PHONES}/${product.id}`} className={styles.link}>
+        <h3 className={styles.text}>{product.name}</h3>
+      </Link>
 
       <div className={styles.price}>
         <h3 className={styles.priceRegular}>${product.price}</h3>
@@ -44,7 +59,7 @@ export const Card: React.FC<Props> = ({ product }) => {
 
       <div className={styles.buttons}>
         <button className={styles.add}>Add to cart</button>
-        <button className={styles.heart} onClick={() => setIsHeartActive(!isHeartActive)}>
+        <button className={styles.heart} onClick={handleFavoriteClick}>
           {isHeartActive ? <img src={FilledHeart} alt="" /> : <img src={Heart} alt="" />}
         </button>
       </div>
