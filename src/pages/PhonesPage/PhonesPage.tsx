@@ -4,11 +4,19 @@ import { BackButton } from '../../components/BackButton/BackButton';
 import mainPicture from '../../assets/images/phonePageItem_images/phone.png';
 import Heart from '../../assets/icons/card_icons/heart_icon.svg';
 import FilledHeart from '../../assets/icons/card_icons/filled_heart_icon.svg';
+import { ProductsMain } from '../../components/ProductsMain/ProductsMain';
+import { Link } from 'react-router-dom';
+import { RoutesPathes } from '../../utils/RoutesPathes';
+import { useParams } from 'react-router-dom';
 
 export const PhonesPage: React.FC = () => {
   const [isHeartActive, setIsHeartActive] = useState(false);
   const [selectedColor, setSelectedColor] = useState<string>('color1');
   const [selectedButton, setSelectedButton] = useState<string>('button1');
+
+  const { phonesId } = useParams<{ phonesId: string }>();
+
+  const linkClassName = phonesId ? styles.pageNameActive : styles.pageName;
 
   const handleColorClick = (color: string) => {
     setSelectedColor(color);
@@ -18,8 +26,28 @@ export const PhonesPage: React.FC = () => {
     setSelectedButton(button);
   };
 
+  const temp = false;
+
   return (
-    <main className={styles.main}>
+    <>
+    <div className={styles.pagesContainer}>
+      <div className={styles.route}>
+        <Link to={RoutesPathes.HOME} className={styles.home}></Link>
+        <i className={styles.arrow}></i>
+        <Link to={RoutesPathes.PHONES} className={linkClassName}>
+          Phones
+        </Link>
+        {phonesId && (
+          <>
+            <i className={styles.arrow}></i>
+            <p className={styles.pageName}>{phonesId}</p>
+          </>
+        )}
+      </div>
+      <ProductsMain pageLabel="Phones" productsCategory="phones" />
+    </div>
+
+    {temp && (<main className={styles.main}>
       <div className={styles.main__content}>
         <BackButton />
         <h1 className={styles.main_text}>Apple iPhone 11 Pro Max 64GB Gold (iMT9G2FS/A)</h1>
@@ -214,6 +242,7 @@ export const PhonesPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </main>
+    </main>)}
+    </>
   );
 };

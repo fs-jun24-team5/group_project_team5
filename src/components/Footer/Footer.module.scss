@@ -1,3 +1,4 @@
+@import '../../helpers/mixins';
 $secondary-color: #89939a;
 
 .footer {
@@ -7,10 +8,12 @@ $secondary-color: #89939a;
 
   @media (max-width: 1200px) {
     padding: 32px;
+    margin-top: 64px;
   }
 
   @media (max-width: 640px) {
     padding: 32px 16px;
+    margin-top: 64px;
   }
 
   &__content {
@@ -44,12 +47,13 @@ $secondary-color: #89939a;
 
     &__item {
       font-size: 12px;
+      height: 11px;
       text-decoration: none;
       color: $secondary-color;
 
       &:hover {
         color: rgb(109, 107, 107);
-      } 
+      }
     }
   }
 
@@ -63,13 +67,15 @@ $secondary-color: #89939a;
     color: $secondary-color;
     user-select: none;
     font-weight: 700;
-    
+
 
     @media (max-width: 640px) {
       align-self: center;
     }
 
     &__button {
+      width: 32px;
+      height: 32px;
       border: none;
       padding: 0;
       transition: transform 0.3s ease;
@@ -101,6 +107,7 @@ $secondary-color: #89939a;
     text-decoration: none;
     display: block;
     transition: transform 0.3s ease;
+    height: 32px;
 
     &:hover {
       transform: scale(1.1);

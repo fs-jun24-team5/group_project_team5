@@ -75,6 +75,7 @@ li {
   letter-spacing: 0.04em;
   text-align: left;
 
+
   @include respond-to('desktop') {
     height: 64px;
   }  
@@ -84,6 +85,13 @@ li {
   color: #313237;
   border-bottom: 3px solid #313237;
 }
+
+.selected {
+  color: #313237;
+  border-bottom: 3px solid #313237; 
+}
+
+
 
 .icons {
   margin: 0;
@@ -95,15 +103,20 @@ li {
 }
 
 .iconLink_burger {
+  background-color: #fafbfc;
   display: block;
   width: 48px;
   height: 48px;
-  border-left: 1px solid #E2E6E9;
+  padding: 0;
+  border: 1px solid #E2E6E9;
+  border-top: 0;
+  border-right: 1px;
   background-repeat: no-repeat;
   background-position: center;
   background-image: url(../../assets/images/header_images/burger.png);
   box-sizing: border-box;
   transition: background-size 0.3s ease;
+  cursor: pointer;
 
   &:hover {
     background-size: 18px 18px;
@@ -123,7 +136,7 @@ li {
   box-sizing: border-box;
   transition: background-size 0.3s ease;
 
-  &:hover {
+  &:not(.selected):hover {
     background-size: 18px 18px;
   }
 
@@ -147,7 +160,7 @@ li {
   box-sizing: border-box;
   transition: background-size 0.3s ease;
 
-  &:hover {
+  &:not(.selected):hover {
     background-size: 18px 18px;
   }
 
@@ -161,4 +174,3 @@ li {
     height: 64px;
   }  
 }
-

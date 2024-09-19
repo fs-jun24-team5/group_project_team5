@@ -1,62 +1,39 @@
 import { Card } from '../Card/Card';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useRef } from 'react';
 import styles from './NewPhoneModelsSlider.module.scss';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { ProductType } from '../../api/type/ProductType';
+import { Loader } from '../Loader';
 
-export const NewPhoneModelsSlider: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [widthOfCard, setWidthOfCard] = useState(212);
-  const [clickCount, setClickCount] = useState(0);
-  const cards = [1, 2, 3, 4, 5];
-  const gap = 16;
-  let maxClickCount = cards.length - 1;
+type Props = {
+  newModels: ProductType[];
+  isLoading: boolean;
+};
 
-  const updateDimensions = useCallback(() => {
-    const screenWidth = window.innerWidth;
-
-    if (screenWidth >= 1200) {
-      setWidthOfCard(272);
-    } else if (screenWidth >= 640) {
-      setWidthOfCard(237);
-    } else {
-      setWidthOfCard(212);
-    }
-  }, [clickCount]);
-
-  useEffect(() => {
-    updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
-  }, [updateDimensions]);
+export const NewPhoneModelsSlider: React.FC<Props> = ({ newModels, isLoading }) => {
+  const sliderRef = useRef<Slider>(null);
 
   const handleNext = () => {
-    if (currentIndex < cards.length - 1) {
-      setCurrentIndex(currentIndex + 1);
+    if (sliderRef.current) {
+      sliderRef.current.slickNext();
     }
-    setClickCount((prev) => prev + 1);
   };
 
   const handlePrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-    setClickCount((prev) => prev - 1);
-  };
-
-  const getCurrentMaxClicks = () => {
-    if (window.innerWidth >= 480) {
-      maxClickCount = cards.length - 2;
-    }
-    if (window.innerWidth >= 776) {
-      maxClickCount = cards.length - 3;
-    }
-    if (window.innerWidth >= 1030) {
-      maxClickCount = cards.length - 4;
+    if (sliderRef.current) {
+      sliderRef.current.slickPrev();
     }
   };
 
-  getCurrentMaxClicks();
-
-
+  const settings = {
+    className: 'slider variable-width',
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    variableWidth: true,
+    infinite: true,
+  };
   return (
     <div className={styles.newPhoneModels__container}>
       <div className={styles.newPhoneModels__header}>
@@ -65,29 +42,25 @@ export const NewPhoneModelsSlider: React.FC = () => {
           <button
             className={styles.arrowLeft}
             onClick={handlePrev}
-            disabled={currentIndex === 0}
+            aria-label="Previous slide"
           ></button>
           <button
             className={styles.arrowRight}
             onClick={handleNext}
-            disabled={clickCount === maxClickCount}
+            aria-label="Next slide"
           ></button>
         </div>
       </div>
       <div className={styles.newPhoneModels__bottom}>
-        <div
-          className={styles.cardsContainer}
-          style={{
-            transform: `translateX(-${currentIndex * widthOfCard + currentIndex * gap}px)`,
-            transition: 'transform 0.5s ease',
-          }}
-        >
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-        </div>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <Slider ref={sliderRef} {...settings}>
+            {newModels.map((phone) => (
+              <Card key={phone.id} product={phone} />
+            ))}
+          </Slider>
+        )}
       </div>
     </div>
   );
