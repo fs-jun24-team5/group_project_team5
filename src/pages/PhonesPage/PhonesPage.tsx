@@ -8,6 +8,7 @@ import { ProductsMain } from '../../components/ProductsMain/ProductsMain';
 import { Link } from 'react-router-dom';
 import { RoutesPathes } from '../../utils/RoutesPathes';
 import { useParams } from 'react-router-dom';
+import { ProductCategories } from '../../utils/ProductCategories';
 
 export const PhonesPage: React.FC = () => {
   const [isHeartActive, setIsHeartActive] = useState(false);
@@ -44,7 +45,7 @@ export const PhonesPage: React.FC = () => {
           </>
         )}
       </div>
-      <ProductsMain pageLabel="Phones" productsCategory="phones" />
+      <ProductsMain pageLabel="Phones" productsCategory={ProductCategories.PHONES} />
     </div>
 
     {temp && (<main className={styles.main}>

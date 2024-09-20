@@ -3,6 +3,7 @@ import styles from './TabletsPage.module.scss'
 import { ProductsMain } from '../../components/ProductsMain/ProductsMain';
 import { Link } from 'react-router-dom';
 import { RoutesPathes } from '../../utils/RoutesPathes';
+import { ProductCategories } from '../../utils/ProductCategories';
 
 export const TabletsPage: React.FC = () => {
   return (
@@ -14,7 +15,7 @@ export const TabletsPage: React.FC = () => {
             Tablets
           </Link>
         </div>
-          <ProductsMain pageLabel='Tablets' productsCategory='tablets' />
+          <ProductsMain pageLabel='Tablets' productsCategory={ProductCategories.TABLETS} />
       </div>
   );
 };
