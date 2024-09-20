@@ -124,6 +124,7 @@ $secondary: #89939a;
     letter-spacing: -0.01em;
     color: $primary;
     margin-bottom: 32px;
+    margin-top: 32px;
 
     @include onTablet {
       grid-column: span 12;
@@ -362,51 +363,3 @@ $secondary: #89939a;
     cursor: pointer;
   }
 }
-
-
-// /* CartPage.module.scss */
-// .cartPage {
-//   padding: 20px;
-// }
-
-// .cartList {
-//   list-style: none;
-//   padding: 0;
-// }
-
-// .cartItem {
-//   display: flex;
-//   align-items: center;
-//   border-bottom: 1px solid #ccc;
-//   padding: 10px 0;
-// }
-
-// .itemImage {
-//   width: 100px;
-//   height: auto;
-//   margin-right: 10px;
-// }
-
-// .itemDetails {
-//   flex: 1;
-// }
-
-// .quantityControls {
-//   display: flex;
-//   align-items: center;
-// }
-
-// .quantityControls button {
-//   border: 1px solid #ddd;
-//   padding: 5px;
-//   background-color: #f7f7f7;
-//   cursor: pointer;
-// }
-
-// .removeButton {
-//   background-color: red;
-//   color: white;
-//   border: none;
-//   padding: 5px 10px;
-//   cursor: pointer;
-// }

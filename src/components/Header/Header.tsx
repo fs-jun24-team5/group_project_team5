@@ -12,7 +12,6 @@ export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const { favoriteProducts, theme } = useContext(FavoritesContext);
-  const { favoriteProducts } = useContext(FavoritesContext);
   const cartContext = useContext(CartContext);
   const cartCount = cartContext ? cartContext.cartItems.length : 0;
 
