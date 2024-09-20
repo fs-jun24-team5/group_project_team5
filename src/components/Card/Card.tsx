@@ -22,11 +22,11 @@ export const Card: React.FC<Props> = ({ product }) => {
 
   return (
     <article className={styles.card}>
-      <Link to={`${RoutesPathes.PHONES}/${product.id}`}>
+      <Link to={`${RoutesPathes.PHONES}/${product.itemId}`}>
         <img src={product.image} alt="iphone" className={styles.image} />
       </Link>
 
-      <Link to={`${RoutesPathes.PHONES}/${product.id}`} className={styles.link}>
+      <Link to={`${RoutesPathes.PHONES}/${product.itemId}`} className={styles.link}>
         <h3 className={styles.text}>{product.name}</h3>
       </Link>
 
