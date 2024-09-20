@@ -3,6 +3,7 @@ import styles from './AcessoriesPage.module.scss';
 import { ProductsMain } from '../../components/ProductsMain/ProductsMain';
 import { Link } from 'react-router-dom';
 import { RoutesPathes } from '../../utils/RoutesPathes';
+import { ProductCategories } from '../../utils/ProductCategories';
 import classNames from 'classnames';
 import { FavoritesContext } from '../../context/FavoritesContext';
 
@@ -24,7 +25,7 @@ export const AccessoriesPage: React.FC = () => {
           Accessories
         </Link>
       </div>
-      <ProductsMain pageLabel="Accessories" productsCategory="accessories" />
+      <ProductsMain pageLabel="Accessories" productsCategory={ProductCategories.ACCESSORIES} />
     </div>
   );
 };
