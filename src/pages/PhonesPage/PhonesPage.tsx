@@ -8,6 +8,7 @@ import { getPhones } from '../../api/api';
 import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
 import { ItemDescription } from '../../components/ItemDescription/ItemDescription';
 import { Loader } from '../../components/Loader';
+import { ProductCategories } from '../../utils/ProductCategories';
 
 export const PhonesPage: React.FC = () => {
   const { phonesId } = useParams<{ phonesId: string }>();
@@ -78,7 +79,7 @@ export const PhonesPage: React.FC = () => {
               </>
             )}
           </div>
-          <ProductsMain pageLabel="Phones" productsCategory="phones" />
+          <ProductsMain pageLabel="Phones" productsCategory={ProductCategories.PHONES} />
         </div>
       )}
     </>

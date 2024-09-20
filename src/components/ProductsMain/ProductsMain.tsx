@@ -11,10 +11,13 @@ import styles from './ProductsMain.module.scss';
 import { ProductType } from '../../api/type/ProductType';
 import { Card } from '../Card/Card';
 import { Loader } from '../Loader';
+import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
+import { ErrorTypes } from '../../utils/ErrorTypes';
+import { ProductCategories } from '../../utils/ProductCategories';
 
 type Props = {
   pageLabel: string;
-  productsCategory: string;
+  productsCategory: ProductCategories;
 };
 
 export const ProductsMain: React.FC<Props> = ({ pageLabel, productsCategory }) => {
@@ -22,6 +25,7 @@ export const ProductsMain: React.FC<Props> = ({ pageLabel, productsCategory }) =
 
   const [products, setProducts] = useState<ProductType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(ErrorTypes.NO_ERROR);
   const [searchParams, setSearchParams] = useSearchParams();
   const itemsPerPage = (searchParams.get('itemsPerPage') as PerPageOptions) || PerPageOptions.ALL;
   const currentPage = searchParams.get('page') || defaultPage;
@@ -50,31 +54,68 @@ export const ProductsMain: React.FC<Props> = ({ pageLabel, productsCategory }) =
     }
   };
 
-  useEffect(() => {
+  const init = () => {
+    setIsLoading(true);
+    setError(ErrorTypes.NO_ERROR);
+
     getProducts()
       .then((productsFromServer) => {
-        const neededProducts = productsFromServer.filter(
-          (product) => product.category === productsCategory,
-        );
-
-        setProducts(neededProducts);
+        if (productsFromServer.length === 0) {
+          switch (productsCategory) {
+            case ProductCategories.PHONES:
+              setError(ErrorTypes.NO_PHONES);
+              break;
+            case ProductCategories.TABLETS:
+              setError(ErrorTypes.NO_TABLETS);
+              break;
+            case ProductCategories.ACCESSORIES:
+              setError(ErrorTypes.NO_ACCESSORIES);
+              break;
+            default:
+              setError(ErrorTypes.LOAD);
+          }
+        } else {
+          const neededProducts = productsFromServer.filter(
+            (product) => product.category === productsCategory,
+          );
+  
+          setProducts(neededProducts);
+        }
       })
-      .finally(() => setIsLoading(false));
+      .catch(() => {
+        setError(ErrorTypes.LOAD);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    init();
   }, []);
 
   return (
     <>
-      {isLoading ? (
+      {isLoading && (
         <div className={styles.loader}>
           <Loader />
         </div>
-      ) : (
+      )}
+
+      {!isLoading && error && (
+        <div className={styles.error}>
+          <ErrorMessage message={error} onRetry={init} />
+        </div>
+      )}
+
+      {!isLoading && !error && (
         <>
           <div className={styles.products_main}>
             <div className={styles.category_info}>
-              <h2 className={styles.category_name}>{pageLabel}</h2>
+              <h1 className={styles.category_name}>{pageLabel}</h1>
               <p className={styles.category_models}>{`${products.length} models`}</p>
             </div>
+
             <Dropdown
               label="Sort by"
               options={Object.values(SortOptions)}
@@ -88,6 +129,7 @@ export const ProductsMain: React.FC<Props> = ({ pageLabel, productsCategory }) =
               activeOption={itemsPerPage}
               onChange={handlePerPageSelectorChange}
             />
+
             <div className={styles.product_cards}>
               {preparedProducts.length !== 0 &&
                 preparedProducts[+currentPage - 1].map((product) => (
