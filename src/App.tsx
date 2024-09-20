@@ -1,13 +1,23 @@
-/* eslint-disable react/react-in-jsx-scope */
-import './styles.scss'
+import React from 'react';
+import { Header } from './components/Header/Header';
+import { Footer } from './components/Footer/Footer';
+import './styles.scss';
+import { Outlet } from 'react-router-dom';
+//import { getHotDeals, getNewModels } from "./api/function";
 
-export const App = () => {
+export const App: React.FC = () => {
   return (
-    <>
-      <h1 className="title">Hello World!!!</h1>
-      <h1>Test 0001</h1>
-      <h1>Test 0002</h1>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png" alt="React Icon" />
-    </>
+    <div className='appContainer'>
+      <Header />
+
+      <div className="section">
+        <div className="outletContainer">
+          <Outlet />
+        </div>
+      </div>
+
+      <Footer />
+    </div>
+
   );
 };

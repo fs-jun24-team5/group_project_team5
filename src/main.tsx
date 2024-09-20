@@ -1,10 +1,14 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { App } from './App';
+import './index.scss';
+import { Root } from './Root';
+import { FavoritesProvider } from './context/FavoritesContext';
+import { CartProvider } from './context/CartContextType';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+createRoot(document.getElementById('root') as HTMLElement).render(
+  <FavoritesProvider>
+    <CartProvider>
+      <Root />
+    </CartProvider>
+  </FavoritesProvider>
 );
