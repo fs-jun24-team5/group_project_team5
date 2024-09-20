@@ -8,7 +8,6 @@
 
 .newPhoneModels__bottom {
  // width: 100%;
-  border: 1px solid black;
   margin-top: 24px;
   margin-left: 16px;
 
@@ -24,6 +23,10 @@
   text-align: left;
   color: #313237;
   width: 50%;
+
+  &.dark {
+    color: white;
+  }
 
   @include respond-to('tablet') {
     font-size: 32px;

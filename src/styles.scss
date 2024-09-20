@@ -22,6 +22,10 @@
   padding-inline: 16px;
   color: #313237;
 
+  &.dark {
+    color: white;
+  }
+
   @include respond-to('tablet') {
     font-size: 48px;
     line-height: 56px;
@@ -70,4 +74,15 @@
   height: auto;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }

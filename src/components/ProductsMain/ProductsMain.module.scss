@@ -37,6 +37,10 @@ $colorSecondaryGrey: #89939A;
 .category_name {
   font-size: 48px;
   font-weight: 800;
+
+  &.dark {
+    color: white;
+  }
 }
 
 .category_models {

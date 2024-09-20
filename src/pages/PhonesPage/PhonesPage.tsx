@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+
 import styles from './PhonesPage.module.scss';
 import { ProductsMain } from '../../components/ProductsMain/ProductsMain';
 import { Link } from 'react-router-dom';
@@ -9,8 +10,12 @@ import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
 import { ItemDescription } from '../../components/ItemDescription/ItemDescription';
 import { Loader } from '../../components/Loader';
 import { ProductCategories } from '../../utils/ProductCategories';
+import { FavoritesContext } from '../../context/FavoritesContext';
+import classNames from 'classnames';
 
 export const PhonesPage: React.FC = () => {
+  const { theme } = useContext(FavoritesContext);
+
   const { phonesId } = useParams<{ phonesId: string }>();
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [selectedButton, setSelectedButton] = useState<string>('');
@@ -66,8 +71,13 @@ export const PhonesPage: React.FC = () => {
         </>
       ) : (
         <div className={styles.pagesContainer}>
-          <div className={styles.route}>
-            <Link to={RoutesPathes.HOME} className={styles.home}></Link>
+         <div className={styles.route}>
+            <Link
+              to={RoutesPathes.HOME}
+              className={classNames(styles.home, {
+                [styles.dark]: theme === 'dark',
+              })}
+            />
             <i className={styles.arrow}></i>
             <Link to={RoutesPathes.PHONES} className={linkClassName}>
               Phones
