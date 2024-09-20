@@ -1,21 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Heart from '../../assets/icons/card_icons/heart_icon.svg';
 import FilledHeart from '../../assets/icons/card_icons/filled_heart_icon.svg';
-import IphoneImage from '../../assets/images/card_images/iPhone_XS.png';
 import styles from './Card.module.scss';
+import { Product } from '../../api/type/ProductCart';
+import { FavoritesContext } from '../../context/FavoritesContext';
+import { Link } from 'react-router-dom';
+import { RoutesPathes } from '../../utils/RoutesPathes';
 
-export const Card: React.FC = () => {
-  const [isHeartActive, setIsHeartActive] = useState(false);
+type Props = {
+  product: Product;
+};
+
+export const Card: React.FC<Props> = ({ product }) => {
+  const { favoriteProducts, addToFavorites } = useContext(FavoritesContext);
+  const [isHeartActive, setIsHeartActive] = useState(favoriteProducts.some(p => p.id === product.id));
+
+  const handleFavoriteClick = () => {
+    addToFavorites(product);
+    setIsHeartActive(!isHeartActive);
+  };
 
   return (
     <article className={styles.card}>
-      <img src={IphoneImage} alt="iphone" className={styles.image} />
+      <Link to={`${RoutesPathes.PHONES}/${product.itemId}`}>
+        <img src={product.image} alt="iphone" className={styles.image} />
+      </Link>
 
-      <h3 className={styles.text}>Apple iPhone Xs 64GB Silver (iMT9G2FS/A)</h3>
+      <Link to={`${RoutesPathes.PHONES}/${product.itemId}`} className={styles.link}>
+        <h3 className={styles.text}>{product.name}</h3>
+      </Link>
 
       <div className={styles.price}>
-        <h3 className={styles.priceRegular}>$799</h3>
-        <h3 className={styles.priceDiscount}>$899</h3>
+        <h3 className={styles.priceRegular}>${product.price}</h3>
+        <h3 className={styles.priceDiscount}>${product.fullPrice}</h3>
       </div>
 
       <div className={styles.separator}></div>
@@ -23,24 +40,24 @@ export const Card: React.FC = () => {
       <div className={styles.specs}>
         <div className={styles.screen}>
           <p className={styles.left}>Screen</p>
-          <p className={styles.right}>5.8” OLED</p>
+          <p className={styles.right}>{product.screen}</p>
         </div>
 
         <div className={styles.memory}>
           <p className={styles.left}>Capacity</p>
-          <p className={styles.right}>64 GB</p>
+          <p className={styles.right}>{product.capacity}</p>
         </div>
 
         <div className={styles.ram}>
           <p className={styles.left}>RAM</p>
-          <p className={styles.right}>4 GB</p>
+          <p className={styles.right}>{product.ram}</p>
         </div>
       </div>
 
       <div className={styles.buttons}>
         <button className={styles.add}>Add to cart</button>
-        <button className={styles.heart} onClick={() => setIsHeartActive(!isHeartActive)}>
-          {isHeartActive ? <img src={FilledHeart} alt="" /> : <img src={Heart} alt="" />}
+        <button className={styles.heart} onClick={handleFavoriteClick}>
+          {isHeartActive ? <img src={FilledHeart} alt="addToFavorites" /> : <img src={Heart} alt="" />}
         </button>
       </div>
     </article>

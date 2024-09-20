@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import styles from './MobileBurgerMenu.module.scss';
+import { useLocation } from 'react-router-dom';
+import { RoutesPathes } from '../../utils/RoutesPathes';
 
 type Props = {
   isOpen: boolean;
@@ -9,6 +11,20 @@ type Props = {
 };
 
 export const MobileBurgerMenu: React.FC<Props> = ({ isOpen, handleClose }) => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add(styles.bodyNoScroll);
+    } else {
+      document.body.classList.remove(styles.bodyNoScroll);
+    }
+
+    return () => {
+      document.body.classList.remove(styles.bodyNoScroll);
+    };
+  }, [isOpen]);
+
   return (
     <aside
       className={classNames(styles.menu, {
@@ -16,37 +32,74 @@ export const MobileBurgerMenu: React.FC<Props> = ({ isOpen, handleClose }) => {
       })}
     >
       <div className={styles.menuTop}>
-        <Link to="/" className={styles.logo} />
+        <Link to={RoutesPathes.HOME} className={styles.logo} />
         <button className={styles.iconClose} onClick={handleClose}></button>
       </div>
       <ul className={styles.links}>
         <li>
-          <Link to="/" className={styles.link} onClick={handleClose}>
+          <Link
+            to={RoutesPathes.HOME}
+            className={classNames(styles.link, {
+              [styles.selectedLink]: location.pathname === RoutesPathes.HOME,
+            })}
+            onClick={handleClose}
+          >
             home
           </Link>
         </li>
         <li>
-          <Link to="/phones" className={styles.link} onClick={handleClose}>
+          <Link
+            to={RoutesPathes.PHONES}
+            className={classNames(styles.link, {
+              [styles.selectedLink]: location.pathname.includes(RoutesPathes.PHONES),
+            })}
+            onClick={handleClose}
+          >
             phones
           </Link>
         </li>
         <li>
-          <Link to="/tablets" className={styles.link} onClick={handleClose}>
+          <Link
+            to={RoutesPathes.TABLETS}
+            className={classNames(styles.link, {
+              [styles.selectedLink]: location.pathname.includes(RoutesPathes.TABLETS),
+            })}
+            onClick={handleClose}
+          >
             tablets
           </Link>
         </li>
         <li>
-          <Link to="/accessories" className={styles.link} onClick={handleClose}>
+          <Link
+            to={RoutesPathes.ACCESSORIES}
+            className={classNames(styles.link, {
+              [styles.selectedLink]: location.pathname.includes(RoutesPathes.ACCESSORIES),
+            })}
+            onClick={handleClose}
+          >
             accessories
           </Link>
         </li>
       </ul>
+
       <ul className={styles.icons}>
-        <li className={styles.icon}>
-          <Link to="/favourites" className={styles.iconLinkHeart} onClick={handleClose} />
+        <li className={styles.iconItem}>
+          <Link
+            to={RoutesPathes.FAVOURITES}
+            className={classNames(styles.iconLinkHeart, {
+              [styles.selected]: location.pathname.includes(RoutesPathes.FAVOURITES),
+            })}
+            onClick={handleClose}
+          />
         </li>
-        <li className={styles.icon}>
-          <Link to="/cart" className={styles.iconLinkBag} onClick={handleClose} />
+        <li className={styles.iconItem}>
+          <Link
+            to={RoutesPathes.CART}
+            className={classNames(styles.iconLinkBag, {
+              [styles.selected]: location.pathname.includes(RoutesPathes.CART),
+            })}
+            onClick={handleClose}
+          />
         </li>
       </ul>
     </aside>
