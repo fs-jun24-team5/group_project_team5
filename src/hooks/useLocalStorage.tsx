@@ -7,20 +7,21 @@ export const useLocalStorage = <T,>(
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
       const item = window.localStorage.getItem(key);
-
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-
+      console.error('Error reading localStorage:', error);
       return initialValue;
     }
   });
+  console.log(storedValue);
 
-  useEffect(
-    () => localStorage.setItem(key, JSON.stringify(storedValue)),
-    [key, storedValue],
-  );
+  useEffect(() => {
+    try {
+      localStorage.setItem(key, JSON.stringify(storedValue));
+    } catch (error) {
+      console.error('Error setting localStorage:', error);
+    }
+  }, [key, storedValue]);
 
   return [storedValue, setStoredValue];
 };

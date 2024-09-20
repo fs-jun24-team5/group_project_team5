@@ -6,11 +6,15 @@ import { MobileBurgerMenu } from '../MobileBurgerMenu/MobileBurgerMenu';
 import classNames from 'classnames';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
+import { CartContext } from '../../context/CartContextType';
 
 export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const { favoriteProducts, theme } = useContext(FavoritesContext);
+  const { favoriteProducts } = useContext(FavoritesContext);
+  const cartContext = useContext(CartContext);
+  const cartCount = cartContext ? cartContext.cartItems.length : 0;
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -84,6 +88,7 @@ export const Header: React.FC = () => {
         </li>
         <li className={styles.icon}>
           <Link
+            data-count={cartCount > 0 ? cartCount : ''}
             to={RoutesPathes.CART}
             className={classNames(styles.iconLink_bag, {
               [styles.selected]: location.pathname.includes(RoutesPathes.CART),
