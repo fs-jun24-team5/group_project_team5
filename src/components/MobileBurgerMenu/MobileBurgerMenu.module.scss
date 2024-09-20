@@ -13,6 +13,10 @@
   transform: translateX(-110%);
   transition: transform 0.2s ease-in-out;
   border-bottom: 1px solid #E2E6E9;
+
+  &.dark {
+    background-color: rgb(34, 34, 34)
+  }
 }
 
 .menuOpen {
@@ -51,6 +55,11 @@
   z-index: 2;
   transition: transform 0.5s ease; 
 
+  &.dark {
+    background-color: rgb(34, 34, 34);
+    background-image: url('../../assets/images/header_images/close-icon_darkmode.svg');
+  }  
+
   &:hover {
     transform: rotate(180deg); 
     border: 1px solid #E2E6E9;
@@ -70,6 +79,10 @@
   background-repeat: no-repeat;
   background-position: center;
   transition: transform 0.3s ease;
+
+  &.dark {
+    background-image: url('../../assets/icons/GadgetsLogoDarkTheme.svg');
+  }
 }
 
 .logo:hover {
@@ -100,15 +113,26 @@
   letter-spacing: 0.04;
   text-transform: uppercase;
   box-sizing: border-box;
-  
+
+  &.dark {
+    color: white;
+  }
 }
 
 .selectedLink {
   border-bottom: 2px solid black;
+
+  &.dark {
+    border-bottom: 2px solid white;
+  }
 }
 
 .link:hover {
   border-bottom: 2px solid black;
+
+  &.dark {
+    border-bottom: 2px solid white;
+  }
 }
 
 .icons {
@@ -145,6 +169,10 @@
 .iconLinkHeart {
   background-image: url('../../assets/images/header_images/like.png');
 
+  &.dark {
+    background-image: url('../../assets/icons/header_icons/heart_icon_darkmode.svg');
+  }
+
   &:not(.selected):hover {
     transform: scale(1.1);
     border: none;
@@ -153,6 +181,10 @@
 
 .iconLinkBag {
   background-image: url('../../assets/images/header_images/shoppingBag.png');
+
+  &.dark {
+    background-image: url('../../assets/icons/header_icons/bag_icon_darkmode.svg');
+  }
 
   &:not(.selected):hover {
     transform: scale(1.1);
@@ -169,6 +201,10 @@
   height: 2px;
   background-color: black; 
   width: 100%;
+}
+
+.selected.dark::after {
+  background-color: white; 
 }
 
 .iconItem {

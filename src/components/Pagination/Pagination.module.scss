@@ -4,10 +4,15 @@ $elements-color: #e2e6e9;
 $secondary-color: #89939a;
 $white-color: #fff;
 
+.paginationContainer {
+  grid-column: span 24
+}
+
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
+  justify-self: center;
   margin-top: 40px;
 }
 

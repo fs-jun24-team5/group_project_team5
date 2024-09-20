@@ -35,8 +35,13 @@
     height: 28px;
     width: 80px;
     padding: 0 24px;
+  } 
+
+  &.dark {
+    background-image: url('../../assets/icons/GadgetsLogoDarkTheme.svg');
   }
 }
+
 
 .links {
   margin: 0;
@@ -75,6 +80,11 @@ li {
   letter-spacing: 0.04em;
   text-align: left;
 
+  &.dark {
+    color: white; 
+  }
+
+
   @include respond-to('desktop') {
     height: 64px;
   }
@@ -83,11 +93,20 @@ li {
 .link:hover {
   color: #313237;
   border-bottom: 3px solid #313237;
+
+  &.dark {
+    border-bottom: 3px solid white;
+    color: #89939A;
+  }
 }
 
 .selected {
   color: #313237;
   border-bottom: 3px solid #313237;
+
+  &.dark {
+    border-bottom: 3px solid white;
+  }
 }
 
 .icons {
@@ -115,6 +134,11 @@ li {
   transition: background-size 0.3s ease;
   cursor: pointer;
 
+  &.dark {
+    background-color: rgb(34, 34, 34);
+    background-image: url(../../assets/icons/header_icons/menu_icon_darkmode.svg);
+  }
+
   &:hover {
     background-size: 18px 18px;
   }
@@ -133,6 +157,10 @@ li {
   box-sizing: border-box;
   transition: background-size 0.3s ease;
   position: relative;
+
+  &.dark {
+    background-image: url('../../assets/icons/header_icons/heart_icon_darkmode.svg');
+  }
 
   &:not(.selected):hover {
     background-size: 18px 18px;
@@ -203,6 +231,10 @@ li {
   background-image: url(../../assets/images/header_images/shoppingBag.png);
   box-sizing: border-box;
   transition: background-size 0.3s ease;
+
+  &.dark {
+    background-image: url('../../assets/icons/header_icons/bag_icon_darkmode.svg');
+  }
   position: relative;
 
   &:not(.selected):hover {

@@ -38,6 +38,10 @@ $colorSecondaryGrey: #89939A;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
+  &.dark {
+    background-image: url('../../assets/icons/Home_darkmode.svg');
+  }
 }
 
 .arrow {
