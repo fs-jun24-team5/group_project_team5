@@ -1,11 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Heart from '../../assets/icons/card_icons/heart_icon.svg';
 import FilledHeart from '../../assets/icons/card_icons/filled_heart_icon.svg';
 import styles from './Card.module.scss';
 import { Product } from '../../api/type/ProductCart';
 import { FavoritesContext } from '../../context/FavoritesContext';
+import { useCart } from '../../hooks/useCart';
 import { Link } from 'react-router-dom';
 import { RoutesPathes } from '../../utils/RoutesPathes';
+import classNames from 'classnames';
 
 type Props = {
   product: Product;
@@ -13,11 +15,35 @@ type Props = {
 
 export const Card: React.FC<Props> = ({ product }) => {
   const { favoriteProducts, addToFavorites } = useContext(FavoritesContext);
-  const [isHeartActive, setIsHeartActive] = useState(favoriteProducts.some(p => p.id === product.id));
+  const { cartItems, addToCart, removeFromCart } = useCart();
+  const [isHeartActive, setIsHeartActive] = useState(favoriteProducts.some((p) => p.id === product.id));
+  const [isAdded, setIsAdded] = useState(false);
+
+  useEffect(() => {
+    const storedAddedState = localStorage.getItem(`added-${product.id}`);
+    if (storedAddedState) {
+      setIsAdded(JSON.parse(storedAddedState));
+    }
+
+    const isProductInCart = cartItems.some(item => item.product.id === product.id);
+    setIsAdded(isProductInCart);
+  }, [cartItems, product.id]);
 
   const handleFavoriteClick = () => {
     addToFavorites(product);
     setIsHeartActive(!isHeartActive);
+  };
+
+  const handleAddToCart = () => {
+    if (isAdded) {
+      removeFromCart(product.id.toString());
+      setIsAdded(false);
+      localStorage.removeItem(`added-${product.id}`);
+    } else {
+      addToCart(product);
+      setIsAdded(true);
+      localStorage.setItem(`added-${product.id}`, JSON.stringify(true));
+    }
   };
 
   return (
@@ -55,9 +81,18 @@ export const Card: React.FC<Props> = ({ product }) => {
       </div>
 
       <div className={styles.buttons}>
-        <button className={styles.add}>Add to cart</button>
+        <button
+          className={classNames(styles.add, { [styles.added]: isAdded })}
+          onClick={handleAddToCart}
+        >
+          {isAdded ? 'Added!' : 'Add to cart'}
+        </button>
         <button className={styles.heart} onClick={handleFavoriteClick}>
-          {isHeartActive ? <img src={FilledHeart} alt="addToFavorites" /> : <img src={Heart} alt="" />}
+          {isHeartActive ? (
+            <img src={FilledHeart} alt="addToFavorites" />
+          ) : (
+            <img src={Heart} alt="" />
+          )}
         </button>
       </div>
     </article>

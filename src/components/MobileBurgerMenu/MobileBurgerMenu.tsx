@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import styles from './MobileBurgerMenu.module.scss';
 import { useLocation } from 'react-router-dom';
 import { RoutesPathes } from '../../utils/RoutesPathes';
+import { FavoritesContext } from '../../context/FavoritesContext';
+import { CartContext } from '../../context/CartContextType';
 
 type Props = {
   isOpen: boolean;
@@ -12,6 +14,9 @@ type Props = {
 
 export const MobileBurgerMenu: React.FC<Props> = ({ isOpen, handleClose }) => {
   const location = useLocation();
+  const { favoriteProducts } = useContext(FavoritesContext);
+  const cartContext = useContext(CartContext);
+  const cartCount = cartContext ? cartContext.cartItems.length : 0;
 
   useEffect(() => {
     if (isOpen) {
@@ -90,7 +95,11 @@ export const MobileBurgerMenu: React.FC<Props> = ({ isOpen, handleClose }) => {
               [styles.selected]: location.pathname.includes(RoutesPathes.FAVOURITES),
             })}
             onClick={handleClose}
-          />
+          >
+            {favoriteProducts.length > 0 && (
+              <span className={styles.badge}>{favoriteProducts.length}</span>
+            )}
+          </Link>
         </li>
         <li className={styles.iconItem}>
           <Link
@@ -99,7 +108,11 @@ export const MobileBurgerMenu: React.FC<Props> = ({ isOpen, handleClose }) => {
               [styles.selected]: location.pathname.includes(RoutesPathes.CART),
             })}
             onClick={handleClose}
-          />
+          >
+            {cartCount > 0 && (
+              <span className={styles.badge}>{cartCount}</span>
+            )}
+          </Link>
         </li>
       </ul>
     </aside>
