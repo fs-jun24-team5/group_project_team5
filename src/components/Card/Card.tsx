@@ -15,9 +15,6 @@ export const Card: React.FC<Props> = ({ product }) => {
   const { favoriteProducts, addToFavorites } = useContext(FavoritesContext);
   const [isHeartActive, setIsHeartActive] = useState(favoriteProducts.some(p => p.id === product.id));
 
-  console.log(product);
-  
-
   const handleFavoriteClick = () => {
     addToFavorites(product);
     setIsHeartActive(!isHeartActive);
@@ -60,7 +57,7 @@ export const Card: React.FC<Props> = ({ product }) => {
       <div className={styles.buttons}>
         <button className={styles.add}>Add to cart</button>
         <button className={styles.heart} onClick={handleFavoriteClick}>
-          {isHeartActive ? <img src={FilledHeart} alt="" /> : <img src={Heart} alt="" />}
+          {isHeartActive ? <img src={FilledHeart} alt="addToFavorites" /> : <img src={Heart} alt="" />}
         </button>
       </div>
     </article>
