@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from '../Card/Card';
-import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
+// import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
 import { ProductType } from '../../api/type/ProductType';
 
 type Props = {
