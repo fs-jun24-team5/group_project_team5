@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import { PerPageOptions } from '../../utils/PerPageOptions';
 import { getPreparedProducts } from '../../utils/getPreparedProducts';
 import { getSearchWith } from '../../utils/searchHelper';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { Pagination } from '../Pagination/Pagination';
 import { SortOptions } from '../../utils/SortOptions';
@@ -10,6 +10,8 @@ import { getProducts } from '../../api/api';
 import styles from './ProductsMain.module.scss';
 import { ProductType } from '../../api/type/ProductType';
 import { Card } from '../Card/Card';
+import { FavoritesContext } from '../../context/FavoritesContext';
+import classNames from 'classnames';
 
 type Props = {
   pageLabel: string;
@@ -25,6 +27,7 @@ export const ProductsMain: React.FC<Props> = ({ pageLabel, productsCategory }) =
   const currentPage = searchParams.get('page') || defaultPage;
   const sortParam = (searchParams.get('sort') as SortOptions) || SortOptions.NEWEST;
   const preparedProducts = getPreparedProducts(products, itemsPerPage, sortParam);
+  const { theme } = useContext(FavoritesContext);
 
   const handlePerPageSelectorChange = (option: PerPageOptions) => {
     if (option === PerPageOptions.ALL) {
@@ -62,7 +65,14 @@ export const ProductsMain: React.FC<Props> = ({ pageLabel, productsCategory }) =
     <>
       <div className={styles.products_main}>
         <div className={styles.category_info}>
-          <h2 className={styles.category_name}>{pageLabel}</h2>
+          <h2
+            className={classNames(styles.category_name, {
+              [styles.dark]: theme === 'dark',
+            })}
+          >
+            {pageLabel}
+          </h2>
+
           <p className={styles.category_models}>{`${products.length} models`}</p>
         </div>
         <Dropdown
@@ -81,9 +91,9 @@ export const ProductsMain: React.FC<Props> = ({ pageLabel, productsCategory }) =
         <div className={styles.product_cards}>
           {preparedProducts.length !== 0 &&
             preparedProducts[+currentPage - 1].map((product) => (
-            <div key={product.id} className={styles.product_card}>
-              <Card product={product} />
-            </div>
+              <div key={product.id} className={styles.product_card}>
+                <Card product={product} />
+              </div>
             ))}
         </div>
       </div>

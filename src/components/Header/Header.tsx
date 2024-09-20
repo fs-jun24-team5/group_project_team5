@@ -1,4 +1,3 @@
-// Header.tsx
 import React, { useContext, useState } from 'react';
 import styles from './Header.module.scss';
 import { Link, useLocation } from 'react-router-dom';
@@ -6,84 +5,99 @@ import { RoutesPathes } from '../../utils/RoutesPathes';
 import { MobileBurgerMenu } from '../MobileBurgerMenu/MobileBurgerMenu';
 import classNames from 'classnames';
 import { FavoritesContext } from '../../context/FavoritesContext';
+import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 
 export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const { favoriteProducts } = useContext(FavoritesContext);
-
-  console.log(favoriteProducts.length);
-  
+  const { favoriteProducts, theme } = useContext(FavoritesContext);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
     <div className={styles.container}>
-      <Link to={RoutesPathes.HOME} className={styles.logo} />
+      <Link
+        to={RoutesPathes.HOME}
+        className={classNames(styles.logo, {
+          [styles.dark]: theme === 'dark',
+        })}
+      />
 
       <ul className={styles.links}>
-      <li>
-        <Link
-          to={RoutesPathes.HOME}
-          className={classNames(styles.link, {
-            [styles.selected]: location.pathname === RoutesPathes.HOME,
-          })}
-        >
-          home
-        </Link>
-      </li>
-      <li>
-        <Link
-          to={RoutesPathes.PHONES}
-          className={classNames(styles.link, {
-            [styles.selected]: location.pathname.includes(RoutesPathes.PHONES),
-          })}
-        >
-          phones
-        </Link>
-      </li>
-      <li>
-        <Link
-          to={RoutesPathes.TABLETS}
-          className={classNames(styles.link, {
-            [styles.selected]: location.pathname.includes(RoutesPathes.TABLETS),
-          })}
-        >
-          tablets
-        </Link>
-      </li>
-      <li>
-        <Link
-          to={RoutesPathes.ACCESSORIES}
-          className={classNames(styles.link, {
-            [styles.selected]: location.pathname.includes(RoutesPathes.ACCESSORIES),
-          })}
-        >
-          accessories
-        </Link>
-      </li>    
-    </ul>
+        <li>
+          <Link
+            to={RoutesPathes.HOME}
+            className={classNames(styles.link, {
+              [styles.selected]: location.pathname === RoutesPathes.HOME,
+              [styles.dark]: theme === 'dark',
+            })}
+          >
+            home
+          </Link>
+        </li>
+        <li>
+          <Link
+            to={RoutesPathes.PHONES}
+            className={classNames(styles.link, {
+              [styles.selected]: location.pathname.includes(RoutesPathes.PHONES),
+              [styles.dark]: theme === 'dark',
+            })}
+          >
+            phones
+          </Link>
+        </li>
+        <li>
+          <Link
+            to={RoutesPathes.TABLETS}
+            className={classNames(styles.link, {
+              [styles.selected]: location.pathname.includes(RoutesPathes.TABLETS),
+              [styles.dark]: theme === 'dark',
+            })}
+          >
+            tablets
+          </Link>
+        </li>
+        <li>
+          <Link
+            to={RoutesPathes.ACCESSORIES}
+            className={classNames(styles.link, {
+              [styles.selected]: location.pathname.includes(RoutesPathes.ACCESSORIES),
+              [styles.dark]: theme === 'dark',
+            })}
+          >
+            accessories
+          </Link>
+        </li>
+      </ul>
 
       <ul className={styles.icons}>
-      <li className={styles.icon}>
-        <Link
-          data-count={favoriteProducts.length > 0 ? favoriteProducts.length : ''}
-          to={RoutesPathes.FAVOURITES}
-          className={classNames(styles.iconLink_heart, {
-            [styles.selected]: location.pathname.includes(RoutesPathes.FAVOURITES),
-          })}
-        />
-      </li>
-      <li className={styles.icon}>
-        <Link
-          to={RoutesPathes.CART}
-          className={classNames(styles.iconLink_bag, {
-            [styles.selected]: location.pathname.includes(RoutesPathes.CART),
-          })}
-        />
-      </li>
+        <ThemeSwitcher />
         <li className={styles.icon}>
-          <button onClick={toggleMenu} className={`${styles.iconLink_burger}`} />
+          <Link
+            data-count={favoriteProducts.length > 0 ? favoriteProducts.length : ''}
+            to={RoutesPathes.FAVOURITES}
+            className={classNames(styles.iconLink_heart, {
+              [styles.selected]: location.pathname.includes(RoutesPathes.FAVOURITES),
+              [styles.dark]: theme === 'dark',
+            })}
+          />
+        </li>
+        <li className={styles.icon}>
+          <Link
+            to={RoutesPathes.CART}
+            className={classNames(styles.iconLink_bag, {
+              [styles.selected]: location.pathname.includes(RoutesPathes.CART),
+              [styles.dark]: theme === 'dark',
+            })}
+          />
+        </li>
+        <li className={styles.icon}>
+          <button
+            onClick={toggleMenu}
+            className={classNames(styles.iconLink_burger, {
+              [styles.dark]: theme === 'dark', 
+            })}
+          />
         </li>
       </ul>
 

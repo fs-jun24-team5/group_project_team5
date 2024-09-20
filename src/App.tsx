@@ -21,20 +21,3 @@ export const App: React.FC = () => {
 
   );
 };
-
-
-
-/* const main = async () => {
-  try {
-    const hotDeals = await getHotDeals();
-    console.log("Hot Deals:", hotDeals);
-    
-    const newModels = await getNewModels();
-    console.log("New Models:", newModels);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-};
-
-
-main(); */

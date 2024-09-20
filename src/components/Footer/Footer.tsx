@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import logo from '../../assets/images/footer_images/Logo.png';
+import darkLogo from '../../assets/icons/GadgetsLogoDarkTheme.svg';
 import backToTopIcon from '../../assets/images/footer_images/Slider-button.png';
 import styles from './Footer.module.scss';
 import { Link } from 'react-router-dom';
 import { RoutesPathes } from '../../utils/RoutesPathes';
+import { FavoritesContext } from '../../context/FavoritesContext';
+import classNames from 'classnames';
 
 export const Footer: React.FC = () => {
+  const { theme } = useContext(FavoritesContext);
   const handleBackToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -15,29 +19,47 @@ export const Footer: React.FC = () => {
       <div className={styles.footer__content}>
         <div className={styles.bottomBar}>
           <a href="#" className={styles.bottomBar__link}>
-            <img className={styles.bottomBar__logo} src={logo} alt="NICE GADGETS logo" />
+            <img
+              className={classNames(styles.bottomBar__logo, {
+                [styles.dark]: theme === 'dark',
+              })}
+              src={theme === 'dark' ? darkLogo : logo}
+              alt="NICE GADGETS logo"
+            />
           </a>
         </div>
 
         <div className={styles.footer__links}>
           <a
             href="https://github.com/fs-jun24-team5/group_project_team5/tree/main"
-            className={styles.footer__links__item}
+            className={classNames(styles.footer__links__item, {
+              [styles.dark]: theme === 'dark',
+            })}
             target="_blank"
             rel="noopener noreferrer"
           >
             GITHUB
           </a>
 
-          <Link to={RoutesPathes.ABOUT} className={styles.footer__links__item}>
+          <Link
+            to={RoutesPathes.ABOUT}
+            className={classNames(styles.footer__links__item, {
+              [styles.dark]: theme === 'dark',
+            })}
+          >
             ABOUT US
           </Link>
 
-          <a href="#" className={styles.footer__links__item}>
+          <a
+            href="#"
+            className={classNames(styles.footer__links__item, {
+              [styles.dark]: theme === 'dark',
+            })}
+          >
             RIGHTS
           </a>
         </div>
-
+        
         <div className={styles.footer__backToTop}>
           <div className={styles.footer__backToTop__title}>Back to top</div>
           <div>

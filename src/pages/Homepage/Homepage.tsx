@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NewPhoneModelsSlider } from '../../components/NewPhoneModelsSlider/NewPhoneModelsSlider';
 import { Carousel } from '../../components/Carousel/Carousel';
 import { Categories } from '../../components/Categories/Categories';
@@ -6,43 +6,48 @@ import { HotPricesSlider } from '../../components/HotPricesSlider/HotPricesSlide
 import { getProducts } from '../../api/api';
 import { getHotDeals, getNewModels } from '../../api/function';
 import { ProductType } from '../../api/type/ProductType';
-//import { CardsList } from '../../components/CardsList/CardsList';
+import { FavoritesContext } from '../../context/FavoritesContext';
+import classNames from 'classnames';
 
 export const HomePage: React.FC = () => {
   const [phones, setPhones] = useState<ProductType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { theme } = useContext(FavoritesContext);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);  
+      setIsLoading(true);
       try {
         const data: ProductType[] = await getProducts();
-        setPhones(data);   
+        setPhones(data);
       } catch (error) {
-        console.error("Error", error);  
+        console.error('Error', error);
       } finally {
-        setIsLoading(false);  
+        setIsLoading(false);
       }
     };
-    
+
     fetchData();
   }, []);
-
-  console.log(phones);
-  
 
   const newPhones = getHotDeals(phones);
   const newModels = getNewModels(phones);
 
   return (
     <main className="main">
-      <h1 className="title">Welcome to Nice Gadgets store!</h1>
+      <h1 className="visuallyHidden">Product Catalog</h1>
 
-      {/*    <CardsList newPhones={newPhones} />  */}
+      <h2
+        className={classNames('title', {
+          dark: theme === 'dark',
+        })}
+      >
+        Welcome to Nice Gadgets store!
+      </h2>
 
       <Carousel />
 
-      <NewPhoneModelsSlider newModels={newModels} isLoading={isLoading} />   
+      <NewPhoneModelsSlider newModels={newModels} isLoading={isLoading} />
 
       <Categories />
 
