@@ -1,21 +1,21 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './CartPage.module.scss';
 import { CartContext } from '../../context/CartContextType';
 
 export const CartPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const cartContext = useContext(CartContext);
 
-  // const cartContext = useContext(CartContext);
-  // if (!cartContext) {
-  //   throw new Error("CartContext must be used within a CartProvider");
-  // }
+  if (!cartContext) {
+    throw new Error("CartContext must be used within a CartProvider");
+  }
 
-  // const { cartItems, increaseQuantity, decreaseQuantity, removeFromCart } = cartContext;
+  const { cartItems, increaseQuantity, decreaseQuantity, removeFromCart } = cartContext;
 
-  // const totalAmount = cartItems.reduce((total: number, item: { product: { price: number }; quantity: number }) => {
-  //   return total + item.product.price * item.quantity;
-  // }, 0);
+  const totalAmount = cartItems.reduce((total: number, item: { product: { price: number }; quantity: number }) => {
+    return total + item.product.price * item.quantity;
+  }, 0);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -28,47 +28,50 @@ export const CartPage: React.FC = () => {
           <h2 className={styles.cart__title}>Cart</h2>
         </div>
         <div className={styles.cart__bottom}>
-          <div className={styles.cart__list}></div>
-          <div className={styles.cart}>
-            <div className={styles.cart__item}>
-              <div className={styles.cart__row}>
-                <button
-                  type="button"
-                  aria-label="Delete item from cart"
-                  className={styles.cart__delete}
-                />
-                <div className={styles.cart__photo}>
-                  <Link to={`./phones`}>
-                    <div className={styles.cart__image}></div>
-                  </Link>
+          <div className={styles.cart__list}>
+            {cartItems.length === 0 ? (
+              <p>Your cart is empty.</p>
+            ) : (
+              cartItems.map(({ product, quantity }) => (
+                <div key={product.id.toString()} className={styles.cart__item}>
+                  <div className={styles.cart__row}>
+                    <button
+                      type="button"
+                      aria-label="Delete item from cart"
+                      className={styles.cart__delete}
+                      onClick={() => removeFromCart(product.id.toString())}
+                    />
+                    <div className={styles.cart__photo}>
+                      <Link to={`./phones`}>
+                        <div className={styles.cart__image} style={{ backgroundImage: `url(${product.image})` }}></div>
+                      </Link>
+                    </div>
+                    <div className={styles.cart__name}>
+                      <Link
+                        to={`./phones`}
+                        className={styles.cart__link}
+                      >
+                        {product.name}
+                      </Link>
+                    </div>
+                  </div>
+                  <div className={styles.cart__priceCount}>
+                    <div className={styles.cart__count}>
+                      <button type="button" className={`${styles.button} ${styles.button__minus}`} onClick={() => decreaseQuantity(product.id.toString())} />
+                      <div className={styles.cart__quantity}>{quantity}</div>
+                      <button type="button" className={`${styles.button} ${styles.button__plus}`} onClick={() => increaseQuantity(product.id.toString())} />
+                    </div>
+                    <div className={styles.cart__price}>${(product.price * quantity).toFixed(2)}</div>
+                  </div>
                 </div>
-                <div className={styles.cart__name}>
-                  <Link
-                    to={`./phones`}
-                    state={{
-                      location,
-                    }}
-                    className={styles.cart__link}
-                  >
-                    Apple iPhone 14 Pro 128GB Silver (MQ023)
-                  </Link>
-                </div>
-              </div>
-              <div className={styles.cart__priceCount}>
-                <div className={styles.cart__count}>
-                  <button type="button" className={`${styles.button} ${styles.button__minus}`} />
-                  <div className={styles.cart__quantity}>1</div>
-                  <button type="button" className={`${styles.button} ${styles.button__plus}`} />
-                </div>
-                <div className={styles.cart__price}>$999</div>
-              </div>
-            </div>
+              ))
+            )}
           </div>
 
           <div className={styles.cart__summary}>
             <div className={styles.cart__priceWrapper}>
-              <div className={styles.cart__summaryPrice}>$999</div>
-              <div className={styles.cart__summaryCount}>Total for 1 item</div>
+              <div className={styles.cart__summaryPrice}>Total: ${totalAmount.toFixed(2)}</div>
+              <div className={styles.cart__summaryCount}>Total for {cartItems.length} item{cartItems.length !== 1 ? 's' : ''}</div>
             </div>
             <div className={styles.cart__divider} />
             <button type="button" className={styles.cart__checkout} onClick={toggleModal}>
@@ -79,7 +82,6 @@ export const CartPage: React.FC = () => {
                 <div className={styles.modal__content}>
                   <h2 className={styles.modal__title}>Do you confirm the checkout?</h2>
                   <div className={styles.modal__tableContainer}>
-                    {' '}
                     <table className={styles.modal__table}>
                       <thead>
                         <tr>
@@ -89,18 +91,20 @@ export const CartPage: React.FC = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>Apple iPhone 14 Pro</td>
-                          <td>1</td>
-                          <td>$999</td>
-                        </tr>
+                        {cartItems.map(({ product, quantity }) => (
+                          <tr key={product.id.toString()}>
+                            <td>{product.name}</td>
+                            <td>{quantity}</td>
+                            <td>${(product.price * quantity).toFixed(2)}</td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>
 
                   <div className={styles.modal__total}>
                     <span>Total Price:</span>
-                    <span>$999</span>
+                    <span>${totalAmount.toFixed(2)}</span>
                   </div>
                   <div className={styles.modal__actions}>
                     <button className={styles.confirm} onClick={toggleModal}>
@@ -117,35 +121,5 @@ export const CartPage: React.FC = () => {
         </div>
       </div>
     </div>
-
-// <div className={styles.cartPage}>
-// <h1>Cart</h1>
-// {cartItems.length === 0 ? (
-//   <p>Your cart is empty.</p>
-// ) : (
-//   <>
-//     <ul className={styles.cartList}>
-//       {cartItems.map(({ product, quantity }) => (
-//         <li key={product.id.toString()} className={styles.cartItem}>
-//           <img src={product.image} alt={product.name} className={styles.itemImage} />
-//           <div className={styles.itemDetails}>
-//             <h2>{product.name}</h2>
-//             <p>${product.price}</p>
-//             <div className={styles.quantityControls}>
-//               <button onClick={() => decreaseQuantity(product.id.toString())}>-</button>
-//               <span>{quantity}</span>
-//               <button onClick={() => increaseQuantity(product.id.toString())}>+</button>
-//             </div>
-//           </div>
-//           <button onClick={() => removeFromCart(product.id.toString())}>Remove</button>
-//         </li>
-//       ))}
-//     </ul>
-//     <div className={styles.totalAmount}>
-//       <h2>Total Amount: ${totalAmount.toFixed(2)}</h2>
-//     </div>
-//   </>
-// )}
-// </div>
   );
 };
