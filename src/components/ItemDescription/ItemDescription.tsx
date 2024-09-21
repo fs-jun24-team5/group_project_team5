@@ -1,9 +1,15 @@
 import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
 import { BackButton } from '../BackButton/BackButton';
 import styles from './ItemDescription.module.scss';
-import React, { useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import Heart from '../../assets/icons/card_icons/heart_icon.svg';
 import FilledHeart from '../../assets/icons/card_icons/filled_heart_icon.svg';
+import { Product } from '../../api/type/ProductCart';
+import { Link, useParams } from 'react-router-dom';
+import { FavoritesContext } from '../../context/FavoritesContext';
+import { RoutesPathes } from '../../utils/RoutesPathes';
+import classNames from 'classnames';
+import { RecommendedItemsSlider } from '../RecommendedItemsSlider/RecommendedItemsSlider';
 
 type Props = {
   phone: ProductTypeExtended;
@@ -13,6 +19,7 @@ type Props = {
   setSelectedColor: (value: string) => void;
   setSelectedButton: (value: string) => void;
   setSelectedImg: (value: string) => void;
+  recommendedPhones: Product[];
 };
 
 export const ItemDescription: React.FC<Props> = ({
@@ -23,8 +30,13 @@ export const ItemDescription: React.FC<Props> = ({
   setSelectedColor,
   setSelectedButton,
   setSelectedImg,
+  recommendedPhones,
 }) => {
   const [isHeartActive, setIsHeartActive] = useState(false);
+  const { phonesId } = useParams<{ phonesId: string }>();
+  const { theme } = useContext(FavoritesContext);
+
+  const linkClassName = phonesId ? styles.pageNameActive : styles.pageName;
 
   const handleColorClick = (color: string) => {
     setSelectedColor(color);
@@ -40,6 +52,25 @@ export const ItemDescription: React.FC<Props> = ({
 
   return (
     <>
+      <div className={styles.route}>
+        <Link
+          to={RoutesPathes.HOME}
+          className={classNames(styles.home, {
+            [styles.dark]: theme === 'dark',
+          })}
+        />
+        <i className={styles.arrow}></i>
+        <Link to={RoutesPathes.PHONES} className={linkClassName}>
+          Phones
+        </Link>
+        {phonesId && (
+          <>
+            <i className={styles.arrow}></i>
+            <p className={styles.pageName}>{phonesId}</p>
+          </>
+        )}
+      </div>
+
       <BackButton />
       <h1 key={phone.id} className={styles.main_text}>
         {phone.name}
@@ -131,10 +162,10 @@ export const ItemDescription: React.FC<Props> = ({
           <h3 className={styles.bigText}>About</h3>
           <div className={styles.separator_text}></div>
           {phone.description.map((desc) => (
-            <>
+            <Fragment key={`${desc.title}-${desc.text}`}>
               <h3 className={styles.mediumText}>{desc.title}</h3>
               <p className={styles.smallText}>{desc.text}</p>
-            </>
+            </Fragment>
           ))}
         </div>
         <div className={styles.techSpecs}>
@@ -180,6 +211,8 @@ export const ItemDescription: React.FC<Props> = ({
           </div>
         </div>
       </div>
+
+      <RecommendedItemsSlider recommendedPhones={recommendedPhones} />
     </>
   );
 };

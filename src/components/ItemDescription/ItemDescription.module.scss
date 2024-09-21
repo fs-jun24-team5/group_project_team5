@@ -488,13 +488,73 @@ $colorSecondaryGrey: #89939A;
 .left_text {
   font-size: 14px;
   line-height: 21px;
-  font-weight: 500;
+  font-weight: 600;
   color: $darkGray;
 }
 
 .right_text {
-  font-size: 14px;
+  font-size: 12px;
   line-height: 21px;
-  font-weight: 500;
+  font-weight: 600;
   color: $primaryColor;
+
+  @include respond-to('tablet') {
+    font-size: 14px;
+  }
+}
+
+.route {
+  display: flex;
+  box-sizing: border-box;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+
+  @include respond-to('tablet') {
+    margin-bottom: 40px;
+  }
+
+  @include respond-to('desktop') {
+    margin-left: 0;
+    grid-column: span 24;
+  }
+}
+
+.home {
+  width: 16px;
+  height: 16px;
+  background-image: url(../../assets/icons/Home.svg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  &.dark {
+    background-image: url('../../assets/icons/Home_darkmode.svg');
+  }
+}
+
+.arrow {
+  width: 16px;
+  height: 16px;
+  background-image: url('../../assets/icons/arrow-right.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.pageName {
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 15px;
+  text-align: left;
+  color: $colorSecondaryGrey;
+}
+
+.pageNameActive {
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 15px;
+  text-align: left;
+  color: #313237; 
 }

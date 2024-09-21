@@ -12,8 +12,8 @@
 
   @include respond-to('tablet') {
     width: 237px;
-   /*  height: auto; */
-  /*   height: 512px; */
+    /*  height: auto; */
+    /*   height: 512px; */
   }
 
   @include respond-to('desktop') {
@@ -41,7 +41,7 @@
   @include respond-to('tablet') {
     width: 173px;
     /*   height: 202px; */
- /*    aspect-ratio: 120%; */
+    /*    aspect-ratio: 120%; */
   }
 
   @include respond-to('desktop') {
@@ -103,9 +103,16 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-top: 8px;
   padding-top: 8px;
   padding-bottom: 8px;
+
+  @include respond-to('on-tablet') {
+    margin-top: 8px;
+  }
+
+  @include respond-to('desktop') {
+    margin-top: 0;
+  }
 }
 
 .screen,
@@ -132,11 +139,15 @@
 .buttons {
   display: flex;
   gap: 8px;
-  margin-top: 16px;
+  margin-top: 10px;
 
-/*   @include respond-to('desktop') {
-    margin: 0;
-  } */
+  @include respond-to('tablet') {
+    margin-top: 16px;
+  }
+
+  @include respond-to('desktop') {
+    margin-top: 12px;
+  }
 }
 
 .add {
@@ -196,9 +207,9 @@
   background-color: #313237;
   color: white;
   border: 1px solid #E2E6E9;
-  padding: 10px 20px;
+  padding: 0;
   cursor: pointer;
-  font-size: 1em;
+  font-size: 14px;
   border-radius: 4px;
   transition: background-color 0.2s, transform 0.1s, color 0.2s;
 
