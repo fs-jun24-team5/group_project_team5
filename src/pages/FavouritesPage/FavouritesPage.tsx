@@ -27,7 +27,14 @@ export const FavouritesPage: React.FC = () => {
 
       <div className={styles.products_main}>
         <div className={styles.category_info}>
-          <h2 className={styles.category_name}>Favourites</h2>
+          <h2
+            className={classNames(styles.category_name, {
+              [styles.dark]: theme === 'dark',
+            })}
+          >
+            Favourites
+          </h2>
+          
           {!!favoriteProducts.length && (
             <p className={styles.category_models}>{`${favoriteProducts.length} models`}</p>
           )}

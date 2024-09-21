@@ -5,22 +5,24 @@ import { ProductsMain } from '../../components/ProductsMain/ProductsMain';
 import { Link } from 'react-router-dom';
 import { RoutesPathes } from '../../utils/RoutesPathes';
 import { useParams } from 'react-router-dom';
-import { getPhones } from '../../api/api';
+import { getPhones, getProducts } from '../../api/api';
 import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
 import { ItemDescription } from '../../components/ItemDescription/ItemDescription';
 import { Loader } from '../../components/Loader';
 import { ProductCategories } from '../../utils/ProductCategories';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import classNames from 'classnames';
+import { ProductType } from '../../api/type/ProductType';
+import { getRecommendedPhones } from '../../api/function';
 
 export const PhonesPage: React.FC = () => {
   const { theme } = useContext(FavoritesContext);
-
   const { phonesId } = useParams<{ phonesId: string }>();
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [selectedButton, setSelectedButton] = useState<string>('');
   const [selectedImg, setSelectedImg] = useState<string>('');
   const [phone, setPhone1] = useState<ProductTypeExtended[]>([]);
+  const [phones, setPhones] = useState<ProductType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const linkClassName = phonesId ? styles.pageNameActive : styles.pageName;
@@ -43,6 +45,24 @@ export const PhonesPage: React.FC = () => {
       .finally(() => setIsLoading(false));
   }, [phonesId]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const data: ProductType[] = await getProducts();
+        setPhones(data);
+      } catch (error) {
+        console.error('Error', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const recommendedPhones = getRecommendedPhones(phones);
+
   return (
     <>
       {phonesId ? (
@@ -62,6 +82,7 @@ export const PhonesPage: React.FC = () => {
                       setSelectedColor={setSelectedColor}
                       setSelectedButton={setSelectedButton}
                       setSelectedImg={setSelectedImg}
+                      recommendedPhones={recommendedPhones}
                     />
                   </div>
                 </main>
