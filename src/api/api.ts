@@ -1,7 +1,7 @@
 import { ProductType } from "./type/ProductType";
 import { ProductTypeExtended } from "./type/ProductTypeExtended";
 
-const BASE_URL = 'https://fs-jun24-team5.github.io/group_project_team5/api';
+const BASE_URL = 'public/api';
 
 function wait(delay: number): Promise<void> {
   return new Promise(resolve => {
