@@ -13,7 +13,6 @@ export const useLocalStorage = <T,>(
       return initialValue;
     }
   });
-  console.log(storedValue);
 
   useEffect(() => {
     try {

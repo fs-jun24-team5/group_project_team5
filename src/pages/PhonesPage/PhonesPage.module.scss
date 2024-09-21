@@ -82,6 +82,10 @@ $colorSecondaryGrey: #89939A;
   justify-content: center;
   margin-top: 40px;
 
+  @include respond-to('tablet') {
+    margin-top: 24px;
+  }
+
   @include onMobile{
     margin-top: 24px;
   }
