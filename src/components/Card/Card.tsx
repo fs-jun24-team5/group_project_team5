@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Heart from '../../assets/icons/card_icons/heart_icon.svg';
 import FilledHeart from '../../assets/icons/card_icons/filled_heart_icon.svg';
 import styles from './Card.module.scss';
@@ -14,42 +14,44 @@ type Props = {
 };
 
 export const Card: React.FC<Props> = ({ product }) => {
-  const { favoriteProducts, addToFavorites } = useContext(FavoritesContext);
+  const { favoriteProducts, addToFavorites, setFavoriteProducts} = useContext(FavoritesContext);
   const { cartItems, addToCart, removeFromCart } = useCart();
-  const [isHeartActive, setIsHeartActive] = useState(favoriteProducts.some((p) => p.id === product.id));
+  const [isHeartActive, setIsHeartActive] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
 
-  useEffect(() => {
-    const storedAddedState = localStorage.getItem(`added-${product.id}`);
-    if (storedAddedState) {
-      setIsAdded(JSON.parse(storedAddedState));
-    }
 
-    const isProductInCart = cartItems.some(item => item.product.id === product.id);
-    setIsAdded(isProductInCart);
-  }, [cartItems, product.id]);
+  useEffect(() => {
+    setIsHeartActive(favoriteProducts.some(p => p.name === product.name));
+    setIsAdded(cartItems.some(item => item.product.name === product.name));
+  }, [favoriteProducts, cartItems, product.name]);
 
   const handleFavoriteClick = () => {
-    addToFavorites(product);
+    if (isHeartActive) {
+      setFavoriteProducts(prevFavorites =>
+        prevFavorites.filter(p => p.name !== product.name)
+      );
+    } else {
+      addToFavorites(product);
+    }
     setIsHeartActive(!isHeartActive);
   };
-
+  
   const handleAddToCart = () => {
-    if (isAdded) {
-      removeFromCart(product.id.toString());
+    const existingItem = cartItems.find(item => item.product.name === product.name);
+
+    if (existingItem) {
+      removeFromCart(existingItem.product.id.toString());
       setIsAdded(false);
-      localStorage.removeItem(`added-${product.id}`);
     } else {
       addToCart(product);
       setIsAdded(true);
-      localStorage.setItem(`added-${product.id}`, JSON.stringify(true));
     }
   };
 
   return (
     <article className={styles.card}>
       <Link to={`${RoutesPathes.PHONES}/${product.itemId}`}>
-        <img src={product.image} alt="iphone" className={styles.image} />
+        <img src={product.image} alt="Phone" className={styles.image} />
       </Link>
 
       <Link to={`${RoutesPathes.PHONES}/${product.itemId}`} className={styles.link}>
@@ -89,9 +91,9 @@ export const Card: React.FC<Props> = ({ product }) => {
         </button>
         <button className={styles.heart} onClick={handleFavoriteClick}>
           {isHeartActive ? (
-            <img src={FilledHeart} alt="addToFavorites" />
+            <img src={FilledHeart} alt="Added to favorites" />
           ) : (
-            <img src={Heart} alt="" />
+            <img src={Heart} alt="Add to favorites" />
           )}
         </button>
       </div>

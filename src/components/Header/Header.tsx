@@ -13,7 +13,10 @@ export const Header: React.FC = () => {
   const location = useLocation();
   const { favoriteProducts, theme } = useContext(FavoritesContext);
   const cartContext = useContext(CartContext);
-  const cartCount = cartContext ? cartContext.cartItems.length : 0;
+  const cartCount = cartContext 
+  ? cartContext.cartItems.reduce((total, item) => total + item.quantity, 0) 
+  : 0;
+
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -99,7 +102,7 @@ export const Header: React.FC = () => {
           <button
             onClick={toggleMenu}
             className={classNames(styles.iconLink_burger, {
-              [styles.dark]: theme === 'dark', 
+              [styles.dark]: theme === 'dark',
             })}
           />
         </li>
