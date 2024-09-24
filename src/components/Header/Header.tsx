@@ -7,6 +7,8 @@ import classNames from 'classnames';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 import { CartContext } from '../../context/CartContextType';
+import { LangSelector } from '../LangSelector/LangSelector';
+import { useTranslation } from 'react-i18next';
 
 export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,6 +19,8 @@ export const Header: React.FC = () => {
   ? cartContext.cartItems.reduce((total, item) => total + item.quantity, 0) 
   : 0;
 
+
+  const { t } = useTranslation();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -38,7 +42,7 @@ export const Header: React.FC = () => {
               [styles.dark]: theme === 'dark',
             })}
           >
-            home
+            {t('home')}
           </Link>
         </li>
         <li>
@@ -49,7 +53,7 @@ export const Header: React.FC = () => {
               [styles.dark]: theme === 'dark',
             })}
           >
-            phones
+            {t('phones')}
           </Link>
         </li>
         <li>
@@ -60,7 +64,7 @@ export const Header: React.FC = () => {
               [styles.dark]: theme === 'dark',
             })}
           >
-            tablets
+            {t('tablets')}
           </Link>
         </li>
         <li>
@@ -71,13 +75,15 @@ export const Header: React.FC = () => {
               [styles.dark]: theme === 'dark',
             })}
           >
-            accessories
+            {t('accessories')}
           </Link>
         </li>
       </ul>
 
       <ul className={styles.icons}>
         <ThemeSwitcher />
+        <LangSelector />
+
         <li className={styles.icon}>
           <Link
             data-count={favoriteProducts.length > 0 ? favoriteProducts.length : ''}

@@ -13,6 +13,7 @@ import { getTablets, getProducts } from '../../api/api';
 import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
 import { ItemDescription } from '../../components/ItemDescription/ItemDescription';
 import { Loader } from '../../components/Loader';
+import { useTranslation } from 'react-i18next';
 
 export const TabletsPage: React.FC = () => {
   const { theme } = useContext(FavoritesContext);
@@ -63,6 +64,7 @@ export const TabletsPage: React.FC = () => {
   }, []);
 
   const recommendedAccessories = getRecommendedPhones(products);
+  const { t } = useTranslation();
 
   return (
     <>
@@ -103,7 +105,7 @@ export const TabletsPage: React.FC = () => {
 
             <i className={styles.arrow}></i>
             <Link to={RoutesPathes.TABLETS} className={linkClassName}>
-              Tablets
+            {t('tablets')}
             </Link>
           </div>
           <ProductsMain pageLabel="Tablets" productsCategory={ProductCategories.TABLETS} />

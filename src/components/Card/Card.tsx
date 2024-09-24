@@ -6,8 +6,9 @@ import { Product } from '../../api/type/ProductCart';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import { useCart } from '../../hooks/useCart';
 import { Link, useLocation } from 'react-router-dom';
-import classNames from 'classnames';
 import { RoutesPathes } from '../../utils/RoutesPathes';
+import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   product: Product;
@@ -24,6 +25,7 @@ export const Card: React.FC<Props> = ({ product }) => {
 
   const linkToItem = root ? `/${root}/${product.itemId}` : `${RoutesPathes.PHONES}/${product.itemId}`;
 
+  const { t } = useTranslation();
 
   useEffect(() => {
     setIsHeartActive(favoriteProducts.some(p => p.name === product.name));
@@ -72,17 +74,17 @@ export const Card: React.FC<Props> = ({ product }) => {
 
       <div className={styles.specs}>
         <div className={styles.screen}>
-          <p className={styles.left}>Screen</p>
+          <p className={styles.left}>{t('screen')}</p>
           <p className={styles.right}>{product.screen}</p>
         </div>
 
         <div className={styles.memory}>
-          <p className={styles.left}>Capacity</p>
+          <p className={styles.left}>{t('capacity')}</p>
           <p className={styles.right}>{product.capacity}</p>
         </div>
 
         <div className={styles.ram}>
-          <p className={styles.left}>RAM</p>
+          <p className={styles.left}>{t('ram')}</p>
           <p className={styles.right}>{product.ram}</p>
         </div>
       </div>
@@ -92,7 +94,7 @@ export const Card: React.FC<Props> = ({ product }) => {
           className={classNames(styles.add, { [styles.added]: isAdded })}
           onClick={handleAddToCart}
         >
-          {isAdded ? 'Added!' : 'Add to cart'}
+          {isAdded ? t('added') : t('addToCart')}
         </button>
         <button className={styles.heart} onClick={handleFavoriteClick}>
           {isHeartActive ? (

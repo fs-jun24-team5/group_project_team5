@@ -13,9 +13,10 @@ import { getAccessories, getProducts } from '../../api/api';
 import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
 import { ItemDescription } from '../../components/ItemDescription/ItemDescription';
 import { Loader } from '../../components/Loader';
+import { useTranslation } from 'react-i18next';
 
 export const AccessoriesPage: React.FC = () => {
-  <h1>test</h1>
+  <h1>test</h1>;
   const { theme } = useContext(FavoritesContext);
   const { accessoriesId } = useParams<{ accessoriesId: string }>();
   const [selectedColor, setSelectedColor] = useState<string>('');
@@ -31,7 +32,9 @@ export const AccessoriesPage: React.FC = () => {
     setIsLoading(true);
     getAccessories()
       .then((productsFromServer) => {
-        const neededProduct = productsFromServer.filter((accessory) => accessory.id === accessoriesId);
+        const neededProduct = productsFromServer.filter(
+          (accessory) => accessory.id === accessoriesId,
+        );
         neededProduct.map((accessory) => {
           const name = accessory.color;
           setSelectedColor(name);
@@ -62,6 +65,7 @@ export const AccessoriesPage: React.FC = () => {
   }, []);
 
   const recommendedAccessories = getRecommendedPhones(products);
+  const { t } = useTranslation();
 
   return (
     <>
@@ -102,7 +106,7 @@ export const AccessoriesPage: React.FC = () => {
 
             <i className={styles.arrow}></i>
             <Link to={RoutesPathes.ACCESSORIES} className={linkClassName}>
-              Accessories
+              {t('accessories')}
             </Link>
             {accessoriesId && (
               <>

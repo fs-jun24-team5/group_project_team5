@@ -97,13 +97,17 @@ $secondary: #89939a;
   max-width: 1200px;
   padding-inline: 16px;
   margin: auto;
+  margin-top: 24px;
+
 
   @include onTablet {
     padding-inline: 24px;
+    margin-top: 40px;
   }
 
   @include onDesktop {
     padding-inline: 32px;
+    margin-top: 40px;
   }
 }
 
@@ -124,15 +128,21 @@ $secondary: #89939a;
     letter-spacing: -0.01em;
     color: $primary;
     margin-bottom: 32px;
-    margin-top: 32px;
+    margin-top: 24px;
+
+    &.dark {
+      color: white;
+    }
 
     @include onTablet {
       grid-column: span 12;
+      margin-top: 16px;
     }
 
     @include onDesktop {
       grid-column: span 24;
       font-size: 48px;
+      margin-top: 16px;
     }
   }
 
@@ -333,6 +343,10 @@ $secondary: #89939a;
     line-height: 41px;
     letter-spacing: -0.01em;
     text-align: center;
+
+    &.dark {
+      color: white;
+    }
   }
 
   &__priceWrapper {

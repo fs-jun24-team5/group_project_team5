@@ -7,9 +7,11 @@ import { Link } from 'react-router-dom';
 import { RoutesPathes } from '../../utils/RoutesPathes';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 export const Footer: React.FC = () => {
   const { theme } = useContext(FavoritesContext);
+  const { t } = useTranslation();
   const handleBackToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -38,7 +40,7 @@ export const Footer: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            GITHUB
+            {t('github')}
           </a>
 
           <Link
@@ -47,7 +49,7 @@ export const Footer: React.FC = () => {
               [styles.dark]: theme === 'dark',
             })}
           >
-            ABOUT US
+            {t('aboutUs')}
           </Link>
 
           <a
@@ -56,12 +58,12 @@ export const Footer: React.FC = () => {
               [styles.dark]: theme === 'dark',
             })}
           >
-            RIGHTS
+            {t('rights')}
           </a>
         </div>
-        
+
         <div className={styles.footer__backToTop}>
-          <div className={styles.footer__backToTop__title}>Back to top</div>
+          <div className={styles.footer__backToTop__title}>{t('toTop')}</div>
           <div>
             <button onClick={handleBackToTop} className={styles.footer__backToTop__button}>
               <img
