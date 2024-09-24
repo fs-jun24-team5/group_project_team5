@@ -8,6 +8,7 @@ import { ProductType } from '../../api/type/ProductType';
 import { Loader } from '../Loader';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   newModels: ProductType[];
@@ -24,6 +25,7 @@ export const NewPhoneModelsSlider: React.FC<Props> = ({ newModels, isLoading }) 
   });
   const sliderRef = useRef<Slider>(null);
   const { theme } = useContext(FavoritesContext);
+  const { t } = useTranslation();
 
   const updateSliderSettings = () => {
     const windowWidth = window.innerWidth;
@@ -76,7 +78,7 @@ export const NewPhoneModelsSlider: React.FC<Props> = ({ newModels, isLoading }) 
             [styles.dark]: theme === 'dark',
           })}
         >
-          Brand new models
+          {t('newModels')}
         </h2>
         <div className={styles.newPhoneModels__buttonsWrapper}>
           <button

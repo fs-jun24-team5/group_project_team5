@@ -39,6 +39,10 @@ $colorSecondaryGrey: #89939A;
   color: $primaryColor;
   margin-top: 16px;
 
+  &.dark {
+    color: white;
+  }
+
   @include onMobile {
     font-size: 22px;
   }
@@ -292,6 +296,10 @@ $colorSecondaryGrey: #89939A;
   color: $primaryColor;
   margin: 0px;
   font-weight: 800;
+
+  &.dark {
+    color: white;
+  }
 }
 
 .priceDiscount {
@@ -385,6 +393,10 @@ $colorSecondaryGrey: #89939A;
   line-height: 15.34px;
   font-weight: 600;
   color: $primaryColor;
+
+  &.dark {
+    color: white;
+  }
 }
 
 //TEXT SECTION
@@ -428,6 +440,10 @@ $colorSecondaryGrey: #89939A;
   font-size: 22px;
   color: $primaryColor;
 
+  &.dark {
+    color: white;
+  }
+
   @include onMobile {
     font-size: 20px;
   }
@@ -438,6 +454,10 @@ $colorSecondaryGrey: #89939A;
   font-size: 20px;
   color: $primaryColor;
   margin-top: 32px;
+
+  &.dark {
+    color: white;
+  }
 
   @include onMobile {
     font-size: 16px;
@@ -498,6 +518,10 @@ $colorSecondaryGrey: #89939A;
   font-weight: 600;
   color: $primaryColor;
 
+  &.dark {
+    color: white;
+  }
+
   @include respond-to('tablet') {
     font-size: 14px;
   }
@@ -548,6 +572,10 @@ $colorSecondaryGrey: #89939A;
   line-height: 15px;
   text-align: left;
   color: $colorSecondaryGrey;
+
+  &.dark {
+    color: white;
+  }
 }
 
 .pageNameActive {
@@ -557,4 +585,8 @@ $colorSecondaryGrey: #89939A;
   line-height: 15px;
   text-align: left;
   color: #313237; 
+
+  &.dark {
+    color: white;
+  }
 }

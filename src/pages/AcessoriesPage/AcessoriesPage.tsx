@@ -6,9 +6,11 @@ import { RoutesPathes } from '../../utils/RoutesPathes';
 import { ProductCategories } from '../../utils/ProductCategories';
 import classNames from 'classnames';
 import { FavoritesContext } from '../../context/FavoritesContext';
+import { useTranslation } from 'react-i18next';
 
 export const AccessoriesPage: React.FC = () => {
   const { theme } = useContext(FavoritesContext);
+  const { t } = useTranslation();
 
   return (
     <div className={styles.pagesContainer}>
@@ -22,7 +24,7 @@ export const AccessoriesPage: React.FC = () => {
 
         <i className={styles.arrow}></i>
         <Link to={RoutesPathes.PHONES} className={styles.pageName}>
-          Accessories
+          {t('accessories')}
         </Link>
       </div>
       <ProductsMain pageLabel="Accessories" productsCategory={ProductCategories.ACCESSORIES} />

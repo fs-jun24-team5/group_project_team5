@@ -8,6 +8,7 @@ import { useCart } from '../../hooks/useCart';
 import { Link } from 'react-router-dom';
 import { RoutesPathes } from '../../utils/RoutesPathes';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   product: Product;
@@ -16,8 +17,11 @@ type Props = {
 export const Card: React.FC<Props> = ({ product }) => {
   const { favoriteProducts, addToFavorites } = useContext(FavoritesContext);
   const { cartItems, addToCart, removeFromCart } = useCart();
-  const [isHeartActive, setIsHeartActive] = useState(favoriteProducts.some((p) => p.id === product.id));
+  const [isHeartActive, setIsHeartActive] = useState(
+    favoriteProducts.some((p) => p.id === product.id),
+  );
   const [isAdded, setIsAdded] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const storedAddedState = localStorage.getItem(`added-${product.id}`);
@@ -25,7 +29,7 @@ export const Card: React.FC<Props> = ({ product }) => {
       setIsAdded(JSON.parse(storedAddedState));
     }
 
-    const isProductInCart = cartItems.some(item => item.product.id === product.id);
+    const isProductInCart = cartItems.some((item) => item.product.id === product.id);
     setIsAdded(isProductInCart);
   }, [cartItems, product.id]);
 
@@ -65,17 +69,17 @@ export const Card: React.FC<Props> = ({ product }) => {
 
       <div className={styles.specs}>
         <div className={styles.screen}>
-          <p className={styles.left}>Screen</p>
+          <p className={styles.left}>{t('screen')}</p>
           <p className={styles.right}>{product.screen}</p>
         </div>
 
         <div className={styles.memory}>
-          <p className={styles.left}>Capacity</p>
+          <p className={styles.left}>{t('capacity')}</p>
           <p className={styles.right}>{product.capacity}</p>
         </div>
 
         <div className={styles.ram}>
-          <p className={styles.left}>RAM</p>
+          <p className={styles.left}>{t('ram')}</p>
           <p className={styles.right}>{product.ram}</p>
         </div>
       </div>
@@ -85,7 +89,7 @@ export const Card: React.FC<Props> = ({ product }) => {
           className={classNames(styles.add, { [styles.added]: isAdded })}
           onClick={handleAddToCart}
         >
-          {isAdded ? 'Added!' : 'Add to cart'}
+          {isAdded ? t('added') : t('addToCart')}
         </button>
         <button className={styles.heart} onClick={handleFavoriteClick}>
           {isHeartActive ? (

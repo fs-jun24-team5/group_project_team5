@@ -2,6 +2,7 @@
 import { useRef, useState } from 'react';
 import styles from './Dropdown.module.scss';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   label: string;
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export const Dropdown = ({ label, options, activeOption, onChange }: Props) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string>(activeOption);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -30,7 +32,9 @@ export const Dropdown = ({ label, options, activeOption, onChange }: Props) => {
       setIsOpen(false);
     }
   };
-
+  
+  console.log(selectedItem);
+  
   return (
     <div className={styles.dropdown} ref={dropdownRef} tabIndex={0} onBlur={handleOnBlur}>
       <div className={styles.dropdownLabel}>{label}</div>
@@ -38,7 +42,7 @@ export const Dropdown = ({ label, options, activeOption, onChange }: Props) => {
         className={classNames(styles.dropdownMain, { [styles.dropdownActive]: isOpen })}
         onClick={handleToggle}
       >
-        <div>{selectedItem ? selectedItem : 'Default'}</div>
+        <div>{t(selectedItem) ? t(selectedItem) : 'Default'}</div>
         <div className={classNames(styles.dropdownIcon, { [styles.activeIcon]: isOpen })}></div>
       </div>
       {isOpen && (
@@ -51,7 +55,7 @@ export const Dropdown = ({ label, options, activeOption, onChange }: Props) => {
               })}
               onClick={() => handleSelect(item)}
             >
-              {item}
+              {t(item)}
             </li>
           ))}
         </ul>
