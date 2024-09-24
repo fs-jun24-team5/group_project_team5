@@ -1,4 +1,5 @@
 @import '../../helpers/mixins';
+@import '../../mixins/mixins.scss';
 $colorSecondaryGrey: #89939A;
 
 .pagesContainer {
@@ -59,4 +60,34 @@ $colorSecondaryGrey: #89939A;
   line-height: 15px;
   text-align: left;
   color: $colorSecondaryGrey;
+}
+
+
+.main {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+
+  @include respond-to('tablet') {
+    margin-top: 24px;
+  }
+
+  @include onMobile{
+    margin-top: 24px;
+  }
+}
+
+.main__content {
+  width: 1138px;
+  padding: 0 32px;
+
+  @include onTablet {
+    width: 592px;
+    padding: 0 24px;
+  }
+  
+  @include onMobile {
+    width: 288px;
+    padding: 0 16px;
+  }
 }

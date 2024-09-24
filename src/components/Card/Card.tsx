@@ -6,7 +6,6 @@ import { Product } from '../../api/type/ProductCart';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import { useCart } from '../../hooks/useCart';
 import { Link } from 'react-router-dom';
-import { RoutesPathes } from '../../utils/RoutesPathes';
 import classNames from 'classnames';
 
 type Props = {
@@ -16,7 +15,9 @@ type Props = {
 export const Card: React.FC<Props> = ({ product }) => {
   const { favoriteProducts, addToFavorites } = useContext(FavoritesContext);
   const { cartItems, addToCart, removeFromCart } = useCart();
-  const [isHeartActive, setIsHeartActive] = useState(favoriteProducts.some((p) => p.id === product.id));
+  const [isHeartActive, setIsHeartActive] = useState(
+    favoriteProducts.some((p) => p.id === product.id),
+  );
   const [isAdded, setIsAdded] = useState(false);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export const Card: React.FC<Props> = ({ product }) => {
       setIsAdded(JSON.parse(storedAddedState));
     }
 
-    const isProductInCart = cartItems.some(item => item.product.id === product.id);
+    const isProductInCart = cartItems.some((item) => item.product.id === product.id);
     setIsAdded(isProductInCart);
   }, [cartItems, product.id]);
 
@@ -48,11 +49,11 @@ export const Card: React.FC<Props> = ({ product }) => {
 
   return (
     <article className={styles.card}>
-      <Link to={`${RoutesPathes.PHONES}/${product.itemId}`}>
-        <img src={product.image} alt="iphone" className={styles.image} />
+      <Link to={`/${product.category}/${product.itemId}`}>
+        <img src={product.image} className={styles.image} />
       </Link>
 
-      <Link to={`${RoutesPathes.PHONES}/${product.itemId}`} className={styles.link}>
+      <Link to={`/${product.category}/${product.itemId}`} className={styles.link}>
         <h3 className={styles.text}>{product.name}</h3>
       </Link>
 
