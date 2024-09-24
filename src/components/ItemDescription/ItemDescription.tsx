@@ -5,12 +5,13 @@ import React, { Fragment, useContext, useEffect, useState } from 'react';
 import Heart from '../../assets/icons/card_icons/heart_icon.svg';
 import FilledHeart from '../../assets/icons/card_icons/filled_heart_icon.svg';
 import { Product } from '../../api/type/ProductCart';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import { RoutesPathes } from '../../utils/RoutesPathes';
 import classNames from 'classnames';
 import { RecommendedItemsSlider } from '../RecommendedItemsSlider/RecommendedItemsSlider';
 import { CartContext } from '../../context/CartContextType';
+import { COLOR_PALLETE } from '../../utils/Colors';
 
 type Props = {
   phone: ProductTypeExtended;
@@ -109,19 +110,37 @@ export const ItemDescription: React.FC<Props> = ({
     }
   };
   
+  const { theme } = useContext(FavoritesContext);
+  const location = useLocation();
+
+  const root = location.pathname.split('/')[1];
+
+  const linkClassName = phonesId ? styles.pageNameActive : styles.pageName;
+
+  const handleColorClick = (color: string) => {
+    setSelectedColor(color);
+  };
+
+  const handleButtonClick = (button: string) => {
+    setSelectedButton(button);
+  };
+
+  const handleImgClick = (img: string) => {
+    setSelectedImg(img);
+  };
 
   return (
     <>
       <div className={styles.route}>
         <Link to={RoutesPathes.HOME} className={classNames(styles.home)} />
         <i className={styles.arrow}></i>
-        <Link to={RoutesPathes.PHONES} className={styles.linkClassName}>
+        <Link to={RoutesPathes.PHONES} className={linkClassName}>
           Phones
         </Link>
         {phonesId && (
           <>
             <i className={styles.arrow}></i>
-            <p className={styles.pageName}>{phonesId}</p>
+            <p className={styles.pageName}>{phone.name}</p>
           </>
         )}
       </div>
@@ -133,16 +152,16 @@ export const ItemDescription: React.FC<Props> = ({
       <div className={styles.container}>
         <div className={styles.imgBlock}>
           <div className={styles.mainPicture}>
-            <img className={styles.mainPicture_img} src={selectedImg} alt="Phone" />
+            <img className={styles.mainPicture_img} src={selectedImg} alt={phone.id} />
           </div>
           <div className={styles.miniPictures}>
             {phone.images.map((img) => (
               <div
-                onClick={() => setSelectedImg(img)}
+                onClick={() => handleImgClick(img)}
                 key={img}
                 className={selectedImg === img ? styles.imgContainer_active : styles.imgContainer}
               >
-                <img className={styles.miniPicture} src={img} alt="Phone" />
+                <img className={styles.miniPicture} src={img} alt={phone.id} />
               </div>
             ))}
           </div>
@@ -154,12 +173,16 @@ export const ItemDescription: React.FC<Props> = ({
           </div>
           <div className={styles.chooseColor}>
             {phone.colorsAvailable.map((color) => (
-              <div
-                onClick={() => setSelectedColor(color)}
-                style={{ backgroundColor: color }}
+              <Link
                 key={color}
-                className={selectedColor === color ? styles.colorPick_active : styles.colorPick}
-              ></div>
+                to={`/${root}/${phone.namespaceId}-${selectedButton.toLocaleLowerCase()}-${color}`}
+              >
+                <div
+                  onClick={() => handleColorClick(color)}
+                  style={{ backgroundColor: COLOR_PALLETE[color] }}
+                  className={selectedColor === color ? styles.colorPick_active : styles.colorPick}
+                ></div>
+              </Link>
             ))}
           </div>
           <div className={styles.separator}></div>
@@ -167,13 +190,19 @@ export const ItemDescription: React.FC<Props> = ({
             <h3 className={styles.text}>Select capacity</h3>
             <div className={styles.chooseStorage}>
               {phone.capacityAvailable.map((capacity) => (
-                <button
+                <Link
                   key={capacity}
-                  onClick={() => setSelectedButton(capacity)}
-                  className={selectedButton === capacity ? styles.storageActive : styles.storageDefault}
+                  to={`/${root}/${phone.namespaceId}-${capacity.toLocaleLowerCase()}-${selectedColor}`}
                 >
-                  {capacity}
-                </button>
+                  <button
+                    onClick={() => handleButtonClick(capacity)}
+                    className={
+                      selectedButton === capacity ? styles.storageActive : styles.storageDefault
+                    }
+                  >
+                    {capacity}
+                  </button>
+                </Link>
               ))}
             </div>
           </div>
