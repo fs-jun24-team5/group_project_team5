@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import { FavoritesContext } from '../../context/FavoritesContext';
 
 export const AccessoriesPage: React.FC = () => {
+  <h1>test</h1>
   const { theme } = useContext(FavoritesContext);
 
   return (

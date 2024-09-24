@@ -224,6 +224,14 @@ $colorSecondaryGrey: #89939A;
   outline: 1px solid black;
 }
 
+.linkClassName{
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 15px;
+  color: $colorSecondaryGrey
+}
+
 .colorPick {
   background-color: #fcdbc1;
   width: 30px;
@@ -557,4 +565,29 @@ $colorSecondaryGrey: #89939A;
   line-height: 15px;
   text-align: left;
   color: #313237; 
+}
+
+.add {
+  background-color: #313237;
+  color: white;
+  border: 1px solid #E2E6E9;
+  padding: 0;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background-color 0.2s, transform 0.1s, color 0.2s;
+
+  &:hover {
+    background-color: #89939A;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &.added {
+    background-color: white;
+    color: #27AE60;
+    transform: scale(1.05);
+  }
 }
