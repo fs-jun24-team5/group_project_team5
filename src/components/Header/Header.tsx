@@ -15,7 +15,11 @@ export const Header: React.FC = () => {
   const location = useLocation();
   const { favoriteProducts, theme } = useContext(FavoritesContext);
   const cartContext = useContext(CartContext);
-  const cartCount = cartContext ? cartContext.cartItems.length : 0;
+  const cartCount = cartContext 
+  ? cartContext.cartItems.reduce((total, item) => total + item.quantity, 0) 
+  : 0;
+
+
   const { t } = useTranslation();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);

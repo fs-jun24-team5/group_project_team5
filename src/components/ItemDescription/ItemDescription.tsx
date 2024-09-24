@@ -1,15 +1,17 @@
 import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
 import { BackButton } from '../BackButton/BackButton';
 import styles from './ItemDescription.module.scss';
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import Heart from '../../assets/icons/card_icons/heart_icon.svg';
 import FilledHeart from '../../assets/icons/card_icons/filled_heart_icon.svg';
 import { Product } from '../../api/type/ProductCart';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import { RoutesPathes } from '../../utils/RoutesPathes';
 import classNames from 'classnames';
 import { RecommendedItemsSlider } from '../RecommendedItemsSlider/RecommendedItemsSlider';
+import { CartContext } from '../../context/CartContextType';
+import { COLOR_PALLETE } from '../../utils/Colors';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
@@ -33,9 +35,86 @@ export const ItemDescription: React.FC<Props> = ({
   setSelectedImg,
   recommendedPhones,
 }) => {
+  const favoritesContext = useContext(FavoritesContext);
+  const cartContext = useContext(CartContext);
+
+  if (!favoritesContext || !cartContext) {
+    throw new Error('Contexts are not provided');
+  }
+
+  const { addToFavorites, favoriteProducts } = favoritesContext;
+  const { addToCart, cartItems, removeFromCart } = cartContext; 
+
   const [isHeartActive, setIsHeartActive] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
+
   const { phonesId } = useParams<{ phonesId: string }>();
+
+
+  useEffect(() => {
+    const heartState = favoriteProducts.some(p => p.name === phone.name);
+    setIsHeartActive(heartState);
+
+    const isProductInCart = cartItems.some(item => item.product.name === phone.name);
+    setIsAdded(isProductInCart);
+  }, [favoriteProducts, phone.name, cartItems]);
+
+  const handleFavoriteClick = () => {
+    const productToAdd: Product = {
+      id: phone.id,
+      category: phone.category,
+      name: phone.name,
+      fullPrice: phone.priceRegular,
+      price: phone.priceDiscount,
+      screen: phone.screen,
+      capacity: phone.capacity,
+      color: selectedColor,
+      ram: phone.ram,
+      image: selectedImg,
+    };
+  
+    const isFavorite = favoriteProducts.some(p => p.name === phone.name);
+  
+    if (isFavorite) {
+      favoritesContext.setFavoriteProducts(prevFavorites =>
+        prevFavorites.filter(p => p.name !== phone.name)
+      );
+    } else {
+      addToFavorites(productToAdd);
+    }
+    
+    setIsHeartActive(!isHeartActive);
+  };
+  
+  const handleAddToCart = () => {
+    const productToAdd: Product = {
+      id: phone.id,
+      category: phone.category,
+      name: phone.name,
+      fullPrice: phone.priceRegular,
+      price: phone.priceDiscount,
+      screen: phone.screen,
+      capacity: phone.capacity,
+      color: selectedColor,
+      ram: phone.ram,
+      image: selectedImg,
+    };
+  
+    const existingItem = cartItems.find(item => item.product.name === phone.name);
+  
+    if (existingItem) {
+      removeFromCart(existingItem.product.id.toString());
+      setIsAdded(false);
+    } else {
+      addToCart(productToAdd);
+      setIsAdded(true);
+    }
+  };
+  
   const { theme } = useContext(FavoritesContext);
+  const location = useLocation();
+
+  const root = location.pathname.split('/')[1];
   const { t } = useTranslation();  
 
   const linkClassName = classNames(styles.pageName, {
@@ -58,12 +137,7 @@ export const ItemDescription: React.FC<Props> = ({
   return (
     <>
       <div className={styles.route}>
-        <Link
-          to={RoutesPathes.HOME}
-          className={classNames(styles.home, {
-            [styles.dark]: theme === 'dark',
-          })}
-        />
+        <Link to={RoutesPathes.HOME} className={classNames(styles.home)} />
         <i className={styles.arrow}></i>
         <Link to={RoutesPathes.PHONES} className={linkClassName}>
           {t('phones')}
@@ -71,7 +145,7 @@ export const ItemDescription: React.FC<Props> = ({
         {phonesId && (
           <>
             <i className={styles.arrow}></i>
-            <p className={styles.pageName}>{phonesId}</p>
+            <p className={styles.pageName}>{phone.name}</p>
           </>
         )}
       </div>
@@ -88,7 +162,7 @@ export const ItemDescription: React.FC<Props> = ({
       <div className={styles.container}>
         <div className={styles.imgBlock}>
           <div className={styles.mainPicture}>
-            <img className={styles.mainPicture_img} src={selectedImg} alt="iPhone11ProMax" />
+            <img className={styles.mainPicture_img} src={selectedImg} alt={phone.id} />
           </div>
           <div className={styles.miniPictures}>
             {phone.images.map((img) => (
@@ -97,24 +171,30 @@ export const ItemDescription: React.FC<Props> = ({
                 key={img}
                 className={selectedImg === img ? styles.imgContainer_active : styles.imgContainer}
               >
-                <img className={styles.miniPicture} src={img} alt="iPhone11ProMax" />
+                <img className={styles.miniPicture} src={img} alt={phone.id} />
               </div>
             ))}
           </div>
         </div>
         <div className={styles.orderBlock}>
           <div className={styles.textAndId}>
+            <h3 className={styles.text}>Available colors</h3>
+            <h3 className={styles.textId}>ID: {phone.id}</h3>
             <h3 className={styles.text}>{t('colors')}</h3>
             <h3 className={styles.textId}>ID: 802390</h3>
           </div>
           <div className={styles.chooseColor}>
             {phone.colorsAvailable.map((color) => (
-              <div
-                onClick={() => handleColorClick(color)}
-                style={{ backgroundColor: color }}
+              <Link
                 key={color}
-                className={selectedColor === color ? styles.colorPick_active : styles.colorPick}
-              ></div>
+                to={`/${root}/${phone.namespaceId}-${selectedButton.toLocaleLowerCase()}-${color}`}
+              >
+                <div
+                  onClick={() => handleColorClick(color)}
+                  style={{ backgroundColor: COLOR_PALLETE[color] }}
+                  className={selectedColor === color ? styles.colorPick_active : styles.colorPick}
+                ></div>
+              </Link>
             ))}
           </div>
           <div className={styles.separator}></div>
@@ -122,15 +202,19 @@ export const ItemDescription: React.FC<Props> = ({
             <h3 className={styles.text}>{t('selectCapacity')}</h3>
             <div className={styles.chooseStorage}>
               {phone.capacityAvailable.map((capacity) => (
-                <button
+                <Link
                   key={capacity}
-                  onClick={() => handleButtonClick(capacity)}
-                  className={
-                    selectedButton === capacity ? styles.storageActive : styles.storageDefault
-                  }
+                  to={`/${root}/${phone.namespaceId}-${capacity.toLocaleLowerCase()}-${selectedColor}`}
                 >
-                  {capacity}
-                </button>
+                  <button
+                    onClick={() => handleButtonClick(capacity)}
+                    className={
+                      selectedButton === capacity ? styles.storageActive : styles.storageDefault
+                    }
+                  >
+                    {capacity}
+                  </button>
+                </Link>
               ))}
             </div>
           </div>
@@ -146,9 +230,18 @@ export const ItemDescription: React.FC<Props> = ({
             <h3 className={styles.priceDiscount}>{phone.priceRegular}</h3>
           </div>
           <div className={styles.buttons}>
-            <button className={styles.add}>Add to cart</button>
-            <button className={styles.heart} onClick={() => setIsHeartActive(!isHeartActive)}>
-              {isHeartActive ? <img src={FilledHeart} alt="" /> : <img src={Heart} alt="" />}
+            <button
+              className={`${styles.add} ${isAdded ? styles.added : ''}`}
+              onClick={handleAddToCart}
+            >
+              {isAdded ? 'Added!' : 'Add to cart'}
+            </button>
+            <button className={styles.heart} onClick={handleFavoriteClick}>
+              {isHeartActive ? (
+                <img src={FilledHeart} alt="Added to favorites" />
+              ) : (
+                <img src={Heart} alt="Add to favorites" />
+              )}
             </button>
           </div>
           <div className={styles.specs}>
@@ -162,7 +255,6 @@ export const ItemDescription: React.FC<Props> = ({
                 {phone.screen}
               </p>
             </div>
-
             <div className={styles.resolution}>
               <p className={styles.left}>{t('resolution')}</p>
               <p
@@ -183,7 +275,6 @@ export const ItemDescription: React.FC<Props> = ({
                 {phone.processor}
               </p>
             </div>
-
             <div className={styles.ram}>
               <p className={styles.left}>{t('ram')}</p>
               <p
@@ -240,7 +331,6 @@ export const ItemDescription: React.FC<Props> = ({
                 {phone.screen}
               </p>
             </div>
-
             <div className={styles.techResolution}>
               <p className={styles.left_text}> {t('resolution')}</p>
               <p
@@ -251,7 +341,6 @@ export const ItemDescription: React.FC<Props> = ({
                 {phone.resolution}
               </p>
             </div>
-
             <div className={styles.techProcessor}>
               <p className={styles.left_text}> {t('processor')}</p>
               <p
@@ -317,7 +406,6 @@ export const ItemDescription: React.FC<Props> = ({
           </div>
         </div>
       </div>
-
       <RecommendedItemsSlider recommendedPhones={recommendedPhones} />
     </>
   );

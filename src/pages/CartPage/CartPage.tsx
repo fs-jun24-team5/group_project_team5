@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
 import styles from './CartPage.module.scss';
 import { CartContext } from '../../context/CartContextType';
 import { FavoritesContext } from '../../context/FavoritesContext';
@@ -9,6 +8,9 @@ import { useTranslation } from 'react-i18next';
 
 export const CartPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editItemId, setEditItemId] = useState<string | null>(null);
+  const [inputValue, setInputValue] = useState<number | null>(null);
+
   const cartContext = useContext(CartContext);
   const { theme } = useContext(FavoritesContext);
   const { t } = useTranslation();
@@ -17,17 +19,40 @@ export const CartPage: React.FC = () => {
     throw new Error('CartContext must be used within a CartProvider');
   }
 
-  const { cartItems, increaseQuantity, decreaseQuantity, removeFromCart } = cartContext;
+  const { cartItems, increaseQuantity, decreaseQuantity, updateQuantity, removeFromCart } =
+    cartContext;
 
-  const totalAmount = cartItems.reduce(
-    (total: number, item: { product: { price: number }; quantity: number }) => {
-      return total + item.product.price * item.quantity;
-    },
-    0,
-  );
+  const totalAmount = cartItems.reduce((total: number, item) => {
+    const price = item.product.price ?? 0;
+    return total + price * item.quantity;
+  }, 0);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+  };
+
+  const handleDoubleClick = (id: string, quantity: number) => {
+    setEditItemId(id);
+    setInputValue(quantity);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value === '' ? null : +e.target.value;
+    setInputValue(value);
+  };
+
+  const handleBlur = (id: string) => {
+    if (inputValue !== null) {
+      const validValue = Math.max(1, inputValue);
+      updateQuantity(id, validValue);
+    }
+    setEditItemId(null);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, id: string) => {
+    if (e.key === 'Enter') {
+      handleBlur(id);
+    }
   };
 
   return (
@@ -59,17 +84,13 @@ export const CartPage: React.FC = () => {
                       onClick={() => removeFromCart(product.id.toString())}
                     />
                     <div className={styles.cart__photo}>
-                      <Link to={`./phones`}>
-                        <div
-                          className={styles.cart__image}
-                          style={{ backgroundImage: `url(${product.image})` }}
-                        ></div>
-                      </Link>
+                      <div
+                        className={styles.cart__image}
+                        style={{ backgroundImage: `url(${product.image})` }}
+                      ></div>
                     </div>
                     <div className={styles.cart__name}>
-                      <Link to={`./phones`} className={styles.cart__link}>
-                        {product.name}
-                      </Link>
+                      <div className={styles.cart__link}>{product.name}</div>
                     </div>
                   </div>
                   <div className={styles.cart__priceCount}>
@@ -79,7 +100,24 @@ export const CartPage: React.FC = () => {
                         className={`${styles.button} ${styles.button__minus}`}
                         onClick={() => decreaseQuantity(product.id.toString())}
                       />
-                      <div className={styles.cart__quantity}>{quantity}</div>
+                      {editItemId === product.id.toString() ? (
+                        <input
+                          type="number"
+                          className={styles.cart__input}
+                          value={inputValue !== null ? inputValue : quantity}
+                          onChange={handleInputChange}
+                          onBlur={() => handleBlur(product.id.toString())}
+                          onKeyDown={(e) => handleKeyDown(e, product.id.toString())}
+                        />
+                      ) : (
+                        <div
+                          className={styles.cart__quantity}
+                          onDoubleClick={() => handleDoubleClick(product.id.toString(), quantity)}
+                        >
+                          {quantity}
+                        </div>
+                      )}
+
                       <button
                         type="button"
                         className={`${styles.button} ${styles.button__plus}`}
@@ -87,7 +125,7 @@ export const CartPage: React.FC = () => {
                       />
                     </div>
                     <div className={styles.cart__price}>
-                      ${(product.price * quantity).toFixed(2)}
+                      ${product.price ? (product.price * quantity).toFixed(2) : 0}
                     </div>
                   </div>
                 </div>
@@ -96,10 +134,10 @@ export const CartPage: React.FC = () => {
           </div>
 
           <div className={styles.cart__summary}>
-            <div className={styles.cart__priceWrapper}>              
+            <div className={styles.cart__priceWrapper}>
               <div
                 className={classNames(styles.cart__summaryPrice, {
-                  [styles.dark]: theme === 'dark', 
+                  [styles.dark]: theme === 'dark',
                 })}
               >
                 {t('total')}: ${totalAmount.toFixed(2)}
@@ -107,9 +145,9 @@ export const CartPage: React.FC = () => {
 
               <div className={styles.cart__summaryCount}>
                 {t('totalFor')} {cartItems.length} {t('items')}
-              </div>              
+              </div>
             </div>
-            
+
             <div className={styles.cart__divider} />
             <button type="button" className={styles.cart__checkout} onClick={toggleModal}>
               {t('checkout')}
@@ -132,7 +170,7 @@ export const CartPage: React.FC = () => {
                           <tr key={product.id.toString()}>
                             <td>{product.name}</td>
                             <td>{quantity}</td>
-                            <td>${(product.price * quantity).toFixed(2)}</td>
+                            <td>${product.price ? (product.price * quantity).toFixed(2) : 0}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -145,10 +183,10 @@ export const CartPage: React.FC = () => {
                   </div>
                   <div className={styles.modal__actions}>
                     <button className={styles.confirm} onClick={toggleModal}>
-                    {t('confirm')}
+                      {t('confirm')}
                     </button>
                     <button className={styles.cancel} onClick={toggleModal}>
-                    {t('cancel')}
+                      {t('cancel')}
                     </button>
                   </div>
                 </div>
