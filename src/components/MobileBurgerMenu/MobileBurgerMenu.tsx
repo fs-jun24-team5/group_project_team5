@@ -16,7 +16,9 @@ export const MobileBurgerMenu: React.FC<Props> = ({ isOpen, handleClose }) => {
   const location = useLocation();
   const cartContext = useContext(CartContext);
   const { favoriteProducts } = useContext(FavoritesContext);
-  const cartCount = cartContext ? cartContext.cartItems.length : 0;
+  const cartCount = cartContext 
+  ? cartContext.cartItems.reduce((total, item) => total + item.quantity, 0) 
+  : 0;
   const { theme } = useContext(FavoritesContext);
 
   useEffect(() => {
