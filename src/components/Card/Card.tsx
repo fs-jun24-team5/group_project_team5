@@ -5,9 +5,9 @@ import styles from './Card.module.scss';
 import { Product } from '../../api/type/ProductCart';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import { useCart } from '../../hooks/useCart';
-import { Link } from 'react-router-dom';
-import { RoutesPathes } from '../../utils/RoutesPathes';
+import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
+import { RoutesPathes } from '../../utils/RoutesPathes';
 
 type Props = {
   product: Product;
@@ -18,6 +18,11 @@ export const Card: React.FC<Props> = ({ product }) => {
   const { cartItems, addToCart, removeFromCart } = useCart();
   const [isHeartActive, setIsHeartActive] = useState(favoriteProducts.some((p) => p.id === product.id));
   const [isAdded, setIsAdded] = useState(false);
+  const location = useLocation();
+
+  const root = location.pathname.split('/')[1];
+
+  const linkToItem = root ? `/${root}/${product.itemId}` : `${RoutesPathes.PHONES}/${product.itemId}`;
 
   useEffect(() => {
     const storedAddedState = localStorage.getItem(`added-${product.id}`);
@@ -48,11 +53,11 @@ export const Card: React.FC<Props> = ({ product }) => {
 
   return (
     <article className={styles.card}>
-      <Link to={`${RoutesPathes.PHONES}/${product.itemId}`}>
+      <Link to={linkToItem}>
         <img src={product.image} alt="iphone" className={styles.image} />
       </Link>
 
-      <Link to={`${RoutesPathes.PHONES}/${product.itemId}`} className={styles.link}>
+      <Link to={linkToItem} className={styles.link}>
         <h3 className={styles.text}>{product.name}</h3>
       </Link>
 

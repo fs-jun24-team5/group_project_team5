@@ -8,31 +8,6 @@ $gray: #b4bdc3;
 $white: #ffffff;
 $colorSecondaryGrey: #89939A;
 
-.main {
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
-
-  @include onMobile{
-    margin-top: 24px;
-  }
-}
-
-.main__content {
-  width: 1138px;
-  padding: 0 32px;
-
-  @include onTablet {
-    width: 592px;
-    padding: 0 24px;
-  }
-  
-  @include onMobile {
-    width: 288px;
-    padding: 0 16px;
-  }
-}
-
 .main_text {
   font-weight: 800;
   font-size: 32px;
@@ -46,7 +21,7 @@ $colorSecondaryGrey: #89939A;
 
 .container {
   display: flex;
-  gap: 64px;
+  gap: 42px;
   margin-top: 40px;
 
   @include onTablet {
