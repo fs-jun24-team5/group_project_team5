@@ -15,6 +15,7 @@ import { ItemDescription } from '../../components/ItemDescription/ItemDescriptio
 import { Loader } from '../../components/Loader';
 
 export const AccessoriesPage: React.FC = () => {
+  <h1>test</h1>
   const { theme } = useContext(FavoritesContext);
   const { accessoriesId } = useParams<{ accessoriesId: string }>();
   const [selectedColor, setSelectedColor] = useState<string>('');
