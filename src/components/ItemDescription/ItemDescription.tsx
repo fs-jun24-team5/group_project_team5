@@ -178,8 +178,6 @@ export const ItemDescription: React.FC<Props> = ({
         </div>
         <div className={styles.orderBlock}>
           <div className={styles.textAndId}>
-            <h3 className={styles.text}>Available colors</h3>
-            <h3 className={styles.textId}>ID: {phone.id}</h3>
             <h3 className={styles.text}>{t('colors')}</h3>
             <h3 className={styles.textId}>ID: 802390</h3>
           </div>
