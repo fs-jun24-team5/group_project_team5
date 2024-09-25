@@ -243,7 +243,7 @@ export const ItemDescription: React.FC<Props> = ({
               className={`${styles.add} ${isAdded ? styles.added : ''}`}
               onClick={handleAddToCart}
             >
-              {isAdded ? 'Added!' : 'Add to cart'}
+              {isAdded ? t('added') : t('addToCart')}
             </button>
             <button className={styles.heart} onClick={handleFavoriteClick}>
               {isHeartActive ? (

@@ -6,7 +6,7 @@ import { Product } from '../../api/type/ProductCart';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import { useCart } from '../../hooks/useCart';
 import { Link, useLocation } from 'react-router-dom';
-import { RoutesPathes } from '../../utils/RoutesPathes';
+//import { RoutesPathes } from '../../utils/RoutesPathes';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -22,10 +22,8 @@ export const Card: React.FC<Props> = ({ product }) => {
   const location = useLocation();
 
   const root = location.pathname.split('/')[1];
-  console.log(root);
-  
 
-  const linkToItem = root  ? `/${root}/${product.itemId}` : `${RoutesPathes.PHONES}/${product.itemId}`;
+  const linkToItem = root !== 'favourites'  ? `/${root}/${product.itemId}` : `/${product.category}/${product.itemId}`;
 
   const { t } = useTranslation();
 
