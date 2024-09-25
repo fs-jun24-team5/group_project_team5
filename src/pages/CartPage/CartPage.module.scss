@@ -430,28 +430,19 @@ $secondary: #89939a;
   margin: 0 5px;
 }
 
-// .cart__quantity {
-//   border: none;
-//   background: none;
-//   width: 30px;
-//   text-align: center;
-//   font-size: 16px;
-//   cursor: text;
-//   outline: none;
-// }
+.cart__checkout,
+.confirm,
+.cancel {
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 
-// .cart__quantity:hover {
-//   cursor: text;
-// }
+  &:hover {
+    background-color: gray;
+    transform: scale(1.05);
+  }
 
-// .cart__quantity::-webkit-inner-spin-button,
-// .cart__quantity::-webkit-outer-spin-button {
-//   -webkit-appearance: none;
-//   margin: 0;
-// }
-
-// .cart__quantity:focus {
-//   cursor: text;
-//   border: 1px solid #ccc;
-// }
+  &:active {
+    transform: scale(0.98);
+  }
+}
 
