@@ -144,7 +144,12 @@ export const ItemDescription: React.FC<Props> = ({
   return (
     <>
       <div className={styles.route}>
-        <Link to={RoutesPathes.HOME} className={classNames(styles.home)} />
+        <Link
+          to={RoutesPathes.HOME}
+          className={classNames(styles.home, {
+            [styles.dark]: theme === 'dark',
+          })}
+        />
         <i className={styles.arrow}></i>
         <Link to={categoryToRouteMap[phone.category]} className={linkClassName}>
           {t(phone.category)}

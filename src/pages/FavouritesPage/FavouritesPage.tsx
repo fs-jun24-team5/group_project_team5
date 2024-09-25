@@ -36,15 +36,15 @@ export const FavouritesPage: React.FC = () => {
           >
             {t('favourites')}
           </h2>
-          
+
           {!!favoriteProducts.length && (
             <p className={styles.category_models}>{`${favoriteProducts.length} ${t('models')}`}</p>
           )}
         </div>
         <div className={styles.product_cards}>
           {favoriteProducts.length === 0 ? (
-            <div className={styles.no_favourites}>
-              <h3>No favourites yet.</h3>
+            <div className={classNames(styles.no_favourites, { [styles.dark]: theme === 'dark' })}>
+              <h3>{t('noFavourites')}</h3>
             </div>
           ) : (
             favoriteProducts.map((product) => (

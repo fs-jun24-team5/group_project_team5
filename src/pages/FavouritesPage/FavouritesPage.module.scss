@@ -118,6 +118,10 @@ $colorSecondaryGrey: #89939A;
 
 .no_favourites {
   grid-column: span 24;
+
+  &.dark {
+    color: white;
+  }
 }
 
 .product_card {
