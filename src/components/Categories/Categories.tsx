@@ -33,7 +33,7 @@ export const Categories: React.FC = () => {
             >
              {t('mobile')}
             </h3>
-            <p className={styles.category__count}>95 {t('models')}</p>
+            <p className={styles.category__count}>124 {t('models')}</p>
           </div>
         </article>
 
@@ -49,7 +49,7 @@ export const Categories: React.FC = () => {
             >
               {t('tablets')}
             </h3>
-            <p className={styles.category__count}>24 {t('models')}</p>
+            <p className={styles.category__count}>36 {t('models')}</p>
           </div>
         </article>
 
@@ -65,7 +65,7 @@ export const Categories: React.FC = () => {
             >
               {t('accessories')}
             </h3>
-            <p className={styles.category__count}>100 {t('models')}</p>
+            <p className={styles.category__count}>34 {t('models')}</p>
           </div>
         </article>
       </div>
