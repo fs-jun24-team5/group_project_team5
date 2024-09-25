@@ -5,6 +5,8 @@ import styles from './MobileBurgerMenu.module.scss';
 import { useLocation } from 'react-router-dom';
 import { RoutesPathes } from '../../utils/RoutesPathes';
 import { FavoritesContext } from '../../context/FavoritesContext';
+import { CartContext } from '../../context/CartContextType';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   isOpen: boolean;
@@ -13,7 +15,13 @@ type Props = {
 
 export const MobileBurgerMenu: React.FC<Props> = ({ isOpen, handleClose }) => {
   const location = useLocation();
+  const cartContext = useContext(CartContext);
+  const { favoriteProducts } = useContext(FavoritesContext);
+  const cartCount = cartContext 
+  ? cartContext.cartItems.reduce((total, item) => total + item.quantity, 0) 
+  : 0;
   const { theme } = useContext(FavoritesContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isOpen) {
@@ -44,7 +52,7 @@ export const MobileBurgerMenu: React.FC<Props> = ({ isOpen, handleClose }) => {
 
         <button
           className={classNames(styles.iconClose, {
-            [styles.dark]: theme === 'dark', 
+            [styles.dark]: theme === 'dark',
           })}
           onClick={handleClose}
         ></button>
@@ -59,7 +67,7 @@ export const MobileBurgerMenu: React.FC<Props> = ({ isOpen, handleClose }) => {
             })}
             onClick={handleClose}
           >
-            home
+            {t('home')}
           </Link>
         </li>
         <li>
@@ -71,7 +79,7 @@ export const MobileBurgerMenu: React.FC<Props> = ({ isOpen, handleClose }) => {
             })}
             onClick={handleClose}
           >
-            phones
+            {t('phones')}
           </Link>
         </li>
         <li>
@@ -83,7 +91,7 @@ export const MobileBurgerMenu: React.FC<Props> = ({ isOpen, handleClose }) => {
             })}
             onClick={handleClose}
           >
-            tablets
+            {t('tablets')}
           </Link>
         </li>
         <li>
@@ -95,7 +103,7 @@ export const MobileBurgerMenu: React.FC<Props> = ({ isOpen, handleClose }) => {
             })}
             onClick={handleClose}
           >
-            accessories
+            {t('accessories')}
           </Link>
         </li>
       </ul>
@@ -109,7 +117,11 @@ export const MobileBurgerMenu: React.FC<Props> = ({ isOpen, handleClose }) => {
               [styles.dark]: theme === 'dark',
             })}
             onClick={handleClose}
-          />
+          >
+            {favoriteProducts.length > 0 && (
+              <span className={styles.badge}>{favoriteProducts.length}</span>
+            )}
+          </Link>
         </li>
         <li className={styles.iconItem}>
           <Link
@@ -119,7 +131,9 @@ export const MobileBurgerMenu: React.FC<Props> = ({ isOpen, handleClose }) => {
               [styles.dark]: theme === 'dark',
             })}
             onClick={handleClose}
-          />
+          >
+            {cartCount > 0 && <span className={styles.badge}>{cartCount}</span>}
+          </Link>
         </li>
       </ul>
     </aside>

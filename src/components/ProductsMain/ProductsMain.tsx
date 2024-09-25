@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { PerPageOptions } from '../../utils/PerPageOptions';
 import { getPreparedProducts } from '../../utils/getPreparedProducts';
 import { getSearchWith } from '../../utils/searchHelper';
@@ -16,6 +16,7 @@ import { ErrorTypes } from '../../utils/ErrorTypes';
 import { ProductCategories } from '../../utils/ProductCategories';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   pageLabel: string;
@@ -34,6 +35,11 @@ export const ProductsMain: React.FC<Props> = ({ pageLabel, productsCategory }) =
   const sortParam = (searchParams.get('sort') as SortOptions) || SortOptions.NEWEST;
   const preparedProducts = getPreparedProducts(products, itemsPerPage, sortParam);
   const { theme } = useContext(FavoritesContext);
+  const { t } = useTranslation();
+  const location = useLocation();
+
+  console.log(pageLabel);
+  const pageLabelName = location.pathname.split('/')[1];
 
   const handlePerPageSelectorChange = (option: PerPageOptions) => {
     if (option === PerPageOptions.ALL) {
@@ -97,13 +103,16 @@ export const ProductsMain: React.FC<Props> = ({ pageLabel, productsCategory }) =
     init();
   }, []);
 
+  console.log(sortParam);
+  
+
   return (
     <>
-      {isLoading && (
+       {isLoading && (
         <div className={styles.loader}>
           <Loader />
         </div>
-      )}
+      )} 
 
       {!isLoading && error && (
         <div className={styles.error}>
@@ -111,7 +120,7 @@ export const ProductsMain: React.FC<Props> = ({ pageLabel, productsCategory }) =
         </div>
       )}
 
-      {!isLoading && !error && (
+      {!isLoading &&  !error && (
         <>
           <div className={styles.products_main}>
             <div className={styles.category_info}>
@@ -120,25 +129,25 @@ export const ProductsMain: React.FC<Props> = ({ pageLabel, productsCategory }) =
                   [styles.dark]: theme === 'dark',
                 })}
               >
-                {pageLabel}
+                {t(pageLabelName)}
               </h2>
 
-              <p className={styles.category_models}>{`${products.length} models`}</p>
+              <p className={styles.category_models}>{`${products.length} ${t('models')}`}</p>
             </div>
-
             <Dropdown
-              label="Sort by"
+              label={t('Sortby')}
               options={Object.values(SortOptions)}
-              activeOption={sortParam}
+              activeOption={t(sortParam)}
               onChange={handleSortChange}
             />
 
             <Dropdown
-              label="Items on page"
+              label={t('itemsOnPage')}
               options={Object.values(PerPageOptions)}
               activeOption={itemsPerPage}
               onChange={handlePerPageSelectorChange}
             />
+
 
             <div className={styles.product_cards}>
               {preparedProducts.length !== 0 &&

@@ -6,14 +6,28 @@ import { MobileBurgerMenu } from '../MobileBurgerMenu/MobileBurgerMenu';
 import classNames from 'classnames';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
+import { CartContext } from '../../context/CartContextType';
+import { LangSelector } from '../LangSelector/LangSelector';
+import { useTranslation } from 'react-i18next';
+import { useLanguageRerender } from '../../hooks/useLanguageRerender ';
 import { SearchElement } from '../SerachElement/SearchElement';
 
 export const Header: React.FC = () => {
+  useLanguageRerender();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const { favoriteProducts, theme } = useContext(FavoritesContext);
+  const cartContext = useContext(CartContext);
+  const cartCount = cartContext 
+  ? cartContext.cartItems.reduce((total, item) => total + item.quantity, 0) 
+  : 0;
+  const { t} = useTranslation();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+
+
 
   return (
     <div className={styles.container}>
@@ -33,7 +47,7 @@ export const Header: React.FC = () => {
               [styles.dark]: theme === 'dark',
             })}
           >
-            home
+            {t('home')}
           </Link>
         </li>
         <li>
@@ -44,7 +58,7 @@ export const Header: React.FC = () => {
               [styles.dark]: theme === 'dark',
             })}
           >
-            phones
+            {t('phones')}
           </Link>
         </li>
         <li>
@@ -55,7 +69,7 @@ export const Header: React.FC = () => {
               [styles.dark]: theme === 'dark',
             })}
           >
-            tablets
+            {t('tablets')}
           </Link>
         </li>
         <li>
@@ -66,7 +80,7 @@ export const Header: React.FC = () => {
               [styles.dark]: theme === 'dark',
             })}
           >
-            accessories
+            {t('accessories')}
           </Link>
         </li>
       </ul>
@@ -75,6 +89,8 @@ export const Header: React.FC = () => {
         <SearchElement />
 
         <ThemeSwitcher />
+        <LangSelector />
+
         <li className={styles.icon}>
           <Link
             data-count={favoriteProducts.length > 0 ? favoriteProducts.length : ''}
@@ -87,6 +103,7 @@ export const Header: React.FC = () => {
         </li>
         <li className={styles.icon}>
           <Link
+            data-count={cartCount > 0 ? cartCount : ''}
             to={RoutesPathes.CART}
             className={classNames(styles.iconLink_bag, {
               [styles.selected]: location.pathname.includes(RoutesPathes.CART),
@@ -98,7 +115,7 @@ export const Header: React.FC = () => {
           <button
             onClick={toggleMenu}
             className={classNames(styles.iconLink_burger, {
-              [styles.dark]: theme === 'dark', 
+              [styles.dark]: theme === 'dark',
             })}
           />
         </li>

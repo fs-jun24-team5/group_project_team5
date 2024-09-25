@@ -5,25 +5,33 @@ import { ProductsMain } from '../../components/ProductsMain/ProductsMain';
 import { Link } from 'react-router-dom';
 import { RoutesPathes } from '../../utils/RoutesPathes';
 import { useParams } from 'react-router-dom';
-import { getPhones } from '../../api/api';
+import { getPhones, getProducts } from '../../api/api';
 import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
 import { ItemDescription } from '../../components/ItemDescription/ItemDescription';
 import { Loader } from '../../components/Loader';
 import { ProductCategories } from '../../utils/ProductCategories';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import classNames from 'classnames';
+import { ProductType } from '../../api/type/ProductType';
+import { getRecommendedPhones } from '../../api/function';
+import { useTranslation } from 'react-i18next';
+//import { Skeleton } from '../../components/Skeleton/Skeleton';
 
 export const PhonesPage: React.FC = () => {
   const { theme } = useContext(FavoritesContext);
-
   const { phonesId } = useParams<{ phonesId: string }>();
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [selectedButton, setSelectedButton] = useState<string>('');
   const [selectedImg, setSelectedImg] = useState<string>('');
-  const [phone, setPhone1] = useState<ProductTypeExtended[]>([]);
+  const [phone, setPhone] = useState<ProductTypeExtended[]>([]);
+  const [phones, setPhones] = useState<ProductType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [recommendedPhones, setRecommendedPhones] = useState<ProductType[]>([]);
+  const { t } = useTranslation();
 
   const linkClassName = phonesId ? styles.pageNameActive : styles.pageName;
+
+  
 
   useEffect(() => {
     setIsLoading(true);
@@ -38,16 +46,37 @@ export const PhonesPage: React.FC = () => {
           const img = phone.images[0];
           setSelectedImg(img);
         });
-        setPhone1(neededProduct);
+        setPhone(neededProduct);
       })
       .finally(() => setIsLoading(false));
   }, [phonesId]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const data: ProductType[] = await getProducts();
+        setPhones(data);
+      } catch (error) {
+        console.error('Error', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const result = getRecommendedPhones(phones);
+    setRecommendedPhones(result);
+  }, [phones]);
 
   return (
     <>
       {phonesId ? (
         <>
-          {isLoading ? (
+          {isLoading && !phonesId ? (
             <Loader />
           ) : (
             <>
@@ -62,6 +91,7 @@ export const PhonesPage: React.FC = () => {
                       setSelectedColor={setSelectedColor}
                       setSelectedButton={setSelectedButton}
                       setSelectedImg={setSelectedImg}
+                      recommendedPhones={recommendedPhones}
                     />
                   </div>
                 </main>
@@ -71,7 +101,7 @@ export const PhonesPage: React.FC = () => {
         </>
       ) : (
         <div className={styles.pagesContainer}>
-         <div className={styles.route}>
+          <div className={styles.route}>
             <Link
               to={RoutesPathes.HOME}
               className={classNames(styles.home, {
@@ -80,7 +110,7 @@ export const PhonesPage: React.FC = () => {
             />
             <i className={styles.arrow}></i>
             <Link to={RoutesPathes.PHONES} className={linkClassName}>
-              Phones
+              {t('phones')}
             </Link>
             {phonesId && (
               <>
@@ -92,6 +122,7 @@ export const PhonesPage: React.FC = () => {
           <ProductsMain pageLabel="Phones" productsCategory={ProductCategories.PHONES} />
         </div>
       )}
+      {/* <Skeleton /> */}
     </>
   );
 };

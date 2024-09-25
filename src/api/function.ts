@@ -27,8 +27,26 @@ export const getHotDeals = (products: ProductType[]): ProductType[] => {
   }
 
   return Array.from(uniqueModels.values()).slice(0, 6);  
-/*     const shuffledProducts = products.sort(() => 0.5 - Math.random());
-
-  return shuffledProducts.slice(0, 6);   */
 };
+
+export const getRecommendedPhones = (products: ProductType[]):ProductType[] => {
+  const phones = products.filter(product => product.category === "phones");
+
+  const recommendedPhones = phones.slice().sort(() => 0.5 - Math.random());
+  return recommendedPhones.slice(0, 6); 
+}
+
+export const getRecommendedTablets = (products: ProductType[]):ProductType[] => {
+  const tablets = products.filter(product => product.category === "tablets");
+
+  const recommendedtablets = tablets.slice().sort(() => 0.5 - Math.random());
+  return recommendedtablets.slice(0, 6); 
+}
+
+export const getRecommendedAccessories = (products: ProductType[]):ProductType[] => {
+  const accessories = products.filter(product => product.category === "accessories");
+
+  const recommendedAccessories = accessories.slice().sort(() => 0.5 - Math.random());
+  return recommendedAccessories.slice(0, 6); 
+}
  

@@ -8,6 +8,7 @@ import { ProductType } from '../../api/type/ProductType';
 import { Loader } from '../Loader';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   newPhones: ProductType[];
@@ -24,6 +25,7 @@ export const HotPricesSlider: React.FC<Props> = ({ newPhones, isLoading }) => {
   });
   const sliderRef = useRef<Slider>(null);
   const { theme } = useContext(FavoritesContext);
+  const { t } = useTranslation();
 
   const updateSliderSettings = () => {
     const windowWidth = window.innerWidth;
@@ -76,7 +78,7 @@ export const HotPricesSlider: React.FC<Props> = ({ newPhones, isLoading }) => {
             [styles.dark]: theme === 'dark',
           })}
         >
-          Hot prices
+          {t('hotPrices')}
         </h2>
         
         <div className={styles.newPhoneModels__buttonsWrapper}>
