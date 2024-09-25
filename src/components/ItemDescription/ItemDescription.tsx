@@ -49,6 +49,8 @@ export const ItemDescription: React.FC<Props> = ({
   const [isAdded, setIsAdded] = useState(false);
 
   const { phonesId } = useParams<{ phonesId: string }>();
+  const { tabletsId } = useParams<{ tabletsId: string }>();
+  const { accessoriesId } = useParams<{ accessoriesId: string }>();
 
   useEffect(() => {
     const heartState = favoriteProducts.some((p) => p.name === phone.name);
@@ -117,7 +119,7 @@ export const ItemDescription: React.FC<Props> = ({
   const { t } = useTranslation();
 
   const linkClassName = classNames(styles.pageName, {
-    [styles.pageNameActive]: phonesId,
+    [styles.pageNameActive]: phonesId || tabletsId || accessoriesId,
     [styles.dark]: theme === 'dark',
   });
 
@@ -133,6 +135,12 @@ export const ItemDescription: React.FC<Props> = ({
     setSelectedImg(img);
   };
 
+  const categoryToRouteMap: { [key: string]: string } = {
+    phones: RoutesPathes.PHONES,
+    accessories: RoutesPathes.ACCESSORIES,
+    tablets: RoutesPathes.TABLETS,
+  };
+
   return (
     <>
       <div className={styles.route}>
@@ -143,15 +151,14 @@ export const ItemDescription: React.FC<Props> = ({
           })}
         />
         <i className={styles.arrow}></i>
-        <Link to={RoutesPathes.PHONES} className={linkClassName}>
-          {t('phones')}
+        <Link to={categoryToRouteMap[phone.category]} className={linkClassName}>
+          {t(phone.category)}
         </Link>
-        {phonesId && (
-          <>
-            <i className={styles.arrow}></i>
-            <p className={styles.pageName}>{phone.name}</p>
-          </>
-        )}
+
+        <>
+          <i className={styles.arrow}></i>
+          <p className={styles.pageName}>{phone.name}</p>
+        </>
       </div>
 
       <BackButton />
