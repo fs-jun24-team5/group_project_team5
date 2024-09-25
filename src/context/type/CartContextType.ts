@@ -5,5 +5,5 @@ export type CartContextType = {
   addToCart: (product: Product) => void;
   removeFromCart: (productId: number) => void;
   clearCart: () => void;
-  toggleFavorite: (product: Product) => void; 
+  toggleFavorite: (product: Product) => void;
 };
