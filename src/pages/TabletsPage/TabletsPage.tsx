@@ -7,13 +7,13 @@ import { ProductCategories } from '../../utils/ProductCategories';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import classNames from 'classnames';
 import { ProductType } from '../../api/type/ProductType';
-import { getRecommendedPhones } from '../../api/function';
 import { useParams } from 'react-router-dom';
 import { getTablets, getProducts } from '../../api/api';
 import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
 import { ItemDescription } from '../../components/ItemDescription/ItemDescription';
 import { Loader } from '../../components/Loader';
 import { useTranslation } from 'react-i18next';
+import { getRecommendedTablets } from '../../api/function';
 
 export const TabletsPage: React.FC = () => {
   const { theme } = useContext(FavoritesContext);
@@ -63,7 +63,7 @@ export const TabletsPage: React.FC = () => {
     fetchData();
   }, []);
 
-  const recommendedAccessories = getRecommendedPhones(products);
+  const recommendedTablets = getRecommendedTablets(products);
   const { t } = useTranslation();
 
   return (
@@ -85,7 +85,7 @@ export const TabletsPage: React.FC = () => {
                       setSelectedColor={setSelectedColor}
                       setSelectedButton={setSelectedButton}
                       setSelectedImg={setSelectedImg}
-                      recommendedPhones={recommendedAccessories}
+                      recommendedPhones={recommendedTablets}
                     />
                   </div>
                 </main>

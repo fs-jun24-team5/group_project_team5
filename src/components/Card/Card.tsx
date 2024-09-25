@@ -6,16 +6,17 @@ import { Product } from '../../api/type/ProductCart';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import { useCart } from '../../hooks/useCart';
 import { Link, useLocation } from 'react-router-dom';
-import { RoutesPathes } from '../../utils/RoutesPathes';
+//import { RoutesPathes } from '../../utils/RoutesPathes';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { RoutesPathes } from '../../utils/RoutesPathes';
 
 type Props = {
   product: Product;
 };
 
 export const Card: React.FC<Props> = ({ product }) => {
-  const { favoriteProducts, addToFavorites, setFavoriteProducts} = useContext(FavoritesContext);
+  const { favoriteProducts, addToFavorites, setFavoriteProducts } = useContext(FavoritesContext);
   const { cartItems, addToCart, removeFromCart } = useCart();
   const [isHeartActive, setIsHeartActive] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
@@ -23,28 +24,36 @@ export const Card: React.FC<Props> = ({ product }) => {
 
   const root = location.pathname.split('/')[1];
 
-  const linkToItem = root ? `/${root}/${product.itemId}` : `${RoutesPathes.PHONES}/${product.itemId}`;
+  //const linkToItem = root !== 'favourites'  ? `/${root}/${product.itemId}` : `/${product.category}/${product.itemId}`;
+
+  const createLinkToItem = () => {
+    if (!root) {
+      return `${RoutesPathes.PHONES}/${product.itemId}`;
+    }
+  
+    return root === 'favourites' 
+      ? `/${product.category}/${product.itemId}` 
+      : `/${root}/${product.itemId}`;
+  };
 
   const { t } = useTranslation();
 
   useEffect(() => {
-    setIsHeartActive(favoriteProducts.some(p => p.name === product.name));
-    setIsAdded(cartItems.some(item => item.product.name === product.name));
+    setIsHeartActive(favoriteProducts.some((p) => p.name === product.name));
+    setIsAdded(cartItems.some((item) => item.product.name === product.name));
   }, [favoriteProducts, cartItems, product.name]);
 
   const handleFavoriteClick = () => {
     if (isHeartActive) {
-      setFavoriteProducts(prevFavorites =>
-        prevFavorites.filter(p => p.name !== product.name)
-      );
+      setFavoriteProducts((prevFavorites) => prevFavorites.filter((p) => p.name !== product.name));
     } else {
       addToFavorites(product);
     }
     setIsHeartActive(!isHeartActive);
   };
-  
+
   const handleAddToCart = () => {
-    const existingItem = cartItems.find(item => item.product.name === product.name);
+    const existingItem = cartItems.find((item) => item.product.name === product.name);
 
     if (existingItem) {
       removeFromCart(existingItem.product.id.toString());
@@ -57,11 +66,11 @@ export const Card: React.FC<Props> = ({ product }) => {
 
   return (
     <article className={styles.card}>
-      <Link to={linkToItem}>
+      <Link to={createLinkToItem()}>
         <img src={product.image} alt="iphone" className={styles.image} />
       </Link>
 
-      <Link to={linkToItem} className={styles.link}>
+      <Link to={createLinkToItem()} className={styles.link}>
         <h3 className={styles.text}>{product.name}</h3>
       </Link>
 

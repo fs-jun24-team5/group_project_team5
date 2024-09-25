@@ -446,3 +446,8 @@ $secondary: #89939a;
   }
 }
 
+.emptyCart {
+  &.dark {
+    color: white;
+  }
+}

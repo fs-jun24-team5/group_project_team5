@@ -7,7 +7,7 @@ import { ProductCategories } from '../../utils/ProductCategories';
 import classNames from 'classnames';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import { ProductType } from '../../api/type/ProductType';
-import { getRecommendedPhones } from '../../api/function';
+import { getRecommendedAccessories } from '../../api/function';
 import { useParams } from 'react-router-dom';
 import { getAccessories, getProducts } from '../../api/api';
 import { ProductTypeExtended } from '../../api/type/ProductTypeExtended';
@@ -16,7 +16,6 @@ import { Loader } from '../../components/Loader';
 import { useTranslation } from 'react-i18next';
 
 export const AccessoriesPage: React.FC = () => {
-  <h1>test</h1>;
   const { theme } = useContext(FavoritesContext);
   const { accessoriesId } = useParams<{ accessoriesId: string }>();
   const [selectedColor, setSelectedColor] = useState<string>('');
@@ -64,8 +63,11 @@ export const AccessoriesPage: React.FC = () => {
     fetchData();
   }, []);
 
-  const recommendedAccessories = getRecommendedPhones(products);
+  const recommendedAccessories = getRecommendedAccessories(products);
   const { t } = useTranslation();
+
+  console.log(recommendedAccessories);
+  
 
   return (
     <>

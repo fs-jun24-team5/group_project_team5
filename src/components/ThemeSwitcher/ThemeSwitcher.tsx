@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import '@theme-toggles/react/css/Classic.css';
 import { Classic } from '@theme-toggles/react';
 import { FavoritesContext } from '../../context/FavoritesContext';
+import './ThemeSwitcher.scss';
 
 const ThemeSwitcher: React.FC = () => {
   const { toggleTheme } = useContext(FavoritesContext);
@@ -12,9 +13,7 @@ const ThemeSwitcher: React.FC = () => {
     fontSize: '24px',
     borderLeft: '1px solid #E2E6E9',
   });
-  const [isDarkMode, setIsDarkMode] = useState(
-    localStorage.getItem('theme') === 'dark'
-  );
+  const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('theme') === 'dark');
 
   const updateSwitcherSettings = () => {
     const windowWidth = window.innerWidth;
@@ -48,20 +47,24 @@ const ThemeSwitcher: React.FC = () => {
   }, []);
 
   const handleToggleTheme = () => {
-    toggleTheme(); 
-    setIsDarkMode((prevIsDarkMode) => !prevIsDarkMode); 
+    toggleTheme();
+    setIsDarkMode((prevIsDarkMode) => !prevIsDarkMode);
   };
 
+
+
   return (
-    <Classic
-      style={switcherSettings}
-      toggled={isDarkMode} 
-      onToggle={handleToggleTheme} 
-      duration={250}
-      placeholder={undefined}
-      onPointerEnterCapture={undefined}
-      onPointerLeaveCapture={undefined}
-    />
+  
+      <Classic
+        style={switcherSettings}
+        toggled={isDarkMode}
+        onToggle={handleToggleTheme}
+        duration={250}
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+      />
+    
   );
 };
 

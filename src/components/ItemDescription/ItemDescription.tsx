@@ -43,19 +43,20 @@ export const ItemDescription: React.FC<Props> = ({
   }
 
   const { addToFavorites, favoriteProducts } = favoritesContext;
-  const { addToCart, cartItems, removeFromCart } = cartContext; 
+  const { addToCart, cartItems, removeFromCart } = cartContext;
 
   const [isHeartActive, setIsHeartActive] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
 
   const { phonesId } = useParams<{ phonesId: string }>();
-
+  const { tabletsId } = useParams<{ tabletsId: string }>();
+  const { accessoriesId } = useParams<{ accessoriesId: string }>();
 
   useEffect(() => {
-    const heartState = favoriteProducts.some(p => p.name === phone.name);
+    const heartState = favoriteProducts.some((p) => p.name === phone.name);
     setIsHeartActive(heartState);
 
-    const isProductInCart = cartItems.some(item => item.product.name === phone.name);
+    const isProductInCart = cartItems.some((item) => item.product.name === phone.name);
     setIsAdded(isProductInCart);
   }, [favoriteProducts, phone.name, cartItems]);
 
@@ -72,20 +73,20 @@ export const ItemDescription: React.FC<Props> = ({
       ram: phone.ram,
       image: selectedImg,
     };
-  
-    const isFavorite = favoriteProducts.some(p => p.name === phone.name);
-  
+
+    const isFavorite = favoriteProducts.some((p) => p.name === phone.name);
+
     if (isFavorite) {
-      favoritesContext.setFavoriteProducts(prevFavorites =>
-        prevFavorites.filter(p => p.name !== phone.name)
+      favoritesContext.setFavoriteProducts((prevFavorites) =>
+        prevFavorites.filter((p) => p.name !== phone.name),
       );
     } else {
       addToFavorites(productToAdd);
     }
-    
+
     setIsHeartActive(!isHeartActive);
   };
-  
+
   const handleAddToCart = () => {
     const productToAdd: Product = {
       id: phone.id,
@@ -99,9 +100,9 @@ export const ItemDescription: React.FC<Props> = ({
       ram: phone.ram,
       image: selectedImg,
     };
-  
-    const existingItem = cartItems.find(item => item.product.name === phone.name);
-  
+
+    const existingItem = cartItems.find((item) => item.product.name === phone.name);
+
     if (existingItem) {
       removeFromCart(existingItem.product.id.toString());
       setIsAdded(false);
@@ -110,15 +111,15 @@ export const ItemDescription: React.FC<Props> = ({
       setIsAdded(true);
     }
   };
-  
+
   const { theme } = useContext(FavoritesContext);
   const location = useLocation();
 
   const root = location.pathname.split('/')[1];
-  const { t } = useTranslation();  
+  const { t } = useTranslation();
 
   const linkClassName = classNames(styles.pageName, {
-    [styles.pageNameActive]: phonesId,
+    [styles.pageNameActive]: phonesId || tabletsId || accessoriesId,
     [styles.dark]: theme === 'dark',
   });
 
@@ -134,20 +135,30 @@ export const ItemDescription: React.FC<Props> = ({
     setSelectedImg(img);
   };
 
+  const categoryToRouteMap: { [key: string]: string } = {
+    phones: RoutesPathes.PHONES,
+    accessories: RoutesPathes.ACCESSORIES,
+    tablets: RoutesPathes.TABLETS,
+  };
+
   return (
     <>
       <div className={styles.route}>
-        <Link to={RoutesPathes.HOME} className={classNames(styles.home)} />
+        <Link
+          to={RoutesPathes.HOME}
+          className={classNames(styles.home, {
+            [styles.dark]: theme === 'dark',
+          })}
+        />
         <i className={styles.arrow}></i>
-        <Link to={RoutesPathes.PHONES} className={linkClassName}>
-          {t('phones')}
+        <Link to={categoryToRouteMap[phone.category]} className={linkClassName}>
+          {t(phone.category)}
         </Link>
-        {phonesId && (
-          <>
-            <i className={styles.arrow}></i>
-            <p className={styles.pageName}>{phone.name}</p>
-          </>
-        )}
+
+        <>
+          <i className={styles.arrow}></i>
+          <p className={styles.pageName}>{phone.name}</p>
+        </>
       </div>
 
       <BackButton />
@@ -232,7 +243,7 @@ export const ItemDescription: React.FC<Props> = ({
               className={`${styles.add} ${isAdded ? styles.added : ''}`}
               onClick={handleAddToCart}
             >
-              {isAdded ? 'Added!' : 'Add to cart'}
+              {isAdded ? t('added') : t('addToCart')}
             </button>
             <button className={styles.heart} onClick={handleFavoriteClick}>
               {isHeartActive ? (
@@ -315,7 +326,7 @@ export const ItemDescription: React.FC<Props> = ({
               [styles.dark]: theme === 'dark',
             })}
           >
-             {t('techSpecs')}
+            {t('techSpecs')}
           </h3>
           <div className={styles.separator_text}></div>
           <div className={styles.specs}>

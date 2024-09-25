@@ -58,6 +58,8 @@ i18n
           totalPrice: 'Total Price',
           confirm: 'Confirm',
           cancel: 'Cancel',
+          noFavourites: 'No favourites yet',
+          emptyCart: 'Your cart is empty',
         }
       },
       ua: {
@@ -113,10 +115,12 @@ i18n
           totalPrice: 'Повна ціна',
           confirm: 'Підтвердити',
           cancel: 'Відмінити',
+          noFavourites: 'Немає улюблених товарів',
+          emptyCart: 'Ваш кошик пустий',
         }
       }
     },
-    lng: "en", 
+    lng: localStorage.getItem('language') || 'en', 
     fallbackLng: "en", 
     interpolation: {
       escapeValue: false 
