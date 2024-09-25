@@ -209,7 +209,7 @@
   border: 1px solid #E2E6E9;
   padding: 0;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
   border-radius: 4px;
   transition: background-color 0.2s, transform 0.1s, color 0.2s;
 
@@ -225,6 +225,10 @@
     background-color: white;
     color: #27AE60;
     transform: scale(1.05);
+  }
+
+  @include respond-to('tablet') {
+    font-size: 14px;
   }
 }
 

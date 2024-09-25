@@ -9,8 +9,11 @@ import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 import { CartContext } from '../../context/CartContextType';
 import { LangSelector } from '../LangSelector/LangSelector';
 import { useTranslation } from 'react-i18next';
+import { useLanguageRerender } from '../../hooks/useLanguageRerender ';
 
 export const Header: React.FC = () => {
+  useLanguageRerender();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const { favoriteProducts, theme } = useContext(FavoritesContext);
@@ -18,11 +21,12 @@ export const Header: React.FC = () => {
   const cartCount = cartContext 
   ? cartContext.cartItems.reduce((total, item) => total + item.quantity, 0) 
   : 0;
-
-
-  const { t } = useTranslation();
+  const { t} = useTranslation();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+
+
 
   return (
     <div className={styles.container}>

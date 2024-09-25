@@ -14,6 +14,7 @@ import { FavoritesProvider } from './context/FavoritesContext';
 
 export const Root: React.FC = () => (
   <FavoritesProvider>
+    
     <HashRouter>
       <Routes>
         <Route path="/home" element={<Navigate to={RoutesPathes.HOME} replace />} />

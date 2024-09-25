@@ -72,7 +72,7 @@ export const CartPage: React.FC = () => {
         <div className={styles.cart__bottom}>
           <div className={styles.cart__list}>
             {cartItems.length === 0 ? (
-              <p>{t('empty')}</p>
+              <p className={classNames(styles.emptyCart, {  [styles.dark]: theme === 'dark'})}>{t('empty')}</p>
             ) : (
               cartItems.map(({ product, quantity }) => (
                 <div key={product.id.toString()} className={styles.cart__item}>
@@ -133,7 +133,7 @@ export const CartPage: React.FC = () => {
             )}
           </div>
 
-          <div className={styles.cart__summary}>
+          {Boolean(cartItems.length) &&<div className={styles.cart__summary}>
             <div className={styles.cart__priceWrapper}>
               <div
                 className={classNames(styles.cart__summaryPrice, {
@@ -192,7 +192,7 @@ export const CartPage: React.FC = () => {
                 </div>
               </div>
             )}
-          </div>
+          </div>}
         </div>
       </div>
     </div>

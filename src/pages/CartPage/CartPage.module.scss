@@ -455,3 +455,8 @@ $secondary: #89939a;
 //   border: 1px solid #ccc;
 // }
 
+.emptyCart {
+  &.dark {
+    color: white;
+  }
+}

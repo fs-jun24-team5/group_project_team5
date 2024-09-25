@@ -22,8 +22,10 @@ export const Card: React.FC<Props> = ({ product }) => {
   const location = useLocation();
 
   const root = location.pathname.split('/')[1];
+  console.log(root);
+  
 
-  const linkToItem = root ? `/${root}/${product.itemId}` : `${RoutesPathes.PHONES}/${product.itemId}`;
+  const linkToItem = root  ? `/${root}/${product.itemId}` : `${RoutesPathes.PHONES}/${product.itemId}`;
 
   const { t } = useTranslation();
 
