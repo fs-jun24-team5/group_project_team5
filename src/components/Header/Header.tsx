@@ -6,6 +6,7 @@ import { MobileBurgerMenu } from '../MobileBurgerMenu/MobileBurgerMenu';
 import classNames from 'classnames';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
+import { SearchElement } from '../SerachElement/SearchElement';
 
 export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -71,6 +72,8 @@ export const Header: React.FC = () => {
       </ul>
 
       <ul className={styles.icons}>
+        <SearchElement />
+
         <ThemeSwitcher />
         <li className={styles.icon}>
           <Link

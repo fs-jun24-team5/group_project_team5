@@ -81,7 +81,7 @@ export const ProductsMain: React.FC<Props> = ({ pageLabel, productsCategory }) =
           const neededProducts = productsFromServer.filter(
             (product) => product.category === productsCategory,
           );
-  
+
           setProducts(neededProducts);
         }
       })
@@ -112,27 +112,26 @@ export const ProductsMain: React.FC<Props> = ({ pageLabel, productsCategory }) =
       )}
 
       {!isLoading && !error && (
-        
-       
-    <>
-      <div className={styles.products_main}>
-        <div className={styles.category_info}>
-          <h2
-            className={classNames(styles.category_name, {
-              [styles.dark]: theme === 'dark',
-            })}
-          >
-            {pageLabel}
-          </h2>
+        <>
+          <div className={styles.products_main}>
+            <div className={styles.category_info}>
+              <h2
+                className={classNames(styles.category_name, {
+                  [styles.dark]: theme === 'dark',
+                })}
+              >
+                {pageLabel}
+              </h2>
 
-          <p className={styles.category_models}>{`${products.length} models`}</p>
-        </div>
-        <Dropdown
-          label="Sort by"
-          options={Object.values(SortOptions)}
-          activeOption={sortParam}
-          onChange={handleSortChange}
-        />
+              <p className={styles.category_models}>{`${products.length} models`}</p>
+            </div>
+
+            <Dropdown
+              label="Sort by"
+              options={Object.values(SortOptions)}
+              activeOption={sortParam}
+              onChange={handleSortChange}
+            />
 
             <Dropdown
               label="Items on page"
