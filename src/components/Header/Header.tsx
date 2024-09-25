@@ -10,6 +10,7 @@ import { CartContext } from '../../context/CartContextType';
 import { LangSelector } from '../LangSelector/LangSelector';
 import { useTranslation } from 'react-i18next';
 import { useLanguageRerender } from '../../hooks/useLanguageRerender ';
+import { SearchElement } from '../SerachElement/SearchElement';
 
 export const Header: React.FC = () => {
   useLanguageRerender();
@@ -85,6 +86,8 @@ export const Header: React.FC = () => {
       </ul>
 
       <ul className={styles.icons}>
+        <SearchElement />
+
         <ThemeSwitcher />
         <LangSelector />
 
