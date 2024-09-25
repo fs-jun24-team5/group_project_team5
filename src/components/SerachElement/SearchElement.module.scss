@@ -19,33 +19,36 @@ body:has(.slideDown) {
   justify-content: center;
   align-items: center;
   height: 48px;
-  padding: 0 10px;
   border-left: 1px solid #e2e6e9;
 
   @include respond-to('desktop') {
     height: 64px;
-    padding: 0 10px;
   }
 }
 
 .icon {
   cursor: pointer;
-  width: 20px;
-  height: 20px;
+  width: 48px;
+  height: 48px;
   margin-right: 5px;
-  background-image: url(../../assets/icons/search_icons/search-alt-2-svgrepo-com.svg);
+  background-image: url(../../assets/icons/search_icons/search-alt-2.svg);
   background-position: center;
-  background-size: contain;
+  background-size: 20px 20px;
   background-repeat: no-repeat;
   transition: transform 0.3s ease;
+
+  &.dark{
+    background-image: url('../../assets/icons/search_icons/search-alt-2darkMode.svg');
+  }
 
   &:hover {
     transform: scale(1.1);
   }
 
   @include respond-to('desktop') {
-    width: 25px;
-    height: 25px;
+    width: 64px;
+    height: 64px;
+    background-size: 25px 25px;
   }
 }
 
