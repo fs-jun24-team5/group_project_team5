@@ -8,36 +8,15 @@ $gray: #b4bdc3;
 $white: #ffffff;
 $colorSecondaryGrey: #89939A;
 
-.main {
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
-
-  @include onMobile{
-    margin-top: 24px;
-  }
-}
-
-.main__content {
-  width: 1138px;
-  padding: 0 32px;
-
-  @include onTablet {
-    width: 592px;
-    padding: 0 24px;
-  }
-  
-  @include onMobile {
-    width: 288px;
-    padding: 0 16px;
-  }
-}
-
 .main_text {
   font-weight: 800;
   font-size: 32px;
   color: $primaryColor;
   margin-top: 16px;
+
+  &.dark {
+    color: white;
+  }
 
   @include onMobile {
     font-size: 22px;
@@ -46,7 +25,7 @@ $colorSecondaryGrey: #89939A;
 
 .container {
   display: flex;
-  gap: 64px;
+  gap: 42px;
   margin-top: 40px;
 
   @include onTablet {
@@ -216,7 +195,7 @@ $colorSecondaryGrey: #89939A;
 }
 
 .colorPick_active{
-  background-color: #fcdbc1;
+  background-color: #808080;
   width: 30px;
   height: 30px;
   border-radius: 99px;
@@ -224,8 +203,16 @@ $colorSecondaryGrey: #89939A;
   outline: 1px solid black;
 }
 
+.linkClassName{
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 15px;
+  color: $colorSecondaryGrey
+}
+
 .colorPick {
-  background-color: #fcdbc1;
+  background-color: #808080;
   width: 30px;
   height: 30px;
   border-radius: 99px;
@@ -292,6 +279,10 @@ $colorSecondaryGrey: #89939A;
   color: $primaryColor;
   margin: 0px;
   font-weight: 800;
+
+  &.dark {
+    color: white;
+  }
 }
 
 .priceDiscount {
@@ -385,6 +376,10 @@ $colorSecondaryGrey: #89939A;
   line-height: 15.34px;
   font-weight: 600;
   color: $primaryColor;
+
+  &.dark {
+    color: white;
+  }
 }
 
 //TEXT SECTION
@@ -428,6 +423,10 @@ $colorSecondaryGrey: #89939A;
   font-size: 22px;
   color: $primaryColor;
 
+  &.dark {
+    color: white;
+  }
+
   @include onMobile {
     font-size: 20px;
   }
@@ -438,6 +437,10 @@ $colorSecondaryGrey: #89939A;
   font-size: 20px;
   color: $primaryColor;
   margin-top: 32px;
+
+  &.dark {
+    color: white;
+  }
 
   @include onMobile {
     font-size: 16px;
@@ -498,6 +501,10 @@ $colorSecondaryGrey: #89939A;
   font-weight: 600;
   color: $primaryColor;
 
+  &.dark {
+    color: white;
+  }
+
   @include respond-to('tablet') {
     font-size: 14px;
   }
@@ -548,6 +555,10 @@ $colorSecondaryGrey: #89939A;
   line-height: 15px;
   text-align: left;
   color: $colorSecondaryGrey;
+
+  &.dark {
+    color: white;
+  }
 }
 
 .pageNameActive {
@@ -557,4 +568,33 @@ $colorSecondaryGrey: #89939A;
   line-height: 15px;
   text-align: left;
   color: #313237; 
+  
+  &.dark {
+    color: white;
+  }
+}
+
+.add {
+  background-color: #313237;
+  color: white;
+  border: 1px solid #E2E6E9;
+  padding: 0;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background-color 0.2s, transform 0.1s, color 0.2s;
+
+  &:hover {
+    background-color: #89939A;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &.added {
+    background-color: white;
+    color: #27AE60;
+    transform: scale(1.05);
+  }
 }

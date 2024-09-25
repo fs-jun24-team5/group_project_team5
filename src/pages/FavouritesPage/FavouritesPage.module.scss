@@ -2,8 +2,8 @@
 $colorSecondaryGrey: #89939A;
 
 .pagesContainer {
-  display: grid;
-  width: 100vw;
+  width: 100%;
+ // display: grid;
 
   @include respond-to('desktop') {
     display: grid;
@@ -63,13 +63,12 @@ $colorSecondaryGrey: #89939A;
 }
 
 .products_main {
-  width: 100%;
   grid-column: span 24;
   max-width: 1136px;
-  margin-left: 16px;
+//  margin-inline: 16px;
 
   @include respond-to('tablet') {
-    margin-left: 32px;
+//    margin-left: 32px;
   }
 
   @include respond-to('desktop') {
@@ -79,7 +78,15 @@ $colorSecondaryGrey: #89939A;
 }
 
 .category_info {
-  margin: 40px 0;
+  margin: 40px 0 40px 16px;
+
+  @include respond-to('tablet') {
+    margin-left: 32px;
+  }
+
+  @include respond-to('desktop') {
+    margin-left: 0;
+  }
 }
 
 .category_name {
@@ -108,8 +115,13 @@ $colorSecondaryGrey: #89939A;
     column-gap: 16px;
   }
 }
+
 .no_favourites {
   grid-column: span 24;
+
+  &.dark {
+    color: white;
+  }
 }
 
 .product_card {

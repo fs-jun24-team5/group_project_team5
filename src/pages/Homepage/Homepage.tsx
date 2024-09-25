@@ -8,11 +8,13 @@ import { getHotDeals, getNewModels } from '../../api/function';
 import { ProductType } from '../../api/type/ProductType';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 export const HomePage: React.FC = () => {
   const [phones, setPhones] = useState<ProductType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { theme } = useContext(FavoritesContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,7 +44,7 @@ export const HomePage: React.FC = () => {
           dark: theme === 'dark',
         })}
       >
-        Welcome to Nice Gadgets store!
+        {t('welcome')}
       </h2>
 
       <Carousel />
@@ -52,6 +54,7 @@ export const HomePage: React.FC = () => {
       <Categories />
 
       <HotPricesSlider newPhones={newPhones} isLoading={isLoading} />
-    </main>
+
+     </main>
   );
 };

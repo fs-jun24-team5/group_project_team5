@@ -97,13 +97,17 @@ $secondary: #89939a;
   max-width: 1200px;
   padding-inline: 16px;
   margin: auto;
+  margin-top: 24px;
+
 
   @include onTablet {
     padding-inline: 24px;
+    margin-top: 40px;
   }
 
   @include onDesktop {
     padding-inline: 32px;
+    margin-top: 40px;
   }
 }
 
@@ -124,15 +128,21 @@ $secondary: #89939a;
     letter-spacing: -0.01em;
     color: $primary;
     margin-bottom: 32px;
-    margin-top: 32px;
+    margin-top: 24px;
+
+    &.dark {
+      color: white;
+    }
 
     @include onTablet {
       grid-column: span 12;
+      margin-top: 16px;
     }
 
     @include onDesktop {
       grid-column: span 24;
       font-size: 48px;
+      margin-top: 16px;
     }
   }
 
@@ -168,6 +178,13 @@ $secondary: #89939a;
   background-repeat: no-repeat;
   background-position: center;
   border: 1px solid $elements;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: lightgray;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
 
   &__minus {
     background-image: url(../../assets/icons/cardPage_icons/minus.svg);
@@ -326,6 +343,10 @@ $secondary: #89939a;
     line-height: 41px;
     letter-spacing: -0.01em;
     text-align: center;
+
+    &.dark {
+      color: white;
+    }
   }
 
   &__priceWrapper {
@@ -361,5 +382,81 @@ $secondary: #89939a;
     border: none;
     background: $primary;
     cursor: pointer;
+  }
+}
+
+
+.cart__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.cart__product {
+  display: flex;
+  align-items: center;
+}
+
+.cart__input {
+  width: 60px;
+  text-align: center;
+  padding: 5px;
+  margin: 0 10px;
+  font-size: 16px;
+}
+
+.cart__price {
+  width: 100px;
+  text-align: right;
+  font-size: 22px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.cart__buttons {
+  display: flex;
+  align-items: center;
+}
+
+.cart__button {
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+// .cart__quantity {
+//   border: none;
+//   background: none;
+//   width: 30px;
+//   text-align: center;
+//   font-size: 16px;
+//   cursor: text;
+//   outline: none;
+// }
+
+// .cart__quantity:hover {
+//   cursor: text;
+// }
+
+// .cart__quantity::-webkit-inner-spin-button,
+// .cart__quantity::-webkit-outer-spin-button {
+//   -webkit-appearance: none;
+//   margin: 0;
+// }
+
+// .cart__quantity:focus {
+//   cursor: text;
+//   border: 1px solid #ccc;
+// }
+
+.emptyCart {
+  &.dark {
+    color: white;
   }
 }

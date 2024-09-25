@@ -4,9 +4,11 @@ import styles from './Categories.module.scss';
 import { RoutesPathes } from '../../utils/RoutesPathes';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 export const Categories: React.FC = () => {
   const { theme } = useContext(FavoritesContext);
+  const { t } = useTranslation();
 
   return (
     <div className={styles.categories}>
@@ -15,7 +17,7 @@ export const Categories: React.FC = () => {
           [styles.dark]: theme === 'dark',
         })}
       >
-        Shop by category
+        {t('shopByCategory')}
       </h2>
 
       <div className={styles.categories__wrapper}>
@@ -29,12 +31,12 @@ export const Categories: React.FC = () => {
                 [styles.dark]: theme === 'dark',
               })}
             >
-              Mobile phones
+             {t('mobile')}
             </h3>
-            <p className={styles.category__count}>95 models</p>
+            <p className={styles.category__count}>124 {t('models')}</p>
           </div>
         </article>
-        
+
         <article className={styles.category}>
           <Link to={RoutesPathes.TABLETS}>
             <div className={`${styles.category__image} ${styles.category__image__tablets}`} />
@@ -45,9 +47,9 @@ export const Categories: React.FC = () => {
                 [styles.dark]: theme === 'dark',
               })}
             >
-              Tablets
+              {t('tablets')}
             </h3>
-            <p className={styles.category__count}>24 models</p>
+            <p className={styles.category__count}>36 {t('models')}</p>
           </div>
         </article>
 
@@ -61,9 +63,9 @@ export const Categories: React.FC = () => {
                 [styles.dark]: theme === 'dark',
               })}
             >
-              Accessories
+              {t('accessories')}
             </h3>
-            <p className={styles.category__count}>100 models</p>
+            <p className={styles.category__count}>34 {t('models')}</p>
           </div>
         </article>
       </div>

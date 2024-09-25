@@ -7,6 +7,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import classNames from 'classnames';
 import { Product } from '../../api/type/ProductCart';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   recommendedPhones: Product[];
@@ -22,6 +23,7 @@ export const RecommendedItemsSlider: React.FC<Props> = ({ recommendedPhones }) =
   });
   const sliderRef = useRef<Slider>(null);
   const { theme } = useContext(FavoritesContext);
+  const { t } = useTranslation();
 
   const updateSliderSettings = () => {
     const windowWidth = window.innerWidth;
@@ -74,7 +76,7 @@ export const RecommendedItemsSlider: React.FC<Props> = ({ recommendedPhones }) =
             [styles.dark]: theme === 'dark',
           })}
         >
-          You may also like
+          {t('recommended')}
         </h2>
         <div className={styles.newPhoneModels__buttonsWrapper}>
           <button
