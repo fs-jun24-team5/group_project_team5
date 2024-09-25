@@ -1,7 +1,7 @@
 # Nice Gadgets
 Welcome to the Nice Gadgets project! This is a modern online store for electronic devices built with React, TypeScript, Sass, and Vue. The application is designed to provide users with a seamless shopping experience.
 
-[DEMO LINK](https://fs-jun24-team5.github.io/group_project_team5/)
+[DEMO LINK](https://fs-jun24-team5.github.io/group_project_team5/) 
 
 Table of Contents
 - Features
