@@ -19,7 +19,7 @@ export const CartPage: React.FC = () => {
     throw new Error('CartContext must be used within a CartProvider');
   }
 
-  const { cartItems, increaseQuantity, decreaseQuantity, updateQuantity, removeFromCart } =
+  const { cartItems, increaseQuantity, decreaseQuantity, updateQuantity, removeFromCart, clearCart } =
     cartContext;
 
   const totalAmount = cartItems.reduce((total: number, item) => {
@@ -53,6 +53,11 @@ export const CartPage: React.FC = () => {
     if (e.key === 'Enter') {
       handleBlur(id);
     }
+  };
+
+  const handleConfirm = () => {
+    clearCart();
+    setIsModalOpen(false);
   };
 
   return (
@@ -182,7 +187,7 @@ export const CartPage: React.FC = () => {
                     <span>${totalAmount.toFixed(2)}</span>
                   </div>
                   <div className={styles.modal__actions}>
-                    <button className={styles.confirm} onClick={toggleModal}>
+                    <button className={styles.confirm} onClick={handleConfirm}>
                       {t('confirm')}
                     </button>
                     <button className={styles.cancel} onClick={toggleModal}>
