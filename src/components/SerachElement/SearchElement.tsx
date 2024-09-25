@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import styles from './SearchElement.module.scss';
 import { Product } from '../../api/type/ProductCart';
 import { getProducts } from '../../api/api';
@@ -7,6 +7,8 @@ import { RoutesPathes } from '../../utils/RoutesPathes';
 import { ProductCategories } from '../../utils/ProductCategories';
 import { debounce } from '../../utils/debounce';
 import { AutoSizer, List } from 'react-virtualized';
+import classNames from 'classnames';
+import { FavoritesContext } from '../../context/FavoritesContext';
 
 export const SearchElement: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -15,6 +17,7 @@ export const SearchElement: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const params = useParams();
+  const { theme } = useContext(FavoritesContext)
 
   const toggleSearch = () => {
     setIsVisible(!isVisible);
@@ -110,7 +113,9 @@ export const SearchElement: React.FC = () => {
 
   return (
     <div className={styles.searchContainer}>
-      <div className={styles.icon} onClick={toggleSearch}></div>
+      <div className={classNames(styles.icon, {
+         [styles.dark]: theme === 'dark',
+      })} onClick={toggleSearch}></div>
       <div className={`${styles.searchInput} ${isVisible ? styles.slideDown : styles.slideUp}`}>
         <input
           type="text"
