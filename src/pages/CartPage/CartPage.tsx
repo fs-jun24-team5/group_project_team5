@@ -19,8 +19,14 @@ export const CartPage: React.FC = () => {
     throw new Error('CartContext must be used within a CartProvider');
   }
 
-  const { cartItems, increaseQuantity, decreaseQuantity, updateQuantity, removeFromCart, clearCart } =
-    cartContext;
+  const {
+    cartItems,
+    increaseQuantity,
+    decreaseQuantity,
+    updateQuantity,
+    removeFromCart,
+    clearCart,
+  } = cartContext;
 
   const totalAmount = cartItems.reduce((total: number, item) => {
     const price = item.product.price ?? 0;
@@ -77,15 +83,22 @@ export const CartPage: React.FC = () => {
         <div className={styles.cart__bottom}>
           <div className={styles.cart__list}>
             {cartItems.length === 0 ? (
-              <p className={classNames(styles.emptyCart, {  [styles.dark]: theme === 'dark'})}>{t('empty')}</p>
+              <p className={classNames(styles.emptyCart, { [styles.dark]: theme === 'dark' })}>
+                {t('empty')}
+              </p>
             ) : (
               cartItems.map(({ product, quantity }) => (
-                <div key={product.id.toString()} className={styles.cart__item}>
+                <div
+                  key={product.id.toString()}
+                  className={classNames(styles.cart__item, { [styles.dark]: theme === 'dark' })}
+                >
                   <div className={styles.cart__row}>
                     <button
                       type="button"
                       aria-label="Delete item from cart"
-                      className={styles.cart__delete}
+                      className={classNames(styles.cart__delete, {
+                        [styles.dark]: theme === 'dark',
+                      })}
                       onClick={() => removeFromCart(product.id.toString())}
                     />
                     <div className={styles.cart__photo}>
@@ -95,14 +108,22 @@ export const CartPage: React.FC = () => {
                       ></div>
                     </div>
                     <div className={styles.cart__name}>
-                      <div className={styles.cart__link}>{product.name}</div>
+                      <div
+                        className={classNames(styles.cart__link, {
+                          [styles.dark]: theme === 'dark',
+                        })}
+                      >
+                        {product.name}
+                      </div>
                     </div>
                   </div>
                   <div className={styles.cart__priceCount}>
                     <div className={styles.cart__count}>
                       <button
                         type="button"
-                        className={`${styles.button} ${styles.button__minus}`}
+                        className={classNames(styles.button, styles.button__minus, {
+                          [styles.dark]: theme === 'dark',
+                        })}
                         onClick={() => decreaseQuantity(product.id.toString())}
                       />
                       {editItemId === product.id.toString() ? (
@@ -116,7 +137,9 @@ export const CartPage: React.FC = () => {
                         />
                       ) : (
                         <div
-                          className={styles.cart__quantity}
+                          className={classNames(styles.cart__quantity, {
+                            [styles.dark]: theme === 'dark',
+                          })}
                           onDoubleClick={() => handleDoubleClick(product.id.toString(), quantity)}
                         >
                           {quantity}
@@ -125,11 +148,17 @@ export const CartPage: React.FC = () => {
 
                       <button
                         type="button"
-                        className={`${styles.button} ${styles.button__plus}`}
+                        className={classNames(styles.button, styles.button__plus, {
+                          [styles.dark]: theme === 'dark',
+                        })}
                         onClick={() => increaseQuantity(product.id.toString())}
                       />
                     </div>
-                    <div className={styles.cart__price}>
+                    <div
+                      className={classNames(styles.cart__price, {
+                        [styles.dark]: theme === 'dark',
+                      })}
+                    >
                       ${product.price ? (product.price * quantity).toFixed(2) : 0}
                     </div>
                   </div>
@@ -138,66 +167,86 @@ export const CartPage: React.FC = () => {
             )}
           </div>
 
-          {Boolean(cartItems.length) &&<div className={styles.cart__summary}>
-            <div className={styles.cart__priceWrapper}>
-              <div
-                className={classNames(styles.cart__summaryPrice, {
-                  [styles.dark]: theme === 'dark',
-                })}
-              >
-                {t('total')}: ${totalAmount.toFixed(2)}
-              </div>
+          {Boolean(cartItems.length) && (
+            <div className={styles.cart__summary}>
+              <div className={styles.cart__priceWrapper}>
+                <div
+                  className={classNames(styles.cart__summaryPrice, {
+                    [styles.dark]: theme === 'dark',
+                  })}
+                >
+                  {t('total')}: ${totalAmount.toFixed(2)}
+                </div>
 
-              <div className={styles.cart__summaryCount}>
-                {t('totalFor')} {cartItems.length} {t('items')}
-              </div>
-            </div>
-
-            <div className={styles.cart__divider} />
-            <button type="button" className={styles.cart__checkout} onClick={toggleModal}>
-              {t('checkout')}
-            </button>
-            {isModalOpen && (
-              <div className={styles.modal}>
-                <div className={styles.modal__content}>
-                  <h2 className={styles.modal__title}>{t('checkoutConfirm')}</h2>
-                  <div className={styles.modal__tableContainer}>
-                    <table className={styles.modal__table}>
-                      <thead>
-                        <tr>
-                          <th>{t('product')}</th>
-                          <th>{t('quantity')}</th>
-                          <th>{t('price')}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {cartItems.map(({ product, quantity }) => (
-                          <tr key={product.id.toString()}>
-                            <td>{product.name}</td>
-                            <td>{quantity}</td>
-                            <td>${product.price ? (product.price * quantity).toFixed(2) : 0}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <div className={styles.modal__total}>
-                    <span>{t('totalPrice')}:</span>
-                    <span>${totalAmount.toFixed(2)}</span>
-                  </div>
-                  <div className={styles.modal__actions}>
-                    <button className={styles.confirm} onClick={handleConfirm}>
-                      {t('confirm')}
-                    </button>
-                    <button className={styles.cancel} onClick={toggleModal}>
-                      {t('cancel')}
-                    </button>
-                  </div>
+                <div className={styles.cart__summaryCount}>
+                  {t('totalFor')} {cartItems.length} {t('items')}
                 </div>
               </div>
-            )}
-          </div>}
+
+              <div className={styles.cart__divider} />
+              <button type="button" className={styles.cart__checkout} onClick={toggleModal}>
+                {t('checkout')}
+              </button>
+              {isModalOpen && (
+                <div className={styles.modal}>
+                  <div
+                    className={classNames(styles.modal__content, {
+                      [styles.dark]: theme === 'dark',
+                    })}
+                  >
+                    <h2
+                      className={classNames(styles.modal__title, {
+                        [styles.dark]: theme === 'dark',
+                      })}
+                    >
+                      {t('checkoutConfirm')}
+                    </h2>
+                    <div className={styles.modal__tableContainer}>
+                      <table
+                        className={classNames(styles.modal__table, {
+                          [styles.dark]: theme === 'dark',
+                        })}
+                      >
+                        <thead>
+                          <tr>
+                            <th>{t('product')}</th>
+                            <th>{t('quantity')}</th>
+                            <th>{t('price')}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {cartItems.map(({ product, quantity }) => (
+                            <tr key={product.id.toString()}>
+                              <td>{product.name}</td>
+                              <td>{quantity}</td>
+                              <td>${product.price ? (product.price * quantity).toFixed(2) : 0}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div
+                      className={classNames(styles.modal__total, {
+                        [styles.dark]: theme === 'dark',
+                      })}
+                    >
+                      <span>{t('totalPrice')}:</span>
+                      <span>${totalAmount.toFixed(2)}</span>
+                    </div>
+                    <div className={styles.modal__actions}>
+                      <button className={styles.confirm} onClick={handleConfirm}>
+                        {t('confirm')}
+                      </button>
+                      <button className={styles.cancel} onClick={toggleModal}>
+                        {t('cancel')}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
