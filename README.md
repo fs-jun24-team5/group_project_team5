@@ -32,4 +32,4 @@ Once the application is running, you can:
 - Use the carousel to view featured products.
 - Add items to your cart and proceed to checkout.
 
-Thank you for checking out Nice Gadgets! We hope you enjoy using and contributing to this project. If you have any questions, feel free to reach out!
+Thank you for your checking out Nice Gadgets! We hope you enjoy using and contributing to this project. If you have any questions, feel free to reach out!
