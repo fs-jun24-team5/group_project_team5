@@ -15,12 +15,18 @@ $secondary: #89939a;
   display: flex;
   justify-content: center;
   align-items: center;
+
+
 }
 
 .modal__content {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
+
+  &.dark {
+    background-color: rgb(114, 114, 114);
+  }
 
   @include onDesktop {
     width: 500px;
@@ -30,6 +36,10 @@ $secondary: #89939a;
 .modal__title {
   padding-bottom: 10px;
   font-size: 20px;
+
+  &.dark {
+    color: white;
+  }
 }
 
 .modal__actions {
@@ -48,18 +58,29 @@ $secondary: #89939a;
   width: 100%;
   border-collapse: collapse;
 
+  &.dark {
+    color: white;
+    background-color: #6b6b6b;
+  }
+
   th,
   td {
     border: 1px solid $elements;
     padding: 8px;
     text-align: left;
     max-width: 1800px;
+
+    &.dark {
+      border-color: black;
+    }
   }
 
   th {
-    background-color: $elements;
+    background-color: #ababac;
   }
 }
+
+
 
 .modal__total {
   display: flex;
@@ -67,6 +88,10 @@ $secondary: #89939a;
   font-size: 18px;
   font-weight: 800;
   margin-bottom: 20px;
+
+  &.dark {
+    color: white;
+  }
 
   span:last-child {
     margin-left: 10px;
@@ -178,20 +203,33 @@ $secondary: #89939a;
   background-repeat: no-repeat;
   background-position: center;
   border: 1px solid $elements;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease;
   cursor: pointer;
 
+  &.dark {
+    background-color: #939396;
+    border-color: #313237;
+  }
+
   &:hover {
-    background-color: lightgray;
+    background-color: rgb(124, 123, 123);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   }
 
   &__minus {
     background-image: url(../../assets/icons/cardPage_icons/minus.svg);
+
+    &.dark {
+      background-image: url('../../assets/icons/cardPage_icons/minus_dark.svg');
+    }
   }
 
   &__plus {
     background-image: url(../../assets/icons/cardPage_icons/plus.svg);
+
+    &.dark {
+      background-image: url('../../assets/icons/cardPage_icons/plus_dark.svg');
+    }
   }
 }
 
@@ -258,6 +296,10 @@ $secondary: #89939a;
     border: none;
     cursor: pointer;
     transition: background-image ease-out 0.5s;
+
+    &.dark {
+      background-image: url('../../assets/icons/cardPage_icons/close_dark.svg');
+    }
   }
 
   &__photo {
@@ -294,6 +336,10 @@ $secondary: #89939a;
   &__link {
     color: $primary;
     text-decoration: none;
+
+    &.dark {
+      color: white;
+    }
   }
 
   &__count {
@@ -305,6 +351,10 @@ $secondary: #89939a;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &.dark {
+      color: white;
+    }
   }
 
   &__summary {
@@ -385,12 +435,15 @@ $secondary: #89939a;
   }
 }
 
-
 .cart__item {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+
+  &.dark {
+    background-color: rgb(114, 114, 114);
+  }
 }
 
 .cart__product {
@@ -412,6 +465,10 @@ $secondary: #89939a;
   font-size: 22px;
   font-weight: bold;
   margin-right: 10px;
+
+  &.dark {
+    color: white;
+  }
 }
 
 .cart__buttons {

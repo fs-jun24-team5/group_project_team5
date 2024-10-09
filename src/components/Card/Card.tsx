@@ -21,6 +21,7 @@ export const Card: React.FC<Props> = ({ product }) => {
   const [isHeartActive, setIsHeartActive] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
   const location = useLocation();
+  const { theme } = useContext(FavoritesContext);
 
   const root = location.pathname.split('/')[1];
 
@@ -30,9 +31,9 @@ export const Card: React.FC<Props> = ({ product }) => {
     if (!root) {
       return `${RoutesPathes.PHONES}/${product.itemId}`;
     }
-  
-    return root === 'favourites' 
-      ? `/${product.category}/${product.itemId}` 
+
+    return root === 'favourites'
+      ? `/${product.category}/${product.itemId}`
       : `/${root}/${product.itemId}`;
   };
 
@@ -65,42 +66,103 @@ export const Card: React.FC<Props> = ({ product }) => {
   };
 
   return (
-    <article className={styles.card}>
+    <article
+      className={classNames(styles.card, {
+        [styles.dark]: theme === 'dark',
+      })}
+    >
       <Link to={createLinkToItem()}>
         <img src={product.image} alt="iphone" className={styles.image} />
       </Link>
 
       <Link to={createLinkToItem()} className={styles.link}>
-        <h3 className={styles.text}>{product.name}</h3>
+        <h3
+          className={classNames(styles.text, {
+            [styles.dark]: theme === 'dark',
+          })}
+        >
+          {product.name}
+        </h3>
       </Link>
 
       <div className={styles.price}>
-        <h3 className={styles.priceRegular}>${product.price}</h3>
-        <h3 className={styles.priceDiscount}>${product.fullPrice}</h3>
+        <h3
+          className={classNames(styles.priceRegular, {
+            [styles.dark]: theme === 'dark',
+          })}
+        >
+          ${product.price}
+        </h3>
+        <h3
+          className={classNames(styles.priceDiscount, {
+            [styles.dark]: theme === 'dark',
+          })}
+        >
+          ${product.fullPrice}
+        </h3>
       </div>
 
       <div className={styles.separator}></div>
 
       <div className={styles.specs}>
         <div className={styles.screen}>
-          <p className={styles.left}>{t('screen')}</p>
-          <p className={styles.right}>{product.screen}</p>
+          <p
+            className={classNames(styles.left, {
+              [styles.dark]: theme === 'dark',
+            })}
+          >
+            {t('screen')}
+          </p>
+          <p
+            className={classNames(styles.right, {
+              [styles.dark]: theme === 'dark',
+            })}
+          >
+            {product.screen}
+          </p>
         </div>
 
         <div className={styles.memory}>
-          <p className={styles.left}>{t('capacity')}</p>
-          <p className={styles.right}>{product.capacity}</p>
+          <p
+            className={classNames(styles.left, {
+              [styles.dark]: theme === 'dark',
+            })}
+          >
+            {t('capacity')}
+          </p>
+          <p
+            className={classNames(styles.right, {
+              [styles.dark]: theme === 'dark',
+            })}
+          >
+            {product.capacity}
+          </p>
         </div>
 
         <div className={styles.ram}>
-          <p className={styles.left}>{t('ram')}</p>
-          <p className={styles.right}>{product.ram}</p>
+          <p
+            className={classNames(styles.left, {
+              [styles.dark]: theme === 'dark',
+            })}
+          >
+            {t('ram')}
+          </p>
+          <p
+            className={classNames(styles.right, {
+              [styles.dark]: theme === 'dark',
+            })}
+          >
+            {product.ram}
+          </p>
         </div>
       </div>
 
       <div className={styles.buttons}>
         <button
-          className={classNames(styles.add, { [styles.added]: isAdded })}
+          className={classNames(styles.add, {
+            [styles.added]: isAdded,
+            [styles.dark]: theme === 'dark',
+          })}
           onClick={handleAddToCart}
         >
           {isAdded ? t('added') : t('addToCart')}
